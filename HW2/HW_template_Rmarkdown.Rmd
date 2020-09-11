@@ -1,0 +1,177 @@
+---
+title: "HW_Group #1_Austin Halvorsen"
+author: "Pedram Jahangiry"
+date: "Sep 15 2020"
+output:
+  word_document: default
+  pdf_document: default
+---
+
+
+
+\newpage
+
+# Problems
+
+## Question 1
+
+### (i) 
+
+```{r ,comment = NA}
+v1 <- seq(1,17,4)
+
+v1
+```
+
+### (ii)
+
+## Question 2
+
+### (i)
+
+```{r echo=FALSE, comment = NA}
+my_data <- 20:39
+header_names <- c("A", "B", "C", "D", "E")
+A <- matrix(my_data, nrow = 4, ncol = 5, byrow = TRUE) 
+A
+colnames(A) <- header_names
+A
+```
+
+### (ii)
+
+```{r}
+# Extracting Columns B & D
+
+B <- A[c(2,4),c("B","D")]
+```
+
+### (iii)
+
+```{r}
+# Transpose Matrix B
+
+t(B)
+```
+
+### (iv)
+
+```{r}
+# Inverse of Matrix B
+
+B_inverse <- solve(B)
+```
+
+### (v)
+
+```{r}
+B %*% B_inverse
+```
+
+## Question 3
+
+### (i)
+
+```{r}
+df <- data.frame(mtcars)
+head(df,10)
+```
+
+### (ii)
+
+```{r}
+library(dplyr)
+df1 <- df %>% 
+  select(c(cyl, hp, wt, vs, am, gear, mpg)) %>% 
+  filter(cyl == 4) %>% 
+  head(5)
+```
+
+### (iii)
+
+```{r}
+df1 %>% 
+  mutate(gpm = round((1/df1$mpg),3)) %>% 
+  head(5)
+```
+
+### (iv)
+
+```{r}
+str(df1)
+```
+
+### (v)
+
+```{r}
+
+```
+
+---------
+
+
+
+# Computer Exercises
+
+```{r include=FALSE}
+library(wooldridge)
+```
+
+## C1 Use the data in wage1 for this exercise.
+
+### (i) 
+
+This is my answer to section (i)
+ 
+
+
+
+
+
+
+
+# Including r output within some text 
+
+for example I calculated the average number of cars as: 
+```{r}
+avg_speed <- mean(cars$speed)
+avg_speed
+```
+
+from the R output above, we see that the average speed is equal to 15.4. 
+
+Or you could directly do some in-line calculations. 
+Here is the average speed: `r mean(cars$speed)`. 
+
+We can also insert plots from R in Rmarkdown: 
+
+
+```{r}
+hist(wage2$wage, col="red")
+```
+
+
+
+-------------
+
+
+How to write mathematical formulas in **Rmarkdown**: 
+
+1. Writing in-line formulas using one dollar sign: $y=\beta_0 + \beta_1 x_1 + ... + \beta_k x_k + u$
+
+
+2. Writing centered and stand alone formulas using 2 dollar signs: 
+$$y=\beta_0 + \beta_1 x_1 + ... + \beta_k x_k + u$$
+$$P(X|Y)$$
+
+$log(salary)$
+
+$P(X \le 6)$
+
+$f(x)=3x^2 -2x^3$  then $0 \le x \le 1$
+
+---------------
+
+
+
+
