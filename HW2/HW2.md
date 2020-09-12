@@ -1,5 +1,5 @@
 ---
-title: "HW_Group #1_Austin Halvorsen"
+title: "HW2_Group #1_Austin Halvorsen"
 author: "Pedram Jahangiry"
 date: "Sep 15 2020"
 output:
@@ -18,12 +18,6 @@ output:
 
 ### (i) 
 
-
-```r
-v1 <- seq(1,17,4)
-
-v1
-```
 
 ```
 [1]  1  5  9 13 17
@@ -55,47 +49,32 @@ v1
 ### (ii)
 
 
-```r
-# Extracting Columns B & D
-
-B <- A[c(2,4),c("B","D")]
-```
 
 ### (iii)
 
 
-```r
-# Transpose Matrix B
-
-t(B)
 ```
-
-```
-##   [,1] [,2]
-## B   26   36
-## D   28   38
+  [,1] [,2]
+B   26   36
+D   28   38
 ```
 
 ### (iv)
 
 
-```r
-# Inverse of Matrix B
-
-B_inverse <- solve(B)
+```
+  [,1] [,2]
+B -1.9  1.4
+D  1.8 -1.3
 ```
 
 ### (v)
 
 
-```r
-B %*% B_inverse
 ```
-
-```
-##      [,1] [,2]
-## [1,]    1    0
-## [2,]    0    1
+     [,1] [,2]
+[1,]    1    0
+[2,]    0    1
 ```
 
 ## Question 3
@@ -103,95 +82,79 @@ B %*% B_inverse
 ### (i)
 
 
-```r
-df <- data.frame(mtcars)
-head(df,10)
 ```
-
-```
-##                    mpg cyl  disp  hp drat    wt  qsec vs am gear carb
-## Mazda RX4         21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
-## Mazda RX4 Wag     21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
-## Datsun 710        22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
-## Hornet 4 Drive    21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
-## Hornet Sportabout 18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
-## Valiant           18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
-## Duster 360        14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
-## Merc 240D         24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2
-## Merc 230          22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2
-## Merc 280          19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
+                   mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+Mazda RX4         21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
+Mazda RX4 Wag     21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
+Datsun 710        22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
+Hornet 4 Drive    21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
+Hornet Sportabout 18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
+Valiant           18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
+Duster 360        14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
+Merc 240D         24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2
+Merc 230          22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2
+Merc 280          19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
 ```
 
 ### (ii)
 
 
-```r
-library(dplyr)
+```
+
+Attaching package: 'dplyr'
 ```
 
 ```
-## 
-## Attaching package: 'dplyr'
+The following objects are masked from 'package:stats':
+
+    filter, lag
 ```
 
 ```
-## The following objects are masked from 'package:stats':
-## 
-##     filter, lag
-```
+The following objects are masked from 'package:base':
 
-```
-## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union
-```
-
-```r
-df1 <- df %>% 
-  select(c(cyl, hp, wt, vs, am, gear, mpg)) %>% 
-  filter(cyl == 4) %>% 
-  head(5)
+    intersect, setdiff, setequal, union
 ```
 
 ### (iii)
 
 
-```r
-df1 %>% 
-  mutate(gpm = round((1/df1$mpg),3)) %>% 
-  head(5)
 ```
-
-```
-##   cyl hp    wt vs am gear  mpg   gpm
-## 1   4 93 2.320  1  1    4 22.8 0.044
-## 2   4 62 3.190  1  0    4 24.4 0.041
-## 3   4 95 3.150  1  0    4 22.8 0.044
-## 4   4 66 2.200  1  1    4 32.4 0.031
-## 5   4 52 1.615  1  1    4 30.4 0.033
+  cyl hp    wt vs am gear  mpg   gpm
+1   4 93 2.320  1  1    4 22.8 0.044
+2   4 62 3.190  1  0    4 24.4 0.041
+3   4 95 3.150  1  0    4 22.8 0.044
+4   4 66 2.200  1  1    4 32.4 0.031
+5   4 52 1.615  1  1    4 30.4 0.033
 ```
 
 ### (iv)
 
 
-```r
-str(df1)
 ```
-
-```
-## 'data.frame':	5 obs. of  7 variables:
-##  $ cyl : num  4 4 4 4 4
-##  $ hp  : num  93 62 95 66 52
-##  $ wt  : num  2.32 3.19 3.15 2.2 1.61
-##  $ vs  : num  1 1 1 1 1
-##  $ am  : num  1 0 0 1 1
-##  $ gear: num  4 4 4 4 4
-##  $ mpg : num  22.8 24.4 22.8 32.4 30.4
+'data.frame':	5 obs. of  7 variables:
+ $ cyl : num  4 4 4 4 4
+ $ hp  : num  93 62 95 66 52
+ $ wt  : num  2.32 3.19 3.15 2.2 1.61
+ $ vs  : num  1 1 1 1 1
+ $ am  : num  1 0 0 1 1
+ $ gear: num  4 4 4 4 4
+ $ mpg : num  22.8 24.4 22.8 32.4 30.4
 ```
 
 ### (v)
 
 
+```
+'data.frame':	5 obs. of  7 variables:
+ $ cyl : Factor w/ 1 level "4": 1 1 1 1 1
+ $ hp  : num  93 62 95 66 52
+ $ wt  : num  2.32 3.19 3.15 2.2 1.61
+ $ vs  : Factor w/ 1 level "1": 1 1 1 1 1
+ $ am  : Factor w/ 2 levels "0","1": 2 1 1 2 2
+ $ gear: Factor w/ 1 level "4": 1 1 1 1 1
+ $ mpg : num  22.8 24.4 22.8 32.4 30.4
+```
 
 ---------
 
@@ -201,11 +164,21 @@ str(df1)
 
 
 
-## C1 Use the data in wage1 for this exercise.
+## Alcohol Dataset for Questions
 
 ### (i) 
 
-This is my answer to section (i)
+
+
+### (ii)
+
+
+
+### (iii)
+
+### (iv)
+
+### (v)
  
 
 
@@ -240,7 +213,7 @@ We can also insert plots from R in Rmarkdown:
 hist(wage2$wage, col="red")
 ```
 
-![](HW2_files/figure-docx/unnamed-chunk-14-1.png)<!-- -->
+![](HW2_files/figure-docx/unnamed-chunk-16-1.png)<!-- -->
 
 
 

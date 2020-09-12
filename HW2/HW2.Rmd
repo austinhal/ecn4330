@@ -1,5 +1,5 @@
 ---
-title: "HW_Group #1_Austin Halvorsen"
+title: "HW2_Group #1_Austin Halvorsen"
 author: "Pedram Jahangiry"
 date: "Sep 15 2020"
 output:
@@ -18,7 +18,7 @@ output:
 
 ### (i) 
 
-```{r ,comment = NA}
+```{r echo=FALSE, comment=NA}
 v1 <- seq(1,17,4)
 
 v1
@@ -32,7 +32,7 @@ v1
 
 ```{r echo=FALSE, comment = NA}
 my_data <- 20:39
-header_names <- c("A", "B", "C", "D", "E")
+header_names <- LETTERS[1:5]
 A <- matrix(my_data, nrow = 4, ncol = 5, byrow = TRUE) 
 A
 colnames(A) <- header_names
@@ -41,7 +41,7 @@ A
 
 ### (ii)
 
-```{r}
+```{r echo=FALSE, comment=NA}
 # Extracting Columns B & D
 
 B <- A[c(2,4),c("B","D")]
@@ -49,7 +49,7 @@ B <- A[c(2,4),c("B","D")]
 
 ### (iii)
 
-```{r}
+```{r echo=FALSE, comment=NA}
 # Transpose Matrix B
 
 t(B)
@@ -57,15 +57,16 @@ t(B)
 
 ### (iv)
 
-```{r}
+```{r echo=FALSE, comment=NA}
 # Inverse of Matrix B
 
 B_inverse <- solve(B)
+B_inverse
 ```
 
 ### (v)
 
-```{r}
+```{r echo=FALSE, comment=NA}
 B %*% B_inverse
 ```
 
@@ -73,24 +74,24 @@ B %*% B_inverse
 
 ### (i)
 
-```{r}
+```{r echo=FALSE, comment=NA}
 df <- data.frame(mtcars)
 head(df,10)
 ```
 
 ### (ii)
 
-```{r}
+```{r echo=FALSE, comment=NA}
 library(dplyr)
 df1 <- df %>% 
   select(c(cyl, hp, wt, vs, am, gear, mpg)) %>% 
-  filter(cyl == 4) %>% 
+  arrange(cyl) %>% 
   head(5)
 ```
 
 ### (iii)
 
-```{r}
+```{r echo=FALSE, comment=NA}
 df1 %>% 
   mutate(gpm = round((1/df1$mpg),3)) %>% 
   head(5)
@@ -98,14 +99,16 @@ df1 %>%
 
 ### (iv)
 
-```{r}
+```{r echo=FALSE, comment=NA}
 str(df1)
 ```
 
 ### (v)
 
-```{r}
-
+```{r echo=FALSE, comment=NA}
+names <- c('vs', 'am', 'cyl', 'gear')
+df1[,names] <- lapply(df1[,names] , factor)
+str(df1)
 ```
 
 ---------
@@ -114,15 +117,32 @@ str(df1)
 
 # Computer Exercises
 
-```{r include=FALSE}
+```{r include=FALSE, comment=NA}
 library(wooldridge)
+df2 <- wooldridge::alcohol
+df2 <- df2 %>% 
+  select(abuse, status) 
 ```
 
-## C1 Use the data in wage1 for this exercise.
+## Alcohol Dataset for Questions
 
 ### (i) 
+```{r include=FALSE, comment=NA}
+prop.table(table(df2$abuse))
+```
 
-This is my answer to section (i)
+
+### (ii)
+```{r include=FALSE, comment=NA}
+
+```
+
+
+### (iii)
+
+### (iv)
+
+### (v)
  
 
 
