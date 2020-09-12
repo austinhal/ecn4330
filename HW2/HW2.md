@@ -240,7 +240,7 @@ We can also insert plots from R in Rmarkdown:
 hist(wage2$wage, col="red")
 ```
 
-![](HW_template_Rmarkdown_files/figure-docx/unnamed-chunk-14-1.png)<!-- -->
+![](HW2_files/figure-docx/unnamed-chunk-14-1.png)<!-- -->
 
 
 
