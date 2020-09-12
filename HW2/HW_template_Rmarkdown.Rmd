@@ -3,7 +3,8 @@ title: "HW_Group #1_Austin Halvorsen"
 author: "Pedram Jahangiry"
 date: "Sep 15 2020"
 output:
-  word_document: default
+  word_document: 
+    keep_md: yes
   pdf_document: default
 ---
 
