@@ -20,11 +20,8 @@ output:
 
 ```{r echo=FALSE, comment=NA}
 v1 <- seq(1,17,4)
-
 v1
 ```
-
-### (ii)
 
 ## Question 2
 
@@ -35,27 +32,30 @@ my_data <- 20:39
 header_names <- LETTERS[1:5]
 A <- matrix(my_data, nrow = 4, ncol = 5, byrow = TRUE) 
 A
-colnames(A) <- header_names
-A
 ```
 
 ### (ii)
 
-```{r echo=FALSE, comment=NA}
-# Extracting Columns B & D
-
-B <- A[c(2,4),c("B","D")]
+```{r echo=FALSE, comment = NA}
+colnames(A) <- header_names
+A
 ```
 
 ### (iii)
 
 ```{r echo=FALSE, comment=NA}
-# Transpose Matrix B
-
-t(B)
+# Extracting Columns B & D and rows 2 & 4
+B <- A[c(2,4),c("B","D")]
+B
 ```
 
 ### (iv)
+
+```{r echo=FALSE, comment=NA}
+t(B)
+```
+
+### (v)
 
 ```{r echo=FALSE, comment=NA}
 # Inverse of Matrix B
@@ -64,12 +64,14 @@ B_inverse <- solve(B)
 B_inverse
 ```
 
-### (v)
+### (vi)
 
 ```{r echo=FALSE, comment=NA}
 B %*% B_inverse
 ```
-
+ 
+\newpage 
+ 
 ## Question 3
 
 ### (i)
@@ -81,20 +83,20 @@ head(df,10)
 
 ### (ii)
 
-```{r echo=FALSE, comment=NA}
+```{r echo=FALSE, message=FALSE, warning=FALSE, comment=NA}
 library(dplyr)
 df1 <- df %>% 
   select(c(cyl, hp, wt, vs, am, gear, mpg)) %>% 
-  arrange(cyl) %>% 
-  head(5)
+  arrange(cyl) 
+head(df1,5)
 ```
 
 ### (iii)
 
 ```{r echo=FALSE, comment=NA}
-df1 %>% 
-  mutate(gpm = round((1/df1$mpg),3)) %>% 
-  head(5)
+df1 <- df1 %>% 
+  mutate(gpm = round((1/df1$mpg),3)) 
+head(df1,5)
 ```
 
 ### (iv)
@@ -117,7 +119,7 @@ str(df1)
 
 # Computer Exercises
 
-```{r include=FALSE, comment=NA}
+```{r message=FALSE, warning=FALSE, comment=NA, include=FALSE}
 library(wooldridge)
 df2 <- wooldridge::alcohol
 df2 <- df2 %>% 
@@ -126,73 +128,53 @@ df2 <- df2 %>%
 
 ## Alcohol Dataset for Questions
 
-### (i) 
-```{r include=FALSE, comment=NA}
+### (i)
+**What is percentage of the men in the sample report abusing alcohol?**
+```{r echo=FALSE, comment=NA}
 prop.table(table(df2$abuse))
 ```
-
+From the sample, we see about 9.9% of men report alcohol abuse
 
 ### (ii)
-```{r include=FALSE, comment=NA}
+**What is the employment rate?**
+```{r echo=FALSE, comment=NA}
+employ <- df2 %>% 
+  filter(status == c(2,3))
 
+prop.table(table(employ$status))
+table(employ$status)
 ```
-
+The employment rate is ≈ 96.7%
 
 ### (iii)
+**Consider the group of men who abuse alcohol. What is the employment rate?**
+```{r echo=FALSE, comment=NA}
+ab_emp <- df2 %>% 
+  filter(abuse==1) %>% 
+  filter(status != 1)
+
+prop.table(table(ab_emp$status))
+```
+The employment rate of those who abuse alcohol is ≈ 95.4%
 
 ### (iv)
+**What is the employment rate for the group of men who do not abuse alcohol?**
+```{r echo=FALSE, comment=NA}
+non_ab <- df2 %>% 
+  filter(abuse==0) %>%
+  filter(status!=1)
+
+prop.table(table(non_ab$status))
+```
+The employment rate for those who do not abuse alcohol is ≈ 96.7%
 
 ### (v)
- 
 
+__Discuss the difference in your answers to parts (iii) and (iv). Does this allow you to conclude that alcohol abuse causes unemployment?__
 
+---
+```{r echo=FALSE, comment=NA}
 
-
-
-
-
-# Including r output within some text 
-
-for example I calculated the average number of cars as: 
-```{r}
-avg_speed <- mean(cars$speed)
-avg_speed
 ```
 
-from the R output above, we see that the average speed is equal to 15.4. 
-
-Or you could directly do some in-line calculations. 
-Here is the average speed: `r mean(cars$speed)`. 
-
-We can also insert plots from R in Rmarkdown: 
-
-
-```{r}
-hist(wage2$wage, col="red")
-```
-
-
-
--------------
-
-
-How to write mathematical formulas in **Rmarkdown**: 
-
-1. Writing in-line formulas using one dollar sign: $y=\beta_0 + \beta_1 x_1 + ... + \beta_k x_k + u$
-
-
-2. Writing centered and stand alone formulas using 2 dollar signs: 
-$$y=\beta_0 + \beta_1 x_1 + ... + \beta_k x_k + u$$
-$$P(X|Y)$$
-
-$log(salary)$
-
-$P(X \le 6)$
-
-$f(x)=3x^2 -2x^3$  then $0 \le x \le 1$
-
----------------
-
-
-
-
+The rates of those who abuse alcohol and those who do not were who were employed were x% and y%. This does not highlight anything to do with the causality of alcohol abuse and unemployment. We would need to test and control other explanatory variables to try to explain the reasoning for unemployement.
