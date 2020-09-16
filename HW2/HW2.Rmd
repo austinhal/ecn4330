@@ -141,32 +141,29 @@ From the sample, we see about 9.9% of men report alcohol abuse
 employ <- df2 %>% 
   filter(status == c(2,3))
 
-prop.table(table(employ$status))
-table(employ$status)
+prop.table(table(df2$status))
 ```
-The employment rate is ≈ 96.7%
+The employment rate is ≈ 89.82%
 
 ### (iii)
 **Consider the group of men who abuse alcohol. What is the employment rate?**
 ```{r echo=FALSE, comment=NA}
+prop.table(table(df2$abuse, df2$status),1)
+
 ab_emp <- df2 %>% 
   filter(abuse==1) %>% 
   filter(status != 1)
 
 prop.table(table(ab_emp$status))
 ```
-The employment rate of those who abuse alcohol is ≈ 95.4%
+The employment rate of those who abuse alcohol is ≈ 87.26%
 
 ### (iv)
 **What is the employment rate for the group of men who do not abuse alcohol?**
 ```{r echo=FALSE, comment=NA}
-non_ab <- df2 %>% 
-  filter(abuse==0) %>%
-  filter(status!=1)
-
-prop.table(table(non_ab$status))
+prop.table(table(df2$abuse, df2$status),1)
 ```
-The employment rate for those who do not abuse alcohol is ≈ 96.7%
+The employment rate for those who do not abuse alcohol is ≈ 90.10%
 
 ### (v)
 
@@ -177,4 +174,4 @@ __Discuss the difference in your answers to parts (iii) and (iv). Does this allo
 
 ```
 
-The rates of those who abuse alcohol and those who do not were who were employed were x% and y%. This does not highlight anything to do with the causality of alcohol abuse and unemployment. We would need to test and control other explanatory variables to try to explain the reasoning for unemployement.
+The rates of those who abuse alcohol and those who do not were who were employed were 87.26% and 90.10%. This does not highlight anything to do with the causality of alcohol abuse and unemployment. We would need to test and control other explanatory variables to try to explain the reasoning for unemployment.

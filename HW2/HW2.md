@@ -183,36 +183,38 @@ From the sample, we see about 9.9% of men report alcohol abuse
 
 ```
 
-         2          3 
-0.03272888 0.96727112 
+         1          2          3 
+0.06963958 0.03217267 0.89818774 
 ```
-
-```
-
-   2    3 
- 148 4374 
-```
-The employment rate is ≈ 96.7%
+The employment rate is ≈ 89.82%
 
 ### (iii)
 **Consider the group of men who abuse alcohol. What is the employment rate?**
+
+```
+   
+             1          2          3
+  0 0.06792495 0.03108047 0.90099458
+  1 0.08521561 0.04209446 0.87268994
+```
 
 ```
 
          2          3 
 0.04601571 0.95398429 
 ```
-The employment rate of those who abuse alcohol is ≈ 95.4%
+The employment rate of those who abuse alcohol is ≈ 87.26%
 
 ### (iv)
 **What is the employment rate for the group of men who do not abuse alcohol?**
 
 ```
-
-         2          3 
-0.03334546 0.96665454 
+   
+             1          2          3
+  0 0.06792495 0.03108047 0.90099458
+  1 0.08521561 0.04209446 0.87268994
 ```
-The employment rate for those who do not abuse alcohol is ≈ 96.7%
+The employment rate for those who do not abuse alcohol is ≈ 90.10%
 
 ### (v)
 
@@ -221,4 +223,4 @@ __Discuss the difference in your answers to parts (iii) and (iv). Does this allo
 ---
 
 
-The rates of those who abuse alcohol and those who do not were who were employed were x% and y%. This does not highlight anything to do with the causality of alcohol abuse and unemployment. We would need to test and control other explanatory variables to try to explain the reasoning for unemployement.
+The rates of those who abuse alcohol and those who do not were who were employed were 87.26% and 90.10%. This does not highlight anything to do with the causality of alcohol abuse and unemployment. We would need to test and control other explanatory variables to try to explain the reasoning for unemployment.
