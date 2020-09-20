@@ -1,0 +1,141 @@
+---
+title: "HW3_Group1_Austin Halvorsen"
+author: "Pedram Jahangiry"
+date: "Sep 22 2020"
+output:
+  word_document: 
+    keep_md: yes
+  pdf_document: default
+---
+
+
+
+\newpage
+
+# Problems
+
+## Question 1
+
+```{r}
+library(dplyr)
+library(tidyverse)
+library(wooldridge)
+
+## Make the data frame
+family <- data.frame(family = 1:10, monthly_expense = c(300,440,350,1100,640,480,450,700,670,530))
+```
+
+
+### (i)
+
+Find the average monthly housing expenditure.
+```{r}
+mean(family$monthly_expense)
+```
+
+### (ii)
+```{r}
+median(family$monthly_expense)
+```
+
+### (iii)
+```{r}
+adj1 <- family %>% 
+  mutate(
+    hundreds_dollar = monthly_expense / 100
+  ) 
+
+mean(adj1$hundreds_dollar) 
+median(adj1$hundreds_dollar)
+```
+
+
+### (iv)
+```{r}
+adj2 <- family
+adj2[8,2] <- adj2[8,2] + 100
+mean(adj2$monthly_expense)
+median(adj2$monthly_expense)
+```
+
+
+## Question 2
+
+## Question 3 
+
+```{r}
+log_salary <- 10.6 + 0.027*(0)
+calc_salary <- function(x){
+  exp(10.6 + 0.027 * x)
+}
+```
+
+
+### (i)
+```{r}
+calc_salary(0)
+calc_salary(5)
+```
+
+
+### (ii)
+```{r}
+
+```
+
+
+### (iii)
+```{r}
+
+```
+
+
+## Question 4
+
+### (i)
+```{r}
+round(pnorm(6,5,2),3)
+```
+
+### (ii)
+```{r}
+round(1-pnorm(4,5,2),3)
+```
+
+### (iii)
+```{r}
+round(1-pnorm(6,5,2) + pnorm(4,5,2),3)
+```
+
+## Question 5
+
+```{r}
+# Writing the function
+cdf <- function(x){
+  3*x^2 - 2*x^3
+} 
+
+1-cdf(0.6)
+```
+
+### (i)
+```{r}
+1-pnorm(0.6)
+```
+
+## Question 6
+
+### (i)
+```{r}
+# use expected values property
+
+52.3*1000
+
+14.6*1000
+
+
+
+```
+
+
+
