@@ -61,6 +61,8 @@ median(adj2$monthly_expense)
 
 ## Question 2
 
+The difference between the two percentages was 3%, however the percentage change between 15% and 18% is 20%.
+
 ## Question 3 
 
 ```{r}
@@ -73,22 +75,26 @@ calc_salary <- function(x){
 
 ### (i)
 ```{r}
-calc_salary(0)
-calc_salary(5)
+sal0 <- calc_salary(0)
+sal5 <- calc_salary(5)
 ```
 
 
 ### (ii)
 ```{r}
+calc_percent <- function(x){
+  (100*0.027)*x
+}
 
+calc_percent(5)
 ```
 
 
 ### (iii)
 ```{r}
-
+((sal5-sal0)/sal0)*100
 ```
-
+The exact percent change is 14.5% from the part i. Based on our approximation from part ii, we had that after 5 years experience the percentage increase would be about 13.5%. 
 
 ## Question 4
 
@@ -120,7 +126,8 @@ cdf <- function(x){
 
 ### (i)
 ```{r}
-1-pnorm(0.6)
+1-cdf(0.6)
+#1-pnorm(0.6)
 ```
 
 ## Question 6

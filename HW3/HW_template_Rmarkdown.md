@@ -43,7 +43,7 @@ library(tidyverse)
 ```
 
 ```
-## ── Attaching packages ───────────────────────── tidyverse 1.3.0 ──
+## ── Attaching packages ──────────────────────── tidyverse 1.3.0 ──
 ```
 
 ```
@@ -54,7 +54,7 @@ library(tidyverse)
 ```
 
 ```
-## ── Conflicts ──────────────────────────── tidyverse_conflicts() ──
+## ── Conflicts ─────────────────────────── tidyverse_conflicts() ──
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()
 ```
@@ -63,10 +63,7 @@ library(tidyverse)
 library(wooldridge)
 
 ## Make the data frame
-family <- data.frame(x = 1:10, y = c(300,440,350,1100,640,480,450,700,670,530))
-
-names(family)[1] <- "family" 
-names(family)[2] <- "monthly_expense"
+family <- data.frame(family = 1:10, monthly_expense = c(300,440,350,1100,640,480,450,700,670,530))
 ```
 
 
@@ -139,24 +136,136 @@ median(adj2$monthly_expense)
 
 ## Question 2
 
+The difference between the two percentages was 3%, however the percentage change between 15% and 18% is 20%.
+
 ## Question 3 
+
+
+```r
+log_salary <- 10.6 + 0.027*(0)
+calc_salary <- function(x){
+  exp(10.6 + 0.027 * x)
+}
+```
+
 
 ### (i)
 
+```r
+sal0 <- calc_salary(0)
+sal5 <- calc_salary(5)
+```
 
 
 ### (ii)
 
+```r
+calc_percent <- function(x){
+  (100*0.027)*x
+}
+
+calc_percent(5)
+```
+
+```
+## [1] 13.5
+```
 
 
 ### (iii)
 
+```r
+((sal5-sal0)/sal0)*100
+```
 
+```
+## [1] 14.45368
+```
+The exact percent change is 14.5% from the part i. Based on our approximation from part ii, we had that after 5 years experience the percentage increase would be about 13.5%. 
 
 ## Question 4
 
+### (i)
+
+```r
+round(pnorm(6,5,2),3)
+```
+
+```
+## [1] 0.691
+```
+
+### (ii)
+
+```r
+round(1-pnorm(4,5,2),3)
+```
+
+```
+## [1] 0.691
+```
+
+### (iii)
+
+```r
+round(1-pnorm(6,5,2) + pnorm(4,5,2),3)
+```
+
+```
+## [1] 0.617
+```
+
 ## Question 5
 
+
+```r
+# Writing the function
+cdf <- function(x){
+  3*x^2 - 2*x^3
+} 
+
+1-cdf(0.6)
+```
+
+```
+## [1] 0.352
+```
+
+### (i)
+
+```r
+1-cdf(0.6)
+```
+
+```
+## [1] 0.352
+```
+
+```r
+#1-pnorm(0.6)
+```
+
 ## Question 6
+
+### (i)
+
+```r
+# use expected values property
+
+52.3*1000
+```
+
+```
+## [1] 52300
+```
+
+```r
+14.6*1000
+```
+
+```
+## [1] 14600
+```
+
 
 
