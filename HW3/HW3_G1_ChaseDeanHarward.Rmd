@@ -1,0 +1,123 @@
+---
+title: "HW3-G1-ChaseDeanHarward"
+author: "Chase Dean Harward"
+date: "9/22/2020"
+output: word_document
+---
+\newpage
+
+```{r}
+library(wooldridge)
+library(dplyr)
+```
+
+# Question 1
+
+```{r}
+Q1 <- data.frame(family = 1:10, monthly_house_expend = c(300, 440, 350, 1100, 640, 480, 450, 700, 670, 530))
+
+Q1
+```
+
+
+## (i)
+
+```{r}
+mean(Q1$monthly_house_expend)
+```
+
+## (ii)
+
+```{r}
+median(Q1$monthly_house_expend)
+```
+
+## (iii)
+
+```{r}
+Q1iii <- mutate(Q1, new_expend = monthly_house_expend / 100)
+mean(Q1iii$new_expend)
+median(Q1iii$new_expend)
+```
+
+## (iv)
+```{r}
+iv <- Q1 
+iv[8,2] <- iv[8,2] + 200
+mean(iv$monthly_house_expend)
+median(iv$monthly_house_expend)
+```
+
+
+# Question 2
+The CEO is correct. The stock return did not increase by 3%. It did increase from 15% to 18%, which is a difference of 3%. The CEO is right because the stock return did increase by 20%. 15% increased by 20% is 18%
+
+# Question 3
+
+## (i)
+```{r}
+salary <- function(exper){
+  
+  exp(10.6 + (.027 * exper))
+  
+}
+
+salary(0)
+salary(5)
+```
+
+## (ii)
+```{r}
+percent_salary <- function(exper){
+  (0.027 * 100) *exper
+}
+percent_salary(5)
+```
+13.5% increase
+
+## (iii)
+```{r}
+((salary(5)-salary(0))) / salary(0) * 100
+```
+So there was an exact increase of ~14.454% here, while in part (ii) the approximate increase was 13.5%. This is ~1% difference between the two.
+
+# Question 4
+
+## (i)
+
+```{r}
+pnorm(6, 5, 2)
+```
+
+## (ii)
+```{r}
+1-pnorm(4,5,2)
+```
+
+## (iii)
+```{r}
+pnorm(4,5,2)+(1-pnorm(6,5,2))
+```
+
+# Question 5
+```{r}
+CDF <- function(x){
+  
+  3*x^2 - 2*x^3
+
+}
+
+1-CDF(0.6)
+```
+35.2% probability
+
+# Question 6
+Mean
+```{r}
+52.3 * 1000
+```
+Standard Deviation
+```{r}
+14.6 * 1000
+```
+
