@@ -16,7 +16,7 @@ output:
 
 ## Question 1
 
-```{r}
+```{r echo=FALSE, comment=NA}
 library(dplyr)
 library(tidyverse)
 library(wooldridge)
@@ -29,17 +29,17 @@ family <- data.frame(family = 1:10, monthly_expense = c(300,440,350,1100,640,480
 ### (i)
 
 Find the average monthly housing expenditure.
-```{r}
+```{r echo=FALSE, comment=NA}
 mean(family$monthly_expense)
 ```
 
 ### (ii)
-```{r}
+```{r echo=FALSE, comment=NA}
 median(family$monthly_expense)
 ```
 
 ### (iii)
-```{r}
+```{r echo=FALSE, comment=NA}
 adj1 <- family %>% 
   mutate(
     hundreds_dollar = monthly_expense / 100
@@ -51,21 +51,26 @@ median(adj1$hundreds_dollar)
 
 
 ### (iv)
-```{r}
+```{r echo=FALSE, comment=NA}
 adj2 <- family
 adj2[8,2] <- adj2[8,2] + 100
 mean(adj2$monthly_expense)
 median(adj2$monthly_expense)
 ```
 
+\newpage
 
 ## Question 2
+```{r echo=FALSE, comment=NA}
+(18-15)/15*100
+```
+
 
 The difference between the two percentages was 3%, however the percentage change between 15% and 18% is 20%.
 
 ## Question 3 
 
-```{r}
+```{r echo=FALSE, comment=NA}
 log_salary <- 10.6 + 0.027*(0)
 calc_salary <- function(x){
   exp(10.6 + 0.027 * x)
@@ -74,14 +79,16 @@ calc_salary <- function(x){
 
 
 ### (i)
-```{r}
+```{r echo=FALSE, comment=NA}
 sal0 <- calc_salary(0)
 sal5 <- calc_salary(5)
+sal0
+sal5
 ```
 
 
 ### (ii)
-```{r}
+```{r echo=FALSE, comment=NA}
 calc_percent <- function(x){
   (100*0.027)*x
 }
@@ -91,7 +98,7 @@ calc_percent(5)
 
 
 ### (iii)
-```{r}
+```{r echo=FALSE, comment=NA}
 ((sal5-sal0)/sal0)*100
 ```
 The exact percent change is 14.5% from the part i. Based on our approximation from part ii, we had that after 5 years experience the percentage increase would be about 13.5%. 
@@ -99,23 +106,23 @@ The exact percent change is 14.5% from the part i. Based on our approximation fr
 ## Question 4
 
 ### (i)
-```{r}
+```{r echo=FALSE, comment=NA}
 round(pnorm(6,5,2),3)
 ```
 
 ### (ii)
-```{r}
+```{r echo=FALSE, comment=NA}
 round(1-pnorm(4,5,2),3)
 ```
 
 ### (iii)
-```{r}
+```{r echo=FALSE, comment=NA}
 round(1-pnorm(6,5,2) + pnorm(4,5,2),3)
 ```
 
 ## Question 5
 
-```{r}
+```{r echo=FALSE, comment=NA}
 # Writing the function
 cdf <- function(x){
   3*x^2 - 2*x^3
@@ -125,15 +132,15 @@ cdf <- function(x){
 ```
 
 ### (i)
-```{r}
+```{r echo=FALSE, comment=NA}
 1-cdf(0.6)
-#1-pnorm(0.6)
+1-pnorm(0.6)
 ```
 
 ## Question 6
 
 ### (i)
-```{r}
+```{r echo=FALSE, comment=NA}
 # use expected values property
 
 52.3*1000
