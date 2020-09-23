@@ -16,7 +16,7 @@ output:
 
 ## Question 1
 
-```{r echo=FALSE, comment=NA}
+```{r echo=FALSE, message=FALSE, warning=FALSE, comment=NA}
 library(dplyr)
 library(tidyverse)
 library(wooldridge)
@@ -34,11 +34,15 @@ mean(family$monthly_expense)
 ```
 
 ### (ii)
+
+Find the median monthly housing expenditure.
 ```{r echo=FALSE, comment=NA}
 median(family$monthly_expense)
 ```
 
 ### (iii)
+
+If monthly housing expenditures were measured in hundreds of dollars, rather than in dollars, what would be the average and median expenditures?
 ```{r echo=FALSE, comment=NA}
 adj1 <- family %>% 
   mutate(
@@ -48,25 +52,39 @@ adj1 <- family %>%
 mean(adj1$hundreds_dollar) 
 median(adj1$hundreds_dollar)
 ```
+The mean would be 5.66
 
+The median would be 5.05
 
 ### (iv)
-```{r echo=FALSE, comment=NA}
+
+Suppose that family number 8 increases its monthly housing expenditure to $900, but the expenditures of all other families remain the same. Compute the average and median housing expenditures.
+```{r echo=FALSE, message=TRUE, comment=NA}
 adj2 <- family
 adj2[8,2] <- adj2[8,2] + 100
+
+# Mean
 mean(adj2$monthly_expense)
+# Median
 median(adj2$monthly_expense)
 ```
+The mean would be 576.
+
+The median would be 505.
 
 \newpage
 
 ## Question 2
+
+Reconcile the shareholders and CEO's disagreement:
 ```{r echo=FALSE, comment=NA}
-(18-15)/15*100
+(18-15)/15
+
+# The percentage change from 15% to 18% represents a 20% increase.
 ```
 
 
-The difference between the two percentages was 3%, however the percentage change between 15% and 18% is 20%.
+The difference between the two percentages (18% - 15%) is 3%, however the percentage change between 15% and 18% is 20%. They are both correct, but looking at the problem from two different positions.
 
 ## Question 3 
 
@@ -79,15 +97,22 @@ calc_salary <- function(x){
 
 
 ### (i)
+
+What is salary when exper = 0? When exper = 5? (Hint: You will need to
+exponentiate.)
+
 ```{r echo=FALSE, comment=NA}
 sal0 <- calc_salary(0)
 sal5 <- calc_salary(5)
 sal0
 sal5
 ```
+The salary at 0 years would be $40,134.84. 
 
+The salary at 5 years would be $45,935.80.
 
 ### (ii)
+Use this equation: %∆y ≈ (100 ∗ β1)∆x to approximate the percentage increase in salary when exper increases by five years.
 ```{r echo=FALSE, comment=NA}
 calc_percent <- function(x){
   (100*0.027)*x
@@ -98,57 +123,74 @@ calc_percent(5)
 
 
 ### (iii)
+
+Use the results of part (i) to compute the exact percentage difference in salary when exper = 0 and When exper = 5. Comment on how this compares with the approximation in part (ii).
 ```{r echo=FALSE, comment=NA}
 ((sal5-sal0)/sal0)*100
 ```
-The exact percent change is 14.5% from the part i. Based on our approximation from part ii, we had that after 5 years experience the percentage increase would be about 13.5%. 
+The  percent change is 14.5% from the part i. Based on our approximation from part ii, we had that after 5 years experience the percentage increase would be about 13.5%. 
+
+\newpage 
 
 ## Question 4
 
+Let X be a random variable distributed as X ∼ Norm(5,4). Find the probabilities of the following events. Hint: E(X) = 5 and V ar(X) = 4
+
 ### (i)
+
+P(X ≤ 6)
+
 ```{r echo=FALSE, comment=NA}
 round(pnorm(6,5,2),3)
 ```
 
 ### (ii)
+
+P(X > 4)
+
 ```{r echo=FALSE, comment=NA}
 round(1-pnorm(4,5,2),3)
 ```
 
 ### (iii)
+
+P(|X−5|>1)
+
 ```{r echo=FALSE, comment=NA}
 round(1-pnorm(6,5,2) + pnorm(4,5,2),3)
 ```
 
 ## Question 5
 
+
+
 ```{r echo=FALSE, comment=NA}
 # Writing the function
 cdf <- function(x){
   3*x^2 - 2*x^3
 } 
-
-1-cdf(0.6)
 ```
 
 ### (i)
+
+Find the probability that the elderly employment rate is at least 0.6 (i.e. 60%).
+
 ```{r echo=FALSE, comment=NA}
 1-cdf(0.6)
-1-pnorm(0.6)
 ```
 
 ## Question 6
 
 ### (i)
+
+Find the mean and standard deviation when salary is measured in dollars.
+
 ```{r echo=FALSE, comment=NA}
 # use expected values property
 
 52.3*1000
 
 14.6*1000
-
-
-
 ```
 
 
