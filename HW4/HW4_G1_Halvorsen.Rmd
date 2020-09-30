@@ -8,19 +8,9 @@ output:
   pdf_document: default
 ---
 
-<<<<<<< HEAD
 \newpage
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
-=======
-
-
-\newpage
-
-# Problems
-
-```{r}
->>>>>>> 2c494fd2a22671d95b600b4fe49b4f1e5590bfb4
 # setup
 library(tidyverse)
 library(stargazer)
@@ -31,16 +21,8 @@ library(wooldridge)
 ## Question 1
 
 ### (i)
-<<<<<<< HEAD
 
 I am not surprised by the sign, because the further away from the incinerator I am, the more value I get from my house. As you add a percent of distance away from the incinerator, your home value $log\hat(price)$ would increase by .132%
-=======
-```{r}
-
-```
-
-I am not surprised by the sign, because the further away from the incinerator I am, the more value I get from my house. As you add a percent of distance away from the incinerator, your home value $$log\hat(price)$$ would increase by .132%
->>>>>>> 2c494fd2a22671d95b600b4fe49b4f1e5590bfb4
 
 ### (ii)
 
@@ -48,11 +30,7 @@ Other factors that could influence your home prices could be square footage, age
 
 ### (iii)
 
-<<<<<<< HEAD
 No, because our unobserved variables are not independent of our the price of our home. The city decides as to where the incinerator is built, which would mean that it was placed away from more expensive homes, this would violate our 4th SLR assumption and give us biased results.
-=======
-No, because our unobserved variables are not independent of our the price of our home. The city decides as to where the incinerator is built 
->>>>>>> 2c494fd2a22671d95b600b4fe49b4f1e5590bfb4
 
 ## Question 2
 
@@ -61,7 +39,6 @@ No, because our unobserved variables are not independent of our the price of our
 
 $$E(u|inc) = E(\sqrt{inc} * e|inc) = (\sqrt{inc})E(e|inc) = (\sqrt{inc})E(e) = (\sqrt{inc}) * 0 = 0$$
 
-<<<<<<< HEAD
 ### (ii)
 
 $$Var(u|inc)=Var(\sqrt{inc} * e|inc = (\sigma_e)^2*inc$$
@@ -69,15 +46,6 @@ $$Var(u|inc)=Var(\sqrt{inc} * e|inc = (\sigma_e)^2*inc$$
 ### (iii)
 
 As family income increases, the basic needs of the family are more fully met and that family has more discretion as to where they invest their money. Low income families must spend their money on necessities like food, rent, and bills. High income families may choose to invest in savings or spend it on non-necessities, which could explain the variance of increase income to savings.
-=======
-
-### (ii)
-
-
-
-### (iii)
-
->>>>>>> 2c494fd2a22671d95b600b4fe49b4f1e5590bfb4
 
 ---
 
@@ -85,32 +53,20 @@ As family income increases, the basic needs of the family are more fully met and
 
 ## Question 3
 
-<<<<<<< HEAD
 ```{r echo=TRUE, comment=NA}
-=======
-```{r}
->>>>>>> 2c494fd2a22671d95b600b4fe49b4f1e5590bfb4
 ## Load the data
 rich <- k401k
 ```
 
 
 ### (i)
-<<<<<<< HEAD
 ```{r echo=TRUE, comment=NA}
-=======
-```{r}
->>>>>>> 2c494fd2a22671d95b600b4fe49b4f1e5590bfb4
 mean(rich$prate)
 mean(rich$mrate)
 ```
 
 ### (ii)
-<<<<<<< HEAD
 ```{r echo=TRUE, comment=NA}
-=======
-```{r}
->>>>>>> 2c494fd2a22671d95b600b4fe49b4f1e5590bfb4
 reg <- lm(prate~mrate, rich)
 stargazer(reg, type="text")
 ```
@@ -118,11 +74,7 @@ stargazer(reg, type="text")
 This gives us an estimated equation of:
 
 $$\hat{prate}=83.075+5.86mrate$$
-<<<<<<< HEAD
 Our sample size would be: $n=1534$ and $R^2=0.75$
-=======
-Our sample size would be: $$n=1534$$ and $$R^2=0.75$$
->>>>>>> 2c494fd2a22671d95b600b4fe49b4f1e5590bfb4
 
 
 ### (iii)
@@ -133,11 +85,7 @@ Our intercept means that even if our *mrate* was 0, we would still have a partic
 
 ### (iv)
 
-<<<<<<< HEAD
 ```{r echo=TRUE, comment=NA}
-=======
-```{r}
->>>>>>> 2c494fd2a22671d95b600b4fe49b4f1e5590bfb4
 predict_rich <- function(rate){
   83.075+5.86*rate
 }
@@ -151,19 +99,12 @@ When *mrate = 3.5* we get a predicted *prate* of 103.59. This can't happen, beca
 
 Looking at our coefficient estimate, *mrate* explains about 7.5% of the variation in *prate*. This is a low explanation of our model and suggests that there are probably other factors that influence 401(k) plan participation in companies.
 
-<<<<<<< HEAD
 \newpage
 
 ## Question 4
 
 ```{r echo=TRUE, comment=NA}
 ## Load the data
-=======
-## Question 4
-
-```{r}
-# Question Setup
->>>>>>> 2c494fd2a22671d95b600b4fe49b4f1e5590bfb4
 math <- meap93
 ```
 
@@ -177,11 +118,7 @@ I would say that a diminishing return would make more sense. As you increase spe
 
 ### (iii)
 
-<<<<<<< HEAD
 ```{r echo=TRUE, comment=NA}
-=======
-```{r}
->>>>>>> 2c494fd2a22671d95b600b4fe49b4f1e5590bfb4
 math_reg_log <- lm(math10~lexpend, math)
 stargazer(math_reg_log, type="text")
 ```
@@ -189,7 +126,6 @@ This gives us an estimated equation of:
 
 $$\hat{math10}=-69.34+11.16\ log(expend)$$
 
-<<<<<<< HEAD
 Our sample size would be: $n=408$ and $R^2=0.030$
 
 ### (iv)
@@ -205,21 +141,10 @@ pander::pander(summary(predict(math_reg_log)))
 
 If we look at the values for *math10* we see that the maximum value in our data set is 66.70. Furthermore, if we use our model using the fitted values, we still only return a max value of 30.15, so we shouldn't worry about getting values greater than 100 in this dataset.
 
-=======
-Our sample size would be: $$n=408$$ and $$R^2=0.030$$
-
-### (iv)
-
-If *expend* increases by 10%, then $$\hat{math10}$$ increases by about 1.1%. This is not a significant effect, but for schools who spend on average lower amounts, a 10% increase may be a small amount of money.
-
-### (v)
-
->>>>>>> 2c494fd2a22671d95b600b4fe49b4f1e5590bfb4
 ## Question 5
 
 ### (i)
 
-<<<<<<< HEAD
 ```{r echo=TRUE, comment=NA}
 giftsdb <- charity
 
@@ -275,34 +200,11 @@ mean(cat_stats$read12)
 sd(cat_stats$math12)
 sd(cat_stats$read12)
 # The standard deviation for Math Scores was 9.46. For Reading 9.41
-=======
-### (ii)
-### (iii)
-### (iv)
-
-## Question 6
-
-### (i)
-```{r}
-cat_stats 
-
-nrow(cat_stats)
-
-mean(cat_stats$math12)
-mean(cat_stats$read12)
-
-sd(cat_stats$math12)
-sd(cat_stats$read12)
->>>>>>> 2c494fd2a22671d95b600b4fe49b4f1e5590bfb4
 ```
 
 ### (ii)
 
-<<<<<<< HEAD
 ```{r echo=TRUE, comment=NA}
-=======
-```{r}
->>>>>>> 2c494fd2a22671d95b600b4fe49b4f1e5590bfb4
 cat_reg <- lm(math12~read12, cat_stats)
 stargazer(cat_reg, type="text")
 ```
@@ -310,7 +212,6 @@ stargazer(cat_reg, type="text")
 Our estimated equation would be:
 
 $$\hat{math12} = 15.153 + 0.714read12$$
-<<<<<<< HEAD
 Our n is $n=7430$
 And $R^2=0.505$
 
@@ -326,21 +227,3 @@ The $\hat{\beta_1}$ we found was 0.714. This is what I expect we would find, sin
 
 Considering that we are only looking at math and reading scores, we are leaving out a lot of other factors that could influence the scores of math. If we switch the analysis and test the effects of math scores on reading, we get a very similar model. There are unobserved factors in our analysis that are not being accounted for which is leading to a bias in our study.
  
-=======
-Our n is $$n=7430$$ 
-And $$R^2=0.505$$
-
-### (iii)
-
-We can interpret our intercept to mean that if our reading score was zero, than you would have a math score of 15.153.
-
-### (iv)
-
-
-
-### (v)
-
-
-
-
->>>>>>> 2c494fd2a22671d95b600b4fe49b4f1e5590bfb4
