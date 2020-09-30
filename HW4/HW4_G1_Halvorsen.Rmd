@@ -1,0 +1,190 @@
+---
+title: "HW4 Group 1, Austin Halvorsen"
+author: "Pedram Jahangiry"
+date: "Oct 1 2020"
+output:
+  word_document: 
+    keep_md: yes
+  pdf_document: default
+---
+
+
+
+\newpage
+
+# Problems
+
+```{r}
+# setup
+library(tidyverse)
+library(stargazer)
+library(wooldridge)
+```
+# Problems
+
+## Question 1
+
+### (i)
+```{r}
+
+```
+
+I am not surprised by the sign, because the further away from the incinerator I am, the more value I get from my house. As you add a percent of distance away from the incinerator, your home value $$log\hat(price)$$ would increase by .132%
+
+### (ii)
+
+Other factors that could influence your home prices could be square footage, age of the home, location (good neighborhood, commercial versus residential proximity, etc), or the lot size of the home. These factors could also easily be correlated with distance.
+
+### (iii)
+
+No, because our unobserved variables are not independent of our the price of our home. The city decides as to where the incinerator is built 
+
+## Question 2
+
+### (i)
+
+
+$$E(u|inc) = E(\sqrt{inc} * e|inc) = (\sqrt{inc})E(e|inc) = (\sqrt{inc})E(e) = (\sqrt{inc}) * 0 = 0$$
+
+
+### (ii)
+
+
+
+### (iii)
+
+
+---
+
+# Computer Problems
+
+## Question 3
+
+```{r}
+## Load the data
+rich <- k401k
+```
+
+
+### (i)
+```{r}
+mean(rich$prate)
+mean(rich$mrate)
+```
+
+### (ii)
+```{r}
+reg <- lm(prate~mrate, rich)
+stargazer(reg, type="text")
+```
+
+This gives us an estimated equation of:
+
+$$\hat{prate}=83.075+5.86mrate$$
+Our sample size would be: $$n=1534$$ and $$R^2=0.75$$
+
+
+### (iii)
+
+Interpret the intercept and the coefficient of *mrate*
+
+Our intercept means that even if our *mrate* was 0, we would still have a participation rate of 83.05%. Additionally, it means that for every one dollar increase in the match rate, we would see a 5.86% increase in *prate*. 
+
+### (iv)
+
+```{r}
+predict_rich <- function(rate){
+  83.075+5.86*rate
+}
+
+predict_rich(3.5)
+```
+
+When *mrate = 3.5* we get a predicted *prate* of 103.59. This can't happen, because you can't have a participation rate higher than 100%. This is an example that sometimes the simple regression can return strange predictions for with extreme values.
+
+### (v)
+
+Looking at our coefficient estimate, *mrate* explains about 7.5% of the variation in *prate*. This is a low explanation of our model and suggests that there are probably other factors that influence 401(k) plan participation in companies.
+
+## Question 4
+
+```{r}
+# Question Setup
+math <- meap93
+```
+
+### (i)
+
+I would say that a diminishing return would make more sense. As you increase spending, the effect of each dollar will not have a constant effect on the pass rate. At one point you may have every student earning passing marks, so an additional dollar would have no effect on a student passing or not.
+
+### (ii)
+
+
+
+### (iii)
+
+```{r}
+math_reg_log <- lm(math10~lexpend, math)
+stargazer(math_reg_log, type="text")
+```
+This gives us an estimated equation of:
+
+$$\hat{math10}=-69.34+11.16\ log(expend)$$
+
+Our sample size would be: $$n=408$$ and $$R^2=0.030$$
+
+### (iv)
+
+If *expend* increases by 10%, then $$\hat{math10}$$ increases by about 1.1%. This is not a significant effect, but for schools who spend on average lower amounts, a 10% increase may be a small amount of money.
+
+### (v)
+
+## Question 5
+
+### (i)
+
+### (ii)
+### (iii)
+### (iv)
+
+## Question 6
+
+### (i)
+```{r}
+cat_stats 
+
+nrow(cat_stats)
+
+mean(cat_stats$math12)
+mean(cat_stats$read12)
+
+sd(cat_stats$math12)
+sd(cat_stats$read12)
+```
+
+### (ii)
+
+```{r}
+cat_reg <- lm(math12~read12, cat_stats)
+stargazer(cat_reg, type="text")
+```
+
+Our estimated equation would be:
+
+$$\hat{math12} = 15.153 + 0.714read12$$
+Our n is $$n=7430$$ 
+And $$R^2=0.505$$
+
+### (iii)
+
+We can interpret our intercept to mean that if our reading score was zero, than you would have a math score of 15.153.
+
+### (iv)
+
+
+
+### (v)
+
+
+
+
