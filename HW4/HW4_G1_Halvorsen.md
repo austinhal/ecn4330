@@ -50,7 +50,7 @@ As family income increases, the basic needs of the family are more fully met and
 
 
 ```r
-## Load the data
+# Load the data
 rich <- k401k
 ```
 
@@ -72,6 +72,8 @@ mean(rich$mrate)
 ```
 [1] 0.7315124
 ```
+
+The average for prate is **87.36%** and the average for mrate is **0.73**.
 
 ### (ii)
 
@@ -113,7 +115,7 @@ Our sample size would be: $n=1534$ and $R^2=0.75$
 
 Interpret the intercept and the coefficient of *mrate*
 
-Our intercept means that even if our *mrate* was 0, we would still have a participation rate of 83.05%. Additionally, it means that for every one dollar increase in the match rate, we would see a 5.86% increase in *prate*. 
+Our intercept means that even if our *mrate* was 0, we would still have a participation rate of **83.05%**. Additionally, it means that for every one dollar increase in the match rate, we would see a **5.86%** increase in *prate*. 
 
 ### (iv)
 
@@ -130,11 +132,11 @@ predict_rich(3.5)
 [1] 103.585
 ```
 
-When *mrate = 3.5* we get a predicted *prate* of 103.59. This can't happen, because you can't have a participation rate higher than 100%. This is an example that sometimes the simple regression can return strange predictions for with extreme values.
+When *mrate = 3.5* we get a predicted *prate* of **103.59**. This can't happen, because you can't have a participation rate higher than 100%. This is an example that sometimes the simple regression can return strange predictions for with extreme values.
 
 ### (v)
 
-Looking at our coefficient estimate, *mrate* explains about 7.5% of the variation in *prate*. This is a low explanation of our model and suggests that there are probably other factors that influence 401(k) plan participation in companies.
+Looking at our coefficient estimate, *mrate* explains about **7.5%** of the variation in *prate*. This is a low explanation of our model and suggests that there are probably other factors that influence 401(k) plan participation in companies.
 
 \newpage
 
@@ -152,6 +154,9 @@ I would say that a diminishing return would make more sense. As you increase spe
 
 ### (ii)
 
+If we take level-log model, where 
+$$\Delta{math10}=(\beta_1/100)\%\Delta{expend}$$
+Therefore if $\%\Delta{expend}=10$, then $\Delta{math10}=\beta_1/10$
 
 
 ### (iii)
@@ -198,28 +203,31 @@ If *expend* increases by 10%, then $\hat{math10}$ increases by about 1.1%. This 
 
 
 ```r
-pander::pander(summary(math$math10))
+panderOptions('digits',5)
+pander(summary(math$math10))
 ```
 
 
---------------------------------------------------
- Min.   1st Qu.   Median   Mean    3rd Qu.   Max. 
------- --------- -------- ------- --------- ------
- 1.9     16.63     23.4    24.11    30.05    66.7 
---------------------------------------------------
+---------------------------------------------------
+ Min.   1st Qu.   Median    Mean    3rd Qu.   Max. 
+------ --------- -------- -------- --------- ------
+ 1.9    16.625     23.4    24.107    30.05    66.7 
+---------------------------------------------------
 
 ```r
-pander::pander(summary(predict(math_reg_log)))
+pander(summary(predict(math_reg_log)))
 ```
 
 
-----------------------------------------------------
- Min.    1st Qu.   Median   Mean    3rd Qu.   Max.  
-------- --------- -------- ------- --------- -------
- 21.22    22.75    23.65    24.11    24.96    30.15 
-----------------------------------------------------
+-------------------------------------------------------
+  Min.    1st Qu.   Median    Mean    3rd Qu.    Max.  
+-------- --------- -------- -------- --------- --------
+ 21.217   22.747    23.654   24.107   24.959    30.154 
+-------------------------------------------------------
 
-If we look at the values for *math10* we see that the maximum value in our data set is 66.70. Furthermore, if we use our model using the fitted values, we still only return a max value of 30.15, so we shouldn't worry about getting values greater than 100 in this dataset.
+If we look at the values for *math10* we see that the maximum value in our data set is **66.70**. Furthermore, if we use our model using the fitted values, we still only return a max value of **30.15**, so we shouldn't worry about getting values greater than 100 in this data set.
+
+\newpage
 
 ## Question 5
 
@@ -228,7 +236,6 @@ If we look at the values for *math10* we see that the maximum value in our data 
 
 ```r
 giftsdb <- charity
-
 mean(giftsdb$gift)
 ```
 
@@ -237,21 +244,18 @@ mean(giftsdb$gift)
 ```
 
 ```r
-# The average gift amount was 7.44 guilders
-
-pander::pander(prop.table(table(giftsdb$respond)))
+pander(prop.table(table(giftsdb$respond)))
 ```
 
 
------------
-  0     1  
------ -----
- 0.6   0.4 
------------
-
-```r
-#From our sample, about 60% of people did not give a gift.
-```
+-------------------
+    0         1    
+--------- ---------
+ 0.60005   0.39995 
+-------------------
+he average gift amount was **7.44** guilders
+\newline
+From our sample, about **60%** of people did not give a gift.
 
 ### (ii)
 
@@ -280,8 +284,11 @@ max(giftsdb$mailsyear)
 ```
 [1] 3.5
 ```
-The average mailings per year was `2.05` \newline
-The min was `0.25` and the max was `3.5`
+The average mailings per year was **2.05**
+\newline
+The min was **0.25** and the max was **3.5**
+
+\newpage
 
 ### (iii)
 
@@ -321,14 +328,16 @@ We have a $n=4268$ and an $R^2=0.014$
 
 ### (iv)
 
-We can interpret our slope to mean that, on average, each additional mailing is associated with 2.65 additional guilders. So if each mailing costs one guilder, they can expect to make 1.65 guilders on each mailing. However, considering that this is only on average. There are many instances where mailings generated no gifts, or where the gift was less than 1 guilder.  
+We can interpret our slope to mean that, on average, each additional mailing is associated with **2.65** additional guilders. So if each mailing costs one guilder, they can expect to make **1.65** guilders on each mailing. However, considering that this is only on average. There are many instances where mailings generated no gifts, or where the gift was less than 1 guilder.  
+
+\newpage
 
 ## Question 6
 
 ### (i)
 
 ```r
-## Load the data
+# Load the data
 cat_stats <- catholic
 
 nrow(cat_stats)
@@ -339,8 +348,6 @@ nrow(cat_stats)
 ```
 
 ```r
-## Number of observations is 7430
-
 mean(cat_stats$math12)
 ```
 
@@ -357,8 +364,6 @@ mean(cat_stats$read12)
 ```
 
 ```r
-## The average for Math Scores was 51.13. For Reading 51.77
-
 sd(cat_stats$math12)
 ```
 
@@ -374,9 +379,17 @@ sd(cat_stats$read12)
 [1] 9.407761
 ```
 
-```r
-# The standard deviation for Math Scores was 9.46. For Reading 9.41
-```
+The number of observations in our sample was **7430**. 
+
+\newline
+
+The average for math scores was **52.13** and for reading, **51.77** 
+
+\newline
+
+The standard deviation for math scores was **9.46**, and **9.41** for reading.
+
+\newpage
 
 ### (ii)
 
@@ -417,11 +430,13 @@ And $R^2=0.505$
 
 ### (iii)
 
-We can interpret our intercept to mean that if our reading score was zero, than you would have a math score of 15.153. This is not a meaningful interpretation since we would not expect to find zero reading score within our observed scores of students.
+We can interpret our intercept to mean that if our reading score was zero, than you would have a math score of **15.153**. This is not a meaningful interpretation since we would not expect to find zero reading score within our observed scores of students.
 
 ### (iv)
 
 The $\hat{\beta_1}$ we found was 0.714. This is what I expect we would find, since we would assume that if a student did well in one subject, they are likely to do well in the other and vice versa. With that in mind, we can also expect our $R^2$ value to be high as well based off this assumption. We can see that there is a correlation relationship, but not a causal, as we are not taking into account other important factors in our analysis.
+
+\newpage
 
 ### (v)
 
