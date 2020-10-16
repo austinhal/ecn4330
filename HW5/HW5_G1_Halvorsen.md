@@ -33,7 +33,7 @@ The negative sign of our our $educ$ coefficient means that the more education we
 
 ### (v)
 
-The model returns an $R^2$ value of only 11.3%, so the explanatory variables do not explain a lot of variation in this model. We are overlooking many other things like marital status, kids, income, or health.
+The model returns an $R^2$ value of only 11.3%, so the explanatory variables do not explain a lot of variation in this model. We are overlooking many other things like marital status, kids, income, or health. These are would be correlated with $totwrk$ because someone with kids, or married, will have those factors affecting their sleep.
 
 \newpage
 
@@ -41,7 +41,7 @@ The model returns an $R^2$ value of only 11.3%, so the explanatory variables do 
 
 ### (i)
 
-We would expect to have $\beta_5\leq0$ because the higher the rank the *less* prestigious that law school is. In other words, for each increase rank (i.e. 2 to 3 or 30 to 31) you are thought to be less prestigious and therefore have a lower salary.
+We would expect to have $\beta_5\leq0$ because the lower the rank (higher the number) the *less* prestigious that law school is. In other words, for each increase rank (i.e. 2 to 3 or 30 to 31) you are thought to be less prestigious and therefore have a lower salary.
 
 ### (ii)
 
@@ -68,7 +68,7 @@ I would say you are better off going to a school with a lower rank. The differen
 
 ### (i)
 
-$R^2$ could have decreased because we have reduced the number in the sample from 142 -> 99.
+$R^2$ could have decreased because we have reduced the number in the sample from 142 -> 99. Additionally, $R^2$ can only increase (or decrease) by adding or removing variables. So the only way that it could decrease is if it were to have a reduced sample size or an irrelevant variable included that has no correlation with y or any x.
 
 \newpage 
 
@@ -295,7 +295,7 @@ If $prpblck$ increases by 0.20, then we predict the price of soda to increase by
 
 
 ```r
-discrim_pov <- lm(psoda~prpblck+log(income)+prppov, data = price)
+discrim_pov <- lm(log(psoda)~prpblck+log(income)+prppov, data = price)
 stargazer(discrim_pov, type='text')
 ```
 
@@ -304,31 +304,31 @@ stargazer(discrim_pov, type='text')
 ===============================================
                         Dependent variable:    
                     ---------------------------
-                               psoda           
+                            log(psoda)         
 -----------------------------------------------
-prpblck                       0.075**          
-                              (0.032)          
+prpblck                       0.073**          
+                              (0.031)          
                                                
-log(income)                  0.142***          
-                              (0.028)          
+log(income)                  0.137***          
+                              (0.027)          
                                                
-prppov                       0.396***          
-                              (0.139)          
+prppov                       0.380***          
+                              (0.133)          
                                                
-Constant                      -0.512*          
-                              (0.308)          
+Constant                     -1.463***         
+                              (0.294)          
                                                
 -----------------------------------------------
 Observations                    401            
-R2                             0.085           
-Adjusted R2                    0.078           
-Residual Std. Error      0.085 (df = 397)      
-F Statistic           12.289*** (df = 3; 397)  
+R2                             0.087           
+Adjusted R2                    0.080           
+Residual Std. Error      0.081 (df = 397)      
+F Statistic           12.604*** (df = 3; 397)  
 ===============================================
 Note:               *p<0.1; **p<0.05; ***p<0.01
 ```
 
-The estimated model is: $$\hat{psoda}=-0.512+0.073prpblck+0.137log(income)+0.380prppov$$
+The estimated model is: $$\hat{psoda}=-1.463+0.073prpblck+0.137log(income)+0.380prppov$$
 
 Where $R^2=0.087$ and $n = 401$
 

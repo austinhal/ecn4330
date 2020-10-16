@@ -74,7 +74,7 @@ I would say you are better off going to a school with a lower rank. The differen
 
 ### (i)
 
-$R^2$ could have decreased because we have reduced the number in the sample from 142 -> 99.
+$R^2$ could have decreased because we have reduced the number in the sample from 142 -> 99. Additionally, $R^2$ can only increase (or decrease) by adding or removing variables. So the only way that it could decrease is if it were to have a reduced sample size or an irrelevant variable included that has no correlation with y or any x.
 
 \newpage 
 
@@ -191,11 +191,11 @@ If $prpblck$ increases by 0.20, then we predict the price of soda to increase by
 ### (v)
 
 ```{r comment = NA}
-discrim_pov <- lm(psoda~prpblck+log(income)+prppov, data = price)
+discrim_pov <- lm(log(psoda)~prpblck+log(income)+prppov, data = price)
 stargazer(discrim_pov, type='text')
 ```
 
-The estimated model is: $$\hat{psoda}=-0.512+0.073prpblck+0.137log(income)+0.380prppov$$
+The estimated model is: $$\hat{psoda}=-1.463+0.073prpblck+0.137log(income)+0.380prppov$$
 
 Where $R^2=0.087$ and $n = 401$
 
