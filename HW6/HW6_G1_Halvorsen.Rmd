@@ -1,0 +1,95 @@
+---
+title: "HW_template_Rmarkdown"
+author: "Pedram Jahangiry"
+date: "Sep 2020"
+output:
+  word_document: default
+  pdf_document: default
+---
+
+
+
+\newpage
+
+# Problems
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+# setup
+library(tidyverse)
+library(stargazer)
+library(wooldridge)
+library(pander)
+```
+
+## Question 1
+
+### (i) 
+### (ii)
+
+## Question 2
+
+We can know that $\tilde\beta_1=\hat\beta_1+\hat\sigma*\hat\beta_2$ where $\hat\sigma_1$ is just the regression of $x_1$. We know that $\beta_2 > 0$ and we can assume that the $Corr(x_1,x_2)<0$. 
+
+## Question 3
+
+### (i)
+### (ii)
+### (iii)
+
+## Question 4
+
+### (i)
+
+No, mathematically it does not make sense. The problem states that the sum of all activities must be 168, so if we change one, then at least one other category will need to change so that the sum remains 168.
+
+### (ii)
+
+Because we can write one variable from this function as a perfect linear function of the other independent variables, as well as for any of the other variables, this violates MLR.3.
+
+### (iii)
+
+I would drop one of the independent variables, like *leisure* and replace it with $u$, thus creating the new model: $$GPA = \beta_0+\beta_1study+\beta_2sleep+\beta_3work + u$$. 
+Now, this will not violate assumption MLR.3 because if we hold sleep and work fixed, but increase study by an hour, then leisure must be falling by an hour. This would apply to the other parameters interpretations as well.
+
+---------
+
+# Computer Exercises
+
+## Question 5
+
+### (i)
+
+```{r comment=NA}
+d1 <- wooldridge::meapsingle
+
+srm1 <- lm(math4~pctsgle, data = d1)
+stargazer(srm1, type='text')
+```
+
+
+
+### (ii)
+### (iii)
+### (iv)
+### (v)
+
+## Question 6
+
+### (i)
+
+```{r comment=NA}
+d2 <- wooldridge::htv
+
+educ <- range(d2$educ)
+print(educ[2]-educ[1])
+
+#The Range of the educ variable is 14
+
+
+```
+
+### (ii)
+### (iii)
+### (iv)
+### (v)
+### (vi)
