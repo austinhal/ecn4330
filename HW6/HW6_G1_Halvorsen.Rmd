@@ -8,8 +8,6 @@ output:
   pdf_document: default
 ---
 
-
-
 \newpage
 
 # Problems
@@ -20,16 +18,29 @@ library(tidyverse)
 library(stargazer)
 library(wooldridge)
 library(pander)
+library(car)
 ```
 
 ## Question 1
 
 ### (i) 
+
+$E\left(\hat{\theta}_{1}\right)=E\left(\hat{\beta}_{1}+\hat{\beta}_{2}\right)=E\left(\hat{\beta}_{1}\right)+E\left(\hat{\beta}_{2}\right)=\beta_{1}+\beta_{2}=\theta_{1}$
+
 ### (ii)
+
+$$Var(\hat{\theta_1}=
+Var(\hat{\beta_1}+\hat{\beta_2})=
+Var(\hat{\beta_1})+Var(\hat{\beta_2})+2Cov(\hat{\beta_1},\hat{\beta_2})=
+2Corr(\hat{\beta_1},\hat{\beta_2})\sqrt{Var(\hat{\beta_1})Var(\hat{\beta_2})})$$
 
 ## Question 2
 
-We can know that $\tilde\beta_1=\hat\beta_1+\hat\sigma*\hat\beta_2$ where $\hat\sigma_1$ is just the regression of $x_1$. We know that $\beta_2 > 0$ and we can assume that the $Corr(x_1,x_2)<0$. 
+We can know that $\tilde\beta_1=\hat\beta_1+\hat\sigma*\hat\beta_2$ where $\hat\sigma_1$ is just the regression of $x_1$. We know that $\beta_2 > 0$ and we can assume that the $Corr(x_1,x_2)<0$.
+
+\newline
+
+We can interpret this to mean that on average, the SRM estimator will **underestimate** the effects of the training program.
 
 \newpage 
 
@@ -37,16 +48,17 @@ We can know that $\tilde\beta_1=\hat\beta_1+\hat\sigma*\hat\beta_2$ where $\hat\
 
 ### (i)
 
-df1 = 351
-df2 = 352
-
-The SER in the second is smaller because the number of explantory variables increased.
+$df = n - (k - 1)$ thus, the degrees of freedom in each regression are calculated as follows: $353 - 1 - 1  = 351$ , and $353 - 2 - 1 = 350$. In the second equation, the number of explanatory variables is increased. $SRR$ and $SER$ are positively related, so $SER$ decreases when $SSR$ decreases.
 
 ### (ii)
 
+$VIF_{years}=\frac{1}{1-0.487}=1.949$
+
+We would expect to see moderate correlation between the variables because we know that intuitively, the longer that you are in the major leagues, there will probably be a higher likelihood that you’ll get a higher $rbisyr$. For a variety of reasons like being put up higher on the batting queue, more training, etc.
+
 ### (iii)
 
-The SER 
+$SER$ for the coefficient on years in the multiple regression is lower than its counterpart in the simple regression, because adding one more independent variable reduces the overall variance which also reduces the standard error.
 
 \newpage
 
@@ -83,25 +95,34 @@ stargazer(srm1, type='text')
 ```
 
 The model from our output: $$math4 = 96.770 -0.833pctsgle + u$$
-Our intercept is $-0.833$
+Our intercept is $-0.833$ which means that for each unit increase in $pctsgle$, we would see a drop in $math4$ of 0.833%. This is effect is small, but still meaningful in our interpretation.
 
 ### (ii)
 ```{r comment=NA}
 srm2 <- lm(math4~pctsgle+lmedinc+free, data = d1)
-stargazer(srm2, type='text')
+stargazer(srm1, srm2, type='text')
 ```
 
-Adding in the variables $lmedinc$ and $free$ drops the slope coefficient of $pctsgle$ to $-0.200$.
+Adding in the variables $lmedinc$ and $free$ drops the slope coefficient of $pctsgle$ to $-0.200$. This results in our model being: $$math4=51.723-0.200pctsgle+3.560lmedinc-0.396free$$ 
+With $R^2=0.460$ and $n=229$.
 
 ### (iii)
 
 ```{r comment=NA}
 cor(d1$lmedinc, d1$free)
 ```
-
+We get a correlation of -0.746. This would be the sign that I expect because we would expect that as lmedinc decrease then the percent of free lunch would increase.
 
 ### (iv)
+
+I would say that you should not drop one variable because they are not perfectly correlated, so this does not violate our assumptions and can still help account for the variance in our model by keeping the variables in.
+
 ### (v)
+```{r}
+pander(vif(srm2))
+```
+
+The largest VIF is for pctsgle. I’d day that it does not affect our model because the VIF’s are fairly close to each other, and scrutinizing the VIF or having a cutoff for it has limited use in our analysis here.
 
 
 \newpage
