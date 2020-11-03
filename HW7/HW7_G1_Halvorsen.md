@@ -1,7 +1,7 @@
 ---
 title: "HW7 Group 1, Austin Halvorsen"
 author: "Pedram Jahangiry"
-date: "Nov 1 2020"
+date: "Nov 3 2020"
 output:
   word_document: 
     keep_md: yes
@@ -273,6 +273,65 @@ The intercept, $\hat{\beta_0}=-43.040$, means that at age 0 and income = 0, thei
 
 ### (i)
 
+
+```r
+d3 <- discrim
+mrm3 <- lm(lpsoda~prpblck+lincome+prppov, d3)
+stargazer(mrm3, type='text')
+```
+
+```
+
+===============================================
+                        Dependent variable:    
+                    ---------------------------
+                              lpsoda           
+-----------------------------------------------
+prpblck                       0.073**          
+                              (0.031)          
+                                               
+lincome                      0.137***          
+                              (0.027)          
+                                               
+prppov                       0.380***          
+                              (0.133)          
+                                               
+Constant                     -1.463***         
+                              (0.294)          
+                                               
+-----------------------------------------------
+Observations                    401            
+R2                             0.087           
+Adjusted R2                    0.080           
+Residual Std. Error      0.081 (df = 397)      
+F Statistic           12.604*** (df = 3; 397)  
+===============================================
+Note:               *p<0.1; **p<0.05; ***p<0.01
+```
+
+We get the following model:
+
+$$log(psoda)=-1.463+0.073prpblck+0.137log(income)+0.380prppov$$
+
+With an $n=401$ and $R^2=0.087$. AT the 5% level, $\hat{\beta_1}$ is statistically significant, but it is not significant at the 1% level.
+
 ### (ii)
 
+
+```r
+pander(cor.test(d3$lincome,d3$prppov))
+```
+
+
+----------------------------------------------------------------------------
+ Test statistic   df        P value        Alternative hypothesis     cor   
+---------------- ----- ------------------ ------------------------ ---------
+     -31.04       407   2.349e-109 * * *         two.sided          -0.8385 
+----------------------------------------------------------------------------
+
+Table: Pearson's product-moment correlation: `d3$lincome` and `d3$prppov`
+
+
 ### (iii)
+
+

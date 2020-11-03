@@ -187,6 +187,25 @@ The intercept, $\hat{\beta_0}=-43.040$, means that at age 0 and income = 0, thei
 
 ### (i)
 
+```{r comment=NA}
+d3 <- discrim
+mrm3 <- lm(lpsoda~prpblck+lincome+prppov, d3)
+stargazer(mrm3, type='text')
+```
+
+We get the following model:
+
+$$log(psoda)=-1.463+0.073prpblck+0.137log(income)+0.380prppov$$
+
+With an $n=401$ and $R^2=0.087$. AT the 5% level, $\hat{\beta_1}$ is statistically significant, but it is not significant at the 1% level.
+
 ### (ii)
 
+```{r comment=NA}
+pander(cor.test(d3$lincome,d3$prppov))
+```
+
+
 ### (iii)
+
+
