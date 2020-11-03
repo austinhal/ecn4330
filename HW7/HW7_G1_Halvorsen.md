@@ -79,13 +79,19 @@ We would estimate y by regressing y on $x_1, 3x_1+x_2,$ and $x_3$. This will all
 
 ### (i)
 
+With the negative sign, I would expect that if a profit margins are small, meaning they weren't that profitable of a company, then that firm would need to pay more in order to attract someone to fill the position.
+
 ### (ii)
+
+Yes, the effect is significant. The t value is greater than 2, and this would make sense that companies with larger market values pay more.
 
 ### (iii)
 
+The
+
 ### (iv)
 
-### (v)
+This could be the result of someone who has stayed with the company for a long time and may not have demands on pay and does the job more out of passion for the company rather than an outsider who may demand large bonus pay to run the company.
 
 ---------
 
@@ -97,25 +103,168 @@ We would estimate y by regressing y on $x_1, 3x_1+x_2,$ and $x_3$. This will all
 
 ### (i)
 
+```r
+d1 <- hprice1
+mrm1 <- lm(lprice~sqrft+bdrms, d1)
+stargazer(mrm1, type = 'text', digits = 8)
+```
+
+```
+
+===============================================
+                        Dependent variable:    
+                    ---------------------------
+                              lprice           
+-----------------------------------------------
+sqrft                      0.00037945***       
+                           (0.00004321)        
+                                               
+bdrms                       0.02888444         
+                           (0.02964326)        
+                                               
+Constant                   4.76602700***       
+                           (0.09704447)        
+                                               
+-----------------------------------------------
+Observations                    88             
+R2                          0.58829480         
+Adjusted R2                 0.57860770         
+Residual Std. Error    0.19706340 (df = 85)    
+F Statistic         60.72921000*** (df = 2; 85)
+===============================================
+Note:               *p<0.1; **p<0.05; ***p<0.01
+```
+
+Using the data from HPRICE1, we get the following model:
+
+$$log(price)=4.766+0.0003795sqrft+0.02889bdrms$$ with an $n=88$ and $R^2=0.588$.
+
+Using our model we get the following estimation: 
+$$\hat{\theta_1}=150(.0003795)+0.02889=0.0858$$
+
+```r
+theta <- 150*mrm1$coefficients[2]+mrm1$coefficients[3]
+theta
+```
+
+```
+     sqrft 
+0.08580134 
+```
+
+This means that when we add a 150 sqft bedroom, then we can expect the home price to increase by about 8.6%
 
 ### (ii)
 
+We can rewrite $\beta_2=\theta_1-150\beta_1$. In our model, we can substitute to have the following:
+
+$$log(price)=\beta_0+\beta_1(sqrft-150bdrms)+\theta_1bdrms + u$$
+
 ### (iii)
 
-### (iv)
 
-### (v)
+```r
+d1$bdrms_150 <- d1$bdrms*150
+d1$bdrms_theta <- d1$bdrms*theta
+se1 <- lm(lprice~(sqrft-bdrms_150)+(bdrms_theta), d1)
+stargazer(se1, type = 'text')
+```
+
+```
+
+===============================================
+                        Dependent variable:    
+                    ---------------------------
+                              lprice           
+-----------------------------------------------
+sqrft                        0.0004***         
+                             (0.00004)         
+                                               
+bdrms_theta                    0.337           
+                              (0.345)          
+                                               
+Constant                     4.766***          
+                              (0.097)          
+                                               
+-----------------------------------------------
+Observations                    88             
+R2                             0.588           
+Adjusted R2                    0.579           
+Residual Std. Error       0.197 (df = 85)      
+F Statistic           60.729*** (df = 2; 85)   
+===============================================
+Note:               *p<0.1; **p<0.05; ***p<0.01
+```
+
 
 
 ## Question 7
 
 ### (i)
 
+
+```r
+d2 <- k401ksubs
+d2  %>% 
+  filter(fsize==1) %>% 
+  count()
+```
+
+```
+##      n
+## 1 2017
+```
+
+There are 2017 single person households in the dataset.
+
 ### (ii)
+
+
+```r
+d2a <- d2 %>% 
+  filter(fsize==1)
+mrm2 <- lm(nettfa~inc+age, d2a)
+stargazer(mrm2, type='text')
+```
+
+```
+## 
+## ===============================================
+##                         Dependent variable:    
+##                     ---------------------------
+##                               nettfa           
+## -----------------------------------------------
+## inc                          0.799***          
+##                               (0.060)          
+##                                                
+## age                          0.843***          
+##                               (0.092)          
+##                                                
+## Constant                    -43.040***         
+##                               (4.080)          
+##                                                
+## -----------------------------------------------
+## Observations                   2,017           
+## R2                             0.119           
+## Adjusted R2                    0.118           
+## Residual Std. Error     44.683 (df = 2014)     
+## F Statistic          136.465*** (df = 2; 2014) 
+## ===============================================
+## Note:               *p<0.1; **p<0.05; ***p<0.01
+```
+
+Using only single family households, we get the model:
+
+$$nettfa=-43.040+0.799inc+0.843age$$
+With an $n=2017$ and $R^2=0.119$. This means that for every \$1 thousand increase in income means an estimated \$799 increase in net wealth. For $\beta_2$ we interpret that for every year increase, we estimate a \$843 net wealth increase. These numbers make sense, and is not too surprising.
 
 ### (iii)
 
+The intercept, $\hat{\beta_0}=-43.040$, means that at age 0 and income = 0, their net wealth is $-43.04. In other words, you are born in debt. 
+
 ### (iv)
+
+
 
 ### (v)
 

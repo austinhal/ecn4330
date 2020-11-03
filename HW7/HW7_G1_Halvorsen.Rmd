@@ -1,7 +1,7 @@
 ---
 title: "HW7 Group 1, Austin Halvorsen"
 author: "Pedram Jahangiry"
-date: "Nov 1 2020"
+date: "Nov 3 2020"
 output:
   word_document: 
     keep_md: yes
@@ -86,13 +86,19 @@ We would estimate y by regressing y on $x_1, 3x_1+x_2,$ and $x_3$. This will all
 
 ### (i)
 
+With the negative sign, I would expect that if a profit margins are small, meaning they weren't that profitable of a company, then that firm would need to pay more in order to attract someone to fill the position.
+
 ### (ii)
+
+Yes, the effect is significant. The t value is greater than 2, and this would make sense that companies with larger market values pay more.
 
 ### (iii)
 
+The
+
 ### (iv)
 
-### (v)
+This could be the result of someone who has stayed with the company for a long time and may not have demands on pay and does the job more out of passion for the company rather than an outsider who may demand large bonus pay to run the company.
 
 ---------
 
@@ -104,27 +110,75 @@ We would estimate y by regressing y on $x_1, 3x_1+x_2,$ and $x_3$. This will all
 
 ### (i)
 ```{r comment=NA}
-
+d1 <- hprice1
+mrm1 <- lm(lprice~sqrft+bdrms, d1)
+stargazer(mrm1, type = 'text', digits = 8)
 ```
+
+Using the data from HPRICE1, we get the following model:
+
+$$log(price)=4.766+0.0003795sqrft+0.02889bdrms$$ with an $n=88$ and $R^2=0.588$.
+
+Using our model we get the following estimation: 
+$$\hat{\theta_1}=150(.0003795)+0.02889=0.0858$$
+```{r comment=NA}
+theta <- 150*mrm1$coefficients[2]+mrm1$coefficients[3]
+theta
+```
+
+This means that when we add a 150 sqft bedroom, then we can expect the home price to increase by about 8.6%
 
 ### (ii)
 
+We can rewrite $\beta_2=\theta_1-150\beta_1$. In our model, we can substitute to have the following:
+
+$$log(price)=\beta_0+\beta_1(sqrft-150bdrms)+\theta_1bdrms + u$$
+
 ### (iii)
 
-### (iv)
+```{r comment=NA}
+d1$bdrms_150 <- d1$bdrms*150
+d1$bdrms_theta <- d1$bdrms*theta
+se1 <- lm(lprice~(sqrft-bdrms_150)+(bdrms_theta), d1)
+stargazer(se1, type = 'text')
+```
 
-### (v)
 
 
 ## Question 7
 
 ### (i)
 
+```{r}
+d2 <- k401ksubs
+d2  %>% 
+  filter(fsize==1) %>% 
+  count()
+```
+
+There are 2017 single person households in the dataset.
+
 ### (ii)
+
+```{r}
+d2a <- d2 %>% 
+  filter(fsize==1)
+mrm2 <- lm(nettfa~inc+age, d2a)
+stargazer(mrm2, type='text')
+```
+
+Using only single family households, we get the model:
+
+$$nettfa=-43.040+0.799inc+0.843age$$
+With an $n=2017$ and $R^2=0.119$. This means that for every \$1 thousand increase in income means an estimated \$799 increase in net wealth. For $\beta_2$ we interpret that for every year increase, we estimate a \$843 net wealth increase. These numbers make sense, and is not too surprising.
 
 ### (iii)
 
+The intercept, $\hat{\beta_0}=-43.040$, means that at age 0 and income = 0, their net wealth is $-43.04. In other words, you are born in debt. 
+
 ### (iv)
+
+
 
 ### (v)
 
