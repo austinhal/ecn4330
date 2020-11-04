@@ -214,10 +214,7 @@ The intercept, $\hat{\beta_0}=-43.040$, means that at age 0 and income = 0, thei
 
 ### (iv)
 
-```{r comment=NA}
-pt(-1.5,2014)
-```
-
+The t-statistic is $\frac{(0.843-1)}{0.092}≈-1.71$ Against the one-sided alternative $H_1: \beta_2 <1$, the p-value is $P(T<-1.71)=.044$. So we can reject the null at the 5% significance level, but not the 1% significance level.
 
 ### (v)
 
