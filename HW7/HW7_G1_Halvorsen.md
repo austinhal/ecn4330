@@ -18,15 +18,23 @@ output:
 
 ### (i) 
 
+If you have heteroskedasticity, you violate assumption MLR5 and cannot rely on the t stat
+
 ### (ii)
 
+If you have a sample correlation coefficient of .95 between two independent variables in the model, you are not in violation of the assumptions and you can use the t stat.
+
 ### (iii)
+
+If you omit an important explanatory variable, you introduce bias into your model, which would violate MLR.4, and you would not be able to rely on the t test for your model.
+
+\newpage
 
 ## Question 2
 
 ### (i) 
 
-The null hypothesis would be $H_0: \beta_3=0$. The alternative hypothesis would be $H_1: \beta_3\neq0$
+The null hypothesis would be $H_0:\beta_3=0$. The alternative hypothesis would be $H_1:\beta_3\neq0$
 
 ### (ii)
 
@@ -40,17 +48,46 @@ Because this is a log-log model, the interpretation of this model should be, *"A
 
 ### (iv)
 
-With a degree of freedom of 60 (64-4), at the 1% level, we 
+With a degree of freedom of 60 (64-4), at the 1% level, we need to calculate the t value as $$t=\frac{\hat{\beta_3}-\beta_{3_{H_0}}}{se(\hat{\beta_3})}$$
+This would give an estimated t stat of $\frac{0.0056-0}{0.0017}≈3.294$
+
+```r
+qt(0.995, 60)
+```
+
+```
+## [1] 2.660283
+```
+
+We would reject the null hypothesis at the 1% significance level.
+
+\newpage
 
 ## Question 3
 
 ### (i)
 
+We fail to reject the null hypothesis where $\beta_0=0$ and we also fail to reject the null hypothesis where $\beta_1=1$. We calculate this be evaluating the t stat for each parameter: 
+
+$$\beta_0[\,tstat]\,=\left\lvert\frac{-14.47}{16.27}\right\rvert≈0.889$$ and $$\beta_1[\,tstat]\,= \left\lvert \frac{0.976-1}{.049} \right\rvert≈0.4898$$
+
 ### (ii)
+
+We need to calculate the F statistic where:
+
+$$F=\frac{\frac{(SSR_R-SSR_{UR})}{q}}{\frac{SSR_{UR}}{n-k-1}} = \frac{\frac{209448.99-165644.51}{2}}{\frac{165644.51}{86}}=11.3713$$
+So we are going to reject the null that they are jointly significant.
 
 ### (iii)
 
+To test the joint hypothesis that $H_0:\beta_2=0, \beta_3=0, and \space \beta_4=0$ we need to test
+
+$$F=\frac{\frac{(R^2_{UR}-R^2_R)}{q}}{\frac{(1-R^2_{UR})}{n-k-1}} = \frac{\frac{0.829-0.820}{3}}{\frac{1-0.829}{88-4-1}}=1.45614$$
+So, with this output, we fail to reject the null.
+
 ### (iv) 
+
+You cannot rely on the F statistic from part iii because we have violated assumption MLR.5. 
 
 \newpage
 
@@ -59,13 +96,15 @@ With a degree of freedom of 60 (64-4), at the 1% level, we
 ### (i)
 
 We can apply the property of variance: 
-$$Var(\hat{\beta}_1-3\hat{\beta}_2=Var(\hat{\beta}_1)+9Var(\hat{\beta}_2)-6 Cov(\hat{\beta}_1,\hat{\beta}_2)$$
+$$Var(\hat{\theta})=Var(\hat{\beta}_1-3\hat{\beta}_2)=Var(\hat{\beta}_1)+9Var(\hat{\beta}_2)-6 Cov(\hat{\beta}_1,\hat{\beta}_2)$$
 
 ### (ii)
 
 $$t = \frac{(\hat{\beta}_1-3\hat{\beta}_2-1)}{se(\hat{\beta}_1-3\hat{\beta}_2)}$$
 
-We will need to identify the standard error, or $se(\hat{\beta}_1-3\hat{\beta}_2)$
+So to identify the t statistic, we get:
+
+$$t = \frac{(\hat{\beta}_1-3\hat{\beta}_2-1)}{se[\,(\hat{\beta}_1)+9Var(\hat{\beta}_2)-6 Cov(\hat{\beta}_1,\hat{\beta}_2)]\,}$$
 
 ### (iii)
 
@@ -75,19 +114,21 @@ $$y=\beta_0+(\theta_1+3\beta_2)x_1+\beta_2x_2+\beta_3x_3+u$$
 $$=\beta_0+\theta_1x_1+\beta_2(3x_1+x_2)+\beta_3x_3+u$$
 We would estimate y by regressing y on $x_1, 3x_1+x_2,$ and $x_3$. This will allow us to calculate the stand error and coefficient of $x_1$
 
+\newpage
+
 ## Question 5
 
 ### (i)
 
-With the negative sign, I would expect that if a profit margins are small, meaning they weren't that profitable of a company, then that firm would need to pay more in order to attract someone to fill the position.
+With our t stat close to 1: ($\frac{.0023}{.0022}$), we will fail to reject that this variable is irrelevant.
 
 ### (ii)
 
-Yes, the effect is significant. The t value is greater than 2, and this would make sense that companies with larger market values pay more.
+Yes, the effect is significant. The t value is greater than 2, and a critical value of and this would make sense that companies with larger market values pay more. 
 
 ### (iii)
 
-The
+The t value for ceoten is $\frac{.0171}{.0055}≈3.101$ and the t value for comten $\frac{.0092}{.0033}≈2.788$ so they are both significant to our model.
 
 ### (iv)
 
@@ -164,37 +205,50 @@ $$log(price)=\beta_0+\beta_1(sqrft-150bdrms)+\theta_1bdrms + u$$
 
 
 ```r
-d1$bdrms_150 <- d1$bdrms*150
-d1$bdrms_theta <- d1$bdrms*theta
-se1 <- lm(lprice~(sqrft-bdrms_150)+(bdrms_theta), d1)
+se1 <- lm(lprice~I(sqrft-150*bdrms)+bdrms, d1)
 stargazer(se1, type = 'text')
 ```
 
 ```
 
-===============================================
-                        Dependent variable:    
-                    ---------------------------
-                              lprice           
------------------------------------------------
-sqrft                        0.0004***         
-                             (0.00004)         
-                                               
-bdrms_theta                    0.337           
-                              (0.345)          
-                                               
-Constant                     4.766***          
-                              (0.097)          
-                                               
------------------------------------------------
-Observations                    88             
-R2                             0.588           
-Adjusted R2                    0.579           
-Residual Std. Error       0.197 (df = 85)      
-F Statistic           60.729*** (df = 2; 85)   
-===============================================
-Note:               *p<0.1; **p<0.05; ***p<0.01
+==================================================
+                           Dependent variable:    
+                       ---------------------------
+                                 lprice           
+--------------------------------------------------
+I(sqrft - 150 * bdrms)          0.0004***         
+                                (0.00004)         
+                                                  
+bdrms                           0.086***          
+                                 (0.027)          
+                                                  
+Constant                        4.766***          
+                                 (0.097)          
+                                                  
+--------------------------------------------------
+Observations                       88             
+R2                                0.588           
+Adjusted R2                       0.579           
+Residual Std. Error          0.197 (df = 85)      
+F Statistic              60.729*** (df = 2; 85)   
+==================================================
+Note:                  *p<0.1; **p<0.05; ***p<0.01
 ```
+
+```r
+pander(confint(se1, level = 0.95))
+```
+
+
+----------------------------------------------------
+           &nbsp;               2.5 %      97.5 %   
+---------------------------- ----------- -----------
+      **(Intercept)**           4.573       4.959   
+
+ **I(sqrft - 150 * bdrms)**   0.0002935   0.0004654 
+
+         **bdrms**             0.03258      0.139   
+----------------------------------------------------
 
 
 
@@ -211,8 +265,8 @@ d2  %>%
 ```
 
 ```
-##      n
-## 1 2017
+     n
+1 2017
 ```
 
 There are 2017 single person households in the dataset.
@@ -228,29 +282,29 @@ stargazer(mrm2, type='text')
 ```
 
 ```
-## 
-## ===============================================
-##                         Dependent variable:    
-##                     ---------------------------
-##                               nettfa           
-## -----------------------------------------------
-## inc                          0.799***          
-##                               (0.060)          
-##                                                
-## age                          0.843***          
-##                               (0.092)          
-##                                                
-## Constant                    -43.040***         
-##                               (4.080)          
-##                                                
-## -----------------------------------------------
-## Observations                   2,017           
-## R2                             0.119           
-## Adjusted R2                    0.118           
-## Residual Std. Error     44.683 (df = 2014)     
-## F Statistic          136.465*** (df = 2; 2014) 
-## ===============================================
-## Note:               *p<0.1; **p<0.05; ***p<0.01
+
+===============================================
+                        Dependent variable:    
+                    ---------------------------
+                              nettfa           
+-----------------------------------------------
+inc                          0.799***          
+                              (0.060)          
+                                               
+age                          0.843***          
+                              (0.092)          
+                                               
+Constant                    -43.040***         
+                              (4.080)          
+                                               
+-----------------------------------------------
+Observations                   2,017           
+R2                             0.119           
+Adjusted R2                    0.118           
+Residual Std. Error     44.683 (df = 2014)     
+F Statistic          136.465*** (df = 2; 2014) 
+===============================================
+Note:               *p<0.1; **p<0.05; ***p<0.01
 ```
 
 Using only single family households, we get the model:
@@ -265,9 +319,51 @@ The intercept, $\hat{\beta_0}=-43.040$, means that at age 0 and income = 0, thei
 ### (iv)
 
 
+```r
+pt(-1.5,2014)
+```
+
+```
+[1] 0.06688557
+```
+
 
 ### (v)
 
+
+```r
+srm <- lm(nettfa~inc, d2a)
+stargazer(srm, mrm2, type = 'text')
+```
+
+```
+
+=======================================================================
+                                    Dependent variable:                
+                    ---------------------------------------------------
+                                          nettfa                       
+                               (1)                       (2)           
+-----------------------------------------------------------------------
+inc                         0.821***                  0.799***         
+                             (0.061)                   (0.060)         
+                                                                       
+age                                                   0.843***         
+                                                       (0.092)         
+                                                                       
+Constant                   -10.571***                -43.040***        
+                             (2.061)                   (4.080)         
+                                                                       
+-----------------------------------------------------------------------
+Observations                  2,017                     2,017          
+R2                            0.083                     0.119          
+Adjusted R2                   0.082                     0.118          
+Residual Std. Error    45.592 (df = 2015)        44.683 (df = 2014)    
+F Statistic         181.599*** (df = 1; 2015) 136.465*** (df = 2; 2014)
+=======================================================================
+Note:                                       *p<0.1; **p<0.05; ***p<0.01
+```
+
+When calculating the regression using just inc, the estimated coefficient is larger than it is the first model. It is going to be larger because the correlation is small between age and inc. So when we remove the age, we introduce a small postivie bias into the model which gives us a larger estimated coefficient.
 
 ## Question 8
 
@@ -319,7 +415,7 @@ With an $n=401$ and $R^2=0.087$. AT the 5% level, $\hat{\beta_1}$ is statistical
 
 
 ```r
-pander(cor.test(d3$lincome,d3$prppov))
+pander(cor.test(d3$lincome,d3$prppov, method = "pearson", use="complete.obs"))
 ```
 
 
@@ -331,7 +427,82 @@ pander(cor.test(d3$lincome,d3$prppov))
 
 Table: Pearson's product-moment correlation: `d3$lincome` and `d3$prppov`
 
+```r
+summary(mrm3)
+```
+
+```
+
+Call:
+lm(formula = lpsoda ~ prpblck + lincome + prppov, data = d3)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.32218 -0.04648  0.00651  0.04272  0.35622 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) -1.46333    0.29371  -4.982  9.4e-07 ***
+prpblck      0.07281    0.03068   2.373   0.0181 *  
+lincome      0.13696    0.02676   5.119  4.8e-07 ***
+prppov       0.38036    0.13279   2.864   0.0044 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.08137 on 397 degrees of freedom
+  (9 observations deleted due to missingness)
+Multiple R-squared:  0.08696,	Adjusted R-squared:  0.08006 
+F-statistic:  12.6 on 3 and 397 DF,  p-value: 6.917e-08
+```
+
+The correlation between log(income) and prppov is **-0.8385**.
+
+The p-value for log(income) is 0.0045 and the p-value for prppov is 0.00001. These are both significant at the 1% level.
 
 ### (iii)
 
+
+```r
+mrm4 <- lm(lpsoda~prpblck+lincome+prppov+lhseval, d3)
+stargazer(mrm4, type='text')
+```
+
+```
+
+===============================================
+                        Dependent variable:    
+                    ---------------------------
+                              lpsoda           
+-----------------------------------------------
+prpblck                      0.098***          
+                              (0.029)          
+                                               
+lincome                       -0.053           
+                              (0.038)          
+                                               
+prppov                         0.052           
+                              (0.134)          
+                                               
+lhseval                      0.121***          
+                              (0.018)          
+                                               
+Constant                     -0.842***         
+                              (0.292)          
+                                               
+-----------------------------------------------
+Observations                    401            
+R2                             0.184           
+Adjusted R2                    0.176           
+Residual Std. Error      0.077 (df = 396)      
+F Statistic           22.313*** (df = 4; 396)  
+===============================================
+Note:               *p<0.1; **p<0.05; ***p<0.01
+```
+
+Adding the variable **log(hseval)** we get the following model:
+
+$$log(psoda)=-0.842+0.098prpblck-0.053log(income)+0.052prppov+0.121log(hseval)$$
+Using this model, we can interpret the coefficient to mean that a 1% higher median housing value in a zip code with increase the predicted price of a medium soda by 0.121%.
+
+For the two-sided p-value at $H_0:\beta_{log(hseval)}=0$ we have a low p-value, less than 
 

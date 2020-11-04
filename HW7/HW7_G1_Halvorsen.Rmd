@@ -25,15 +25,23 @@ library(car)
 
 ### (i) 
 
+If you have heteroskedasticity, you violate assumption MLR5 and cannot rely on the t stat
+
 ### (ii)
 
+If you have a sample correlation coefficient of .95 between two independent variables in the model, you are not in violation of the assumptions and you can use the t stat.
+
 ### (iii)
+
+If you omit an important explanatory variable, you introduce bias into your model, which would violate MLR.4, and you would not be able to rely on the t test for your model.
+
+\newpage
 
 ## Question 2
 
 ### (i) 
 
-The null hypothesis would be $H_0: \beta_3=0$. The alternative hypothesis would be $H_1: \beta_3\neq0$
+The null hypothesis would be $H_0:\beta_3=0$. The alternative hypothesis would be $H_1:\beta_3\neq0$
 
 ### (ii)
 
@@ -47,17 +55,41 @@ Because this is a log-log model, the interpretation of this model should be, *"A
 
 ### (iv)
 
-With a degree of freedom of 60 (64-4), at the 1% level, we 
+With a degree of freedom of 60 (64-4), at the 1% level, we need to calculate the t value as $$t=\frac{\hat{\beta_3}-\beta_{3_{H_0}}}{se(\hat{\beta_3})}$$
+This would give an estimated t stat of $\frac{0.0056-0}{0.0017}≈3.294$
+```{r}
+qt(0.995, 60)
+```
+
+We would reject the null hypothesis at the 1% significance level.
+
+\newpage
 
 ## Question 3
 
 ### (i)
 
+We fail to reject the null hypothesis where $\beta_0=0$ and we also fail to reject the null hypothesis where $\beta_1=1$. We calculate this be evaluating the t stat for each parameter: 
+
+$$\beta_0[\,tstat]\,=\left\lvert\frac{-14.47}{16.27}\right\rvert≈0.889$$ and $$\beta_1[\,tstat]\,= \left\lvert \frac{0.976-1}{.049} \right\rvert≈0.4898$$
+
 ### (ii)
+
+We need to calculate the F statistic where:
+
+$$F=\frac{\frac{(SSR_R-SSR_{UR})}{q}}{\frac{SSR_{UR}}{n-k-1}} = \frac{\frac{209448.99-165644.51}{2}}{\frac{165644.51}{86}}=11.3713$$
+So we are going to reject the null that they are jointly significant.
 
 ### (iii)
 
+To test the joint hypothesis that $H_0:\beta_2=0, \beta_3=0, and \space \beta_4=0$ we need to test
+
+$$F=\frac{\frac{(R^2_{UR}-R^2_R)}{q}}{\frac{(1-R^2_{UR})}{n-k-1}} = \frac{\frac{0.829-0.820}{3}}{\frac{1-0.829}{88-4-1}}=1.45614$$
+So, with this output, we fail to reject the null.
+
 ### (iv) 
+
+You cannot rely on the F statistic from part iii because we have violated assumption MLR.5. 
 
 \newpage
 
@@ -66,13 +98,15 @@ With a degree of freedom of 60 (64-4), at the 1% level, we
 ### (i)
 
 We can apply the property of variance: 
-$$Var(\hat{\beta}_1-3\hat{\beta}_2=Var(\hat{\beta}_1)+9Var(\hat{\beta}_2)-6 Cov(\hat{\beta}_1,\hat{\beta}_2)$$
+$$Var(\hat{\theta})=Var(\hat{\beta}_1-3\hat{\beta}_2)=Var(\hat{\beta}_1)+9Var(\hat{\beta}_2)-6 Cov(\hat{\beta}_1,\hat{\beta}_2)$$
 
 ### (ii)
 
 $$t = \frac{(\hat{\beta}_1-3\hat{\beta}_2-1)}{se(\hat{\beta}_1-3\hat{\beta}_2)}$$
 
-We will need to identify the standard error, or $se(\hat{\beta}_1-3\hat{\beta}_2)$
+So to identify the t statistic, we get:
+
+$$t = \frac{(\hat{\beta}_1-3\hat{\beta}_2-1)}{se[\,(\hat{\beta}_1)+9Var(\hat{\beta}_2)-6 Cov(\hat{\beta}_1,\hat{\beta}_2)]\,}$$
 
 ### (iii)
 
@@ -82,19 +116,21 @@ $$y=\beta_0+(\theta_1+3\beta_2)x_1+\beta_2x_2+\beta_3x_3+u$$
 $$=\beta_0+\theta_1x_1+\beta_2(3x_1+x_2)+\beta_3x_3+u$$
 We would estimate y by regressing y on $x_1, 3x_1+x_2,$ and $x_3$. This will allow us to calculate the stand error and coefficient of $x_1$
 
+\newpage
+
 ## Question 5
 
 ### (i)
 
-With the negative sign, I would expect that if a profit margins are small, meaning they weren't that profitable of a company, then that firm would need to pay more in order to attract someone to fill the position.
+With our t stat close to 1: ($\frac{.0023}{.0022}$), we will fail to reject that this variable is irrelevant.
 
 ### (ii)
 
-Yes, the effect is significant. The t value is greater than 2, and this would make sense that companies with larger market values pay more.
+Yes, the effect is significant. The t value is greater than 2, and a critical value of and this would make sense that companies with larger market values pay more. 
 
 ### (iii)
 
-The
+The t value for ceoten is $\frac{.0171}{.0055}≈3.101$ and the t value for comten $\frac{.0092}{.0033}≈2.788$ so they are both significant to our model.
 
 ### (iv)
 
@@ -137,10 +173,10 @@ $$log(price)=\beta_0+\beta_1(sqrft-150bdrms)+\theta_1bdrms + u$$
 ### (iii)
 
 ```{r comment=NA}
-d1$bdrms_150 <- d1$bdrms*150
-d1$bdrms_theta <- d1$bdrms*theta
-se1 <- lm(lprice~(sqrft-bdrms_150)+(bdrms_theta), d1)
+se1 <- lm(lprice~I(sqrft-150*bdrms)+bdrms, d1)
 stargazer(se1, type = 'text')
+
+pander(confint(se1, level = 0.95))
 ```
 
 
@@ -149,7 +185,7 @@ stargazer(se1, type = 'text')
 
 ### (i)
 
-```{r}
+```{r comment=NA}
 d2 <- k401ksubs
 d2  %>% 
   filter(fsize==1) %>% 
@@ -160,7 +196,7 @@ There are 2017 single person households in the dataset.
 
 ### (ii)
 
-```{r}
+```{r comment=NA}
 d2a <- d2 %>% 
   filter(fsize==1)
 mrm2 <- lm(nettfa~inc+age, d2a)
@@ -178,10 +214,19 @@ The intercept, $\hat{\beta_0}=-43.040$, means that at age 0 and income = 0, thei
 
 ### (iv)
 
+```{r comment=NA}
+pt(-1.5,2014)
+```
 
 
 ### (v)
 
+```{r comment=NA}
+srm <- lm(nettfa~inc, d2a)
+stargazer(srm, mrm2, type = 'text')
+```
+
+When calculating the regression using just inc, the estimated coefficient is larger than it is the first model. It is going to be larger because the correlation is small between age and inc. So when we remove the age, we introduce a small postivie bias into the model which gives us a larger estimated coefficient.
 
 ## Question 8
 
@@ -202,10 +247,25 @@ With an $n=401$ and $R^2=0.087$. AT the 5% level, $\hat{\beta_1}$ is statistical
 ### (ii)
 
 ```{r comment=NA}
-pander(cor.test(d3$lincome,d3$prppov))
+pander(cor.test(d3$lincome,d3$prppov, method = "pearson", use="complete.obs"))
+summary(mrm3)
 ```
 
+The correlation between log(income) and prppov is **-0.8385**.
+
+The p-value for log(income) is 0.0045 and the p-value for prppov is 0.00001. These are both significant at the 1% level.
 
 ### (iii)
 
+```{r comment=NA}
+mrm4 <- lm(lpsoda~prpblck+lincome+prppov+lhseval, d3)
+stargazer(mrm4, type='text')
+```
+
+Adding the variable **log(hseval)** we get the following model:
+
+$$log(psoda)=-0.842+0.098prpblck-0.053log(income)+0.052prppov+0.121log(hseval)$$
+Using this model, we can interpret the coefficient to mean that a 1% higher median housing value in a zip code with increase the predicted price of a medium soda by 0.121%.
+
+For the two-sided p-value at $H_0:\beta_{log(hseval)}=0$ we have a low p-value, less than 
 
