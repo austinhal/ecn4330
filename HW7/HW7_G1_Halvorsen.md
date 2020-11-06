@@ -1,7 +1,7 @@
 ---
 title: "HW7 Group 1, Austin Halvorsen"
 author: "Pedram Jahangiry"
-date: "Nov 3 2020"
+date: "Nov 5 2020"
 output:
   word_document: 
     keep_md: yes
@@ -491,10 +491,39 @@ F Statistic           22.313*** (df = 4; 396)
 Note:               *p<0.1; **p<0.05; ***p<0.01
 ```
 
+```r
+summary(mrm4)
+```
+
+```
+
+Call:
+lm(formula = lpsoda ~ prpblck + lincome + prppov + lhseval, data = d3)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.30652 -0.04380  0.00701  0.04332  0.35272 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) -0.84151    0.29243  -2.878 0.004224 ** 
+prpblck      0.09755    0.02926   3.334 0.000937 ***
+lincome     -0.05299    0.03753  -1.412 0.158707    
+prppov       0.05212    0.13450   0.388 0.698570    
+lhseval      0.12131    0.01768   6.860 2.67e-11 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.07702 on 396 degrees of freedom
+  (9 observations deleted due to missingness)
+Multiple R-squared:  0.1839,	Adjusted R-squared:  0.1757 
+F-statistic: 22.31 on 4 and 396 DF,  p-value: < 2.2e-16
+```
+
 Adding the variable **log(hseval)** we get the following model:
 
 $$log(psoda)=-0.842+0.098prpblck-0.053log(income)+0.052prppov+0.121log(hseval)$$
 Using this model, we can interpret the coefficient to mean that a 1% higher median housing value in a zip code with increase the predicted price of a medium soda by 0.121%.
 
-For the two-sided p-value at $H_0:\beta_{log(hseval)}=0$ we have a low p-value, less than 
+For the two-sided p-value at $H_0:\beta_{log(hseval)}=0$ we have a low p-value.
 
