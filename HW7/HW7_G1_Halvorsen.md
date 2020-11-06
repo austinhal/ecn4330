@@ -1,7 +1,7 @@
 ---
 title: "HW7 Group 1, Austin Halvorsen"
 author: "Pedram Jahangiry"
-date: "Nov 3 2020"
+date: "Nov 5 2020"
 output:
   word_document: 
     keep_md: yes

@@ -1,7 +1,7 @@
 ---
 title: "HW7 Group 1, Austin Halvorsen"
 author: "Pedram Jahangiry"
-date: "Nov 3 2020"
+date: "Nov 5 2020"
 output:
   word_document: 
     keep_md: yes
@@ -257,6 +257,7 @@ The p-value for log(income) is 0.0045 and the p-value for prppov is 0.00001. The
 ```{r comment=NA}
 mrm4 <- lm(lpsoda~prpblck+lincome+prppov+lhseval, d3)
 stargazer(mrm4, type='text')
+summary(mrm4)
 ```
 
 Adding the variable **log(hseval)** we get the following model:
@@ -264,5 +265,5 @@ Adding the variable **log(hseval)** we get the following model:
 $$log(psoda)=-0.842+0.098prpblck-0.053log(income)+0.052prppov+0.121log(hseval)$$
 Using this model, we can interpret the coefficient to mean that a 1% higher median housing value in a zip code with increase the predicted price of a medium soda by 0.121%.
 
-For the two-sided p-value at $H_0:\beta_{log(hseval)}=0$ we have a low p-value, less than 
+For the two-sided p-value at $H_0:\beta_{log(hseval)}=0$ we have a low p-value.
 

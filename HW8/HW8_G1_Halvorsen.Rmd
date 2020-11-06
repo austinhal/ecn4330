@@ -1,0 +1,119 @@
+---
+title: "HW7 Group 8, Austin Halvorsen"
+author: "Pedram Jahangiry"
+date: "Nov 5 2020"
+output:
+  word_document: 
+    keep_md: yes
+  pdf_document: default
+---
+
+\newpage
+
+# Problems
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+# setup
+library(tidyverse)
+library(stargazer)
+library(wooldridge)
+library(pander)
+library(car)
+```
+
+## Question 1
+
+### (i) 
+
+A larger tolerance ($risktol$) means that there is more willingness to invest in the stock market. $funds$ and $risktol$ are given to be positively correlated. If $x_2$ has a positive partial effect on the dependent variable $pctstck$, such that $\beta_2 > 0$ then the inconsistency is positive.  
+
+\newline
+
+$\hat{\beta_1}$ has a positive inconsistency (asymptotic). If we take out $risktol$ from the regression and it is positively correlated with $funds$, some of the effect of $funds$ is due to the effect of $risktol$
+
+---------
+
+\newpage
+
+# Computer Exercises
+
+## Question 2
+
+### (i) 
+
+```{r comment=NA}
+d1 <- wage1
+mrm1 <- lm(wage~educ+exper+tenure, d1)
+pander(summary(mrm1))
+```
+
+The estimated model is: $wage=-2.873+0.599educ+0.02234exper+0.1693tenure$
+
+\newline
+
+This gives us an $n=526$. and an $R^2=0.306$
+
+```{r comment=NA}
+histresid <- resid(mrm1)
+hist(histresid,breaks = 25, main= "Residuals for Wage", xlim=c(-10,15))
+```
+
+### (ii)
+
+```{r comment=NA}
+mrm1_log <- lm(lwage~educ+exper+tenure, d1)
+pander(summary(mrm1_log))
+```
+
+The estimated model is: $wage=0.284+0.092educ+0.0041exper+0.02207tenure$
+
+\newline
+
+This gives us an $n=526$. and an $R^2=0.316$
+
+```{r}
+histresid_log <- resid(mrm1_log)
+hist(histresid_log, breaks = 25, main= "Residuals for log(Wage)", xlim=c(-2,2))
+```
+
+
+### (iii)
+
+I would say that our MLR6 assumption is closer to being satisfied in our log-level model than our level-level model. Looking at the residuals for our level-level model, there is a large right skewed in the residuals that quite far from the mean. We appear to have a much more normal distribution of residuals in our log-level model.
+
+\newpage
+
+## Question 3
+
+### (i)
+
+```{r}
+d2 <- econmath
+pander(paste("The minimum score would be: " ,min(d2$score), " \nThe maximum score would be: ", max(d2$score)))
+```
+Logically, we wouldn't expect to see any scores <0% and no score >100%.
+
+### (ii)
+```{r comment=NA}
+hist(d2$score, breaks = 25, main="Distribution of Scores")
+```
+Looking at our histogram of math scores, we can see that they are skewed left. Given this, we have violated normality assumptions in our data and therefore, assuming that MLR.6 will not hold for error term $u$. This would mean that t stat would not have the correct distribution and neither would our F stat. 
+
+### (iii)
+
+```{r comment=NA}
+mrm2 <- lm(score~colgpa+actmth+acteng, d2)
+pander(summary(mrm2))
+```
+
+The estimated model is: $score=16.17+12.37colgpa+0.8834actmth+0.05176acteng$
+
+\newline
+
+This gives us an $n=814$. and an $R^2=0.3972$
+
+\newline
+
+Our estimated t value would be 0.4661 and P-value would be 0.6413
+
+I would disagree with their statement that I, "cannot trust the P-value" because we are using a large sample size. Therefore, we can ignore MLR.6 since the central limit theorem will apply and we can trust the P-value from our model.
