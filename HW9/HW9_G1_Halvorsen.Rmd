@@ -1,0 +1,142 @@
+---
+title: "HW9 Group 1, Austin Halvorsen"
+author: "Pedram Jahangiry"
+date: "Nov 12 2020"
+output:
+  word_document: 
+    keep_md: yes
+  pdf_document: default
+---
+
+\newpage
+
+# Problems
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+# setup
+library(tidyverse)
+library(stargazer)
+library(wooldridge)
+library(pander)
+library(car)
+```
+
+## Question 1
+
+### (i)
+
+We can find the where the marginal effect becomes negative by $\frac{0.0003}{0.000000014}=21,428.57$. This would mean that at $21,428.57, the effect of sales on rdintens, becomes negative.
+ 
+### (ii)
+
+I would keep the quadratic term if the impact was significant. Given that $\frac{-.0000000070}{.0000000037}=-1.892$ which is greater than our critical value of 0.256m I would reject the null and leave the variable in, since it has a significant impact to our model.
+
+### (iii)
+
+$salesbil$ would be sales divided by 1000. This means that our coefficients would be multiplied by 1000, as well as our standard error. With our quadratic term, we need to remember to multiply that terms coefficient by $1000^2$. This would give us a new model of: $$\hat{rdintens}=2.613+0.30salesbil-0.0070salesbil^2$$
+
+### (iv)
+
+I definitely prefer the second equation. With leading zeros gone, the results are much easier to interpret and we aren't confused by having to count them all up to see what the effect is. 
+
+\newpage
+
+## Question 2
+
+---------
+
+\newpage
+
+# Computer Exercises
+
+## Question 3
+
+### (i)
+```{r comment=NA}
+df <- kielmc
+df_1981 <- df %>% filter(df$year==1981)
+```
+
+Given that if increased distance would most likely increase the value of your home, I would expect that the sign of $\beta_1$ would be positive.
+
+```{r comment=NA}
+srm1 <- lm(lprice~ldist, df_1981)
+pander(summary(srm1))
+```
+
+Running our model, we get: $\hat{log(price)}=8.047+0.3649log(dist)$ with an $n=142$ and an adjusted $R^2=0.1744$. This means that for each 1% increase in distance from the incinerator, we would expect to see home prices increase by approximately 0.37%.
+
+### (ii)
+
+```{r comment=NA}
+srm2 <- lm(lprice~ldist+lintst+larea+lland+rooms+baths+age, df_1981)
+pander(summary(srm2))
+```
+
+Running this model, we get: 
+$$\hat{log(price)}=7.592+0.055log(dist)-0.039log(intst)+0.3193log(area)+0.0768log(land)+0.0425rooms+0.1669baths-0.0036age$$
+with an $n=142$ and an adjusted $R^2=0.7344$
+
+After running the model with the additional variables, we had our first model give us that distance was significant to our model, however now, it has a t value less than one, and it is not significant in our second model. Essentially, by controlling for distance, it may not be as important as we thought it was in our simple regression analysis. The conflicting results in our model come from our scope. In the first, we are only looking at distance and price. In our new model, we are controlling for distance and can see the effect of the other factors and how they influence price.
+
+### (iii)
+
+```{r comment=NA}
+srm3 <- lm(lprice~ldist+lintst+larea+lland+rooms+baths+age+I(lintst^2), df_1981)
+pander(summary(srm3))
+```
+
+Adding in $log(intst)^2$, our adjusted $R^2$ value increases from 0.7344 to 0.7642. Interestingly, our factor log(dist) changes from insignificant, to significant, just by adding the new factor. Mainly, we can observe a big influence on our variables log(dist) and log(intst). Functional form is important to consider when analyzing your data, because you need to be aware of the transformations it is making on your data. It could completely change the interpretation of your model from factors having positive or negative influence, or from being insignificant to significant.
+
+### (iv)
+
+```{r comment=NA}
+srm4 <- lm(lprice~ldist+I(ldist^2)+lintst+larea+lland+rooms+baths+age+I(lintst^2), df_1981)
+pander(summary(srm4))
+```
+
+By adding in $log(dist)^2$, it is not significant in our model, so there is no reason to add it into our model. Additionally, it makes our model less accurate, so we shouldn't add it.
+
+\newpage
+
+## Question 4
+
+### (i)
+```{r comment=NA}
+df2 <- wage2
+```
+
+Holding $exper$ and our $u$ elements fixed, we can rewrite our model as:
+
+$$\Delta\log(wage)=\beta_1\Delta\ educ+\beta_3(\Delta educ)exper = (\beta_1+\beta_3exper)\Delta educ$$
+This means that our proportion for approximating the change in wage for an additional year of education would look like. 
+
+$$\frac{\Delta log(wage)}{\Delta educ}=(\beta_1+\beta_3exper)$$
+
+### (ii)
+
+If return to education does not depend on level of exper then $H_0: \beta_3=0$. However, if we believe that exper and educ have a positive interaction, meaning that people with more experience are more productive with an additional year of education, then our alternative hypothesis would be: $\beta_3>0$.
+
+### (iii)
+
+```{r comment=NA}
+mrm1 <- lm(lwage~educ+exper+I(educ*exper), df2) 
+pander(summary(mrm1))
+```
+
+Running this model, our estimated model is: $\hat{log(wage)}=5.95+0.0440educ-0.0215exper+0.00320educ*exper$ with an $n=935$, $R^2=0.1349$ and $\bar{R}^2=0.132$. 
+
+With a t value of 2.095, we reject the null hypothesis at the 5% level of significance.
+
+### (iv)
+
+```{r comment=NA}
+df2new <- df2 %>% mutate(exper10 = exper - 10)
+mrm2 <- lm(lwage~educ+exper+I(educ*exper10), df2new)
+pander(summary(mrm2))
+pander(confint(mrm2))
+```
+
+Our new model look like: $log(wage)=\beta_0+\theta_1educ+\beta_2exper+\beta_3educ(exper-10)+u$. Running this regression with the new factor, we obtain $\hat{\theta_1}≈0.761$ and $se(\hat{\theta_1})≈0.0066$. The 95% confidence interval for $\theta_1$ is 0.0631 to 0.08906 
+
+
