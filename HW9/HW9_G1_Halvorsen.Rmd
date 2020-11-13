@@ -43,6 +43,11 @@ I definitely prefer the second equation. With leading zeros gone, the results ar
 
 ## Question 2
 
+Of the models listed, I would say that the second is the preferred. 
+
+  - First: the adjusted $\bar{R}^2$ value is noticeably higher than the other models, so even with the additional factors, we are getting the most explanation from our model.
+  - Second: Our second model also has the same amount of explanatory variables as the first model, and less than the third model, and still has a higher adjusted $\bar{R}^2$ value. And it's just easier to interpret than the third.
+
 ---------
 
 \newpage
