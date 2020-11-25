@@ -104,8 +104,135 @@ The $R^2$ value will remain unchanged, since we are using the same set of indepe
 ## Question 4
 
 ### (i)
+
+```r
+df2 <- gpa1
+mrm4 <- lm(colGPA~PC+hsGPA+ACT+mothcoll+fathcoll, df2)
+stargazer(mrm4, type="text")
+```
+
+```
+
+===============================================
+                        Dependent variable:    
+                    ---------------------------
+                              colGPA           
+-----------------------------------------------
+PC                            0.152**          
+                              (0.059)          
+                                               
+hsGPA                        0.450***          
+                              (0.094)          
+                                               
+ACT                            0.008           
+                              (0.011)          
+                                               
+mothcoll                      -0.004           
+                              (0.060)          
+                                               
+fathcoll                       0.042           
+                              (0.061)          
+                                               
+Constant                     1.256***          
+                              (0.335)          
+                                               
+-----------------------------------------------
+Observations                    141            
+R2                             0.222           
+Adjusted R2                    0.193           
+Residual Std. Error      0.334 (df = 135)      
+F Statistic           7.713*** (df = 5; 135)   
+===============================================
+Note:               *p<0.1; **p<0.05; ***p<0.01
+```
+
+
+
+When adding in *mothcoll* and *fathcoll*, the effect of PC changes from 0.157 to 0.152. The P-value for PC is still less than 0.05, so it is statistically significant.
+
 ### (ii)
+
+
+
+
 ### (iii)
+
+```r
+mrm4a <- lm(colGPA~PC+hsGPA+I(hsGPA^2)+ACT+mothcoll+fathcoll, df2)
+stargazer(mrm4,mrm4a, type='text')
+```
+
+```
+## 
+## =================================================================
+##                                  Dependent variable:             
+##                     ---------------------------------------------
+##                                        colGPA                    
+##                              (1)                    (2)          
+## -----------------------------------------------------------------
+## PC                         0.152**                0.140**        
+##                            (0.059)                (0.059)        
+##                                                                  
+## hsGPA                      0.450***                -1.803        
+##                            (0.094)                (1.444)        
+##                                                                  
+## I(hsGPA2)                                          0.337         
+##                                                   (0.216)        
+##                                                                  
+## ACT                         0.008                  0.005         
+##                            (0.011)                (0.011)        
+##                                                                  
+## mothcoll                    -0.004                 0.003         
+##                            (0.060)                (0.060)        
+##                                                                  
+## fathcoll                    0.042                  0.063         
+##                            (0.061)                (0.062)        
+##                                                                  
+## Constant                   1.256***               5.040**        
+##                            (0.335)                (2.443)        
+##                                                                  
+## -----------------------------------------------------------------
+## Observations                 141                    141          
+## R2                          0.222                  0.236         
+## Adjusted R2                 0.193                  0.202         
+## Residual Std. Error    0.334 (df = 135)       0.333 (df = 134)   
+## F Statistic         7.713*** (df = 5; 135) 6.904*** (df = 6; 134)
+## =================================================================
+## Note:                                 *p<0.1; **p<0.05; ***p<0.01
+```
+
+```r
+summary(mrm4a)
+```
+
+```
+## 
+## Call:
+## lm(formula = colGPA ~ PC + hsGPA + I(hsGPA^2) + ACT + mothcoll + 
+##     fathcoll, data = df2)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.78998 -0.24327 -0.00648  0.26179  0.72231 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(>|t|)  
+## (Intercept)  5.040328   2.443038   2.063   0.0410 *
+## PC           0.140446   0.058858   2.386   0.0184 *
+## hsGPA       -1.802520   1.443552  -1.249   0.2140  
+## I(hsGPA^2)   0.337341   0.215711   1.564   0.1202  
+## ACT          0.004786   0.010786   0.444   0.6580  
+## mothcoll     0.003091   0.060110   0.051   0.9591  
+## fathcoll     0.062761   0.062401   1.006   0.3163  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.3326 on 134 degrees of freedom
+## Multiple R-squared:  0.2361,	Adjusted R-squared:  0.2019 
+## F-statistic: 6.904 on 6 and 134 DF,  p-value: 2.088e-06
+```
+
+The P-value for $hsGPA^2$ 0.115 which is greater than the critical p-value of 0.05, so we probably do not need to add $hsGPA^2$ in not needed.
 
 \newpage
 

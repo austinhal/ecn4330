@@ -111,8 +111,32 @@ The $R^2$ value will remain unchanged, since we are using the same set of indepe
 ## Question 4
 
 ### (i)
+```{r comment=NA}
+df2 <- gpa1
+mrm4 <- lm(colGPA~PC+hsGPA+ACT+mothcoll+fathcoll, df2)
+stargazer(mrm4, type="text")
+```
+
+
+
+When adding in *mothcoll* and *fathcoll*, the effect of PC changes from 0.157 to 0.152. The P-value for PC is still less than 0.05, so it is statistically significant.
+
 ### (ii)
+
+```{r}
+pander(linearHypothesis(mrm4, c("mothcoll", "fathcoll")))
+```
+
+The p-value of the F-stat is 0.7834 which is higher than our 5% significance level indicating that they are jointly significant at the 5% level.
+
 ### (iii)
+```{r}
+mrm4a <- lm(colGPA~PC+hsGPA+I(hsGPA^2)+ACT+mothcoll+fathcoll, df2)
+stargazer(mrm4,mrm4a, type='text')
+summary(mrm4a)
+```
+
+The P-value for $hsGPA^2$ 0.115 which is greater than the critical p-value of 0.05, so we probably do not need to add $hsGPA^2$ in not needed.
 
 \newpage
 
@@ -192,6 +216,13 @@ $$
 $$
  
 ### (iii)
+```{r comment=NA}
+summary(mrm2)$fstatistic
+pander(linearHypothesis(mrm2, c("faminc","hhsize","educ", "age")))
+```
+
+With a low 
+
 ### (iv)
 ### (v)
 ### (vi)
