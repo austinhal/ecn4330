@@ -162,21 +162,35 @@ Our coefficient on *black*, holding all else constant would indicate that the mo
 ### (ii)
 
 ```{r warning=FALSE, comment=NA}
-mrm2 <- lm(lwage~educ+exper+tenure+married+black+south+urban+I(exper^2)+I(tenure^2), df)
+df$expersq = df$exper^2
+df$tenuresq = df$tenure^2
+mrm2 <- lm(lwage~educ+exper+tenure+married+black+south+urban+expersq+tenuresq, df)
 stargazer(mrm1, mrm2, type='text')
-summary(mrm2)
+pander(summary(mrm2))
 ```
 
 ```{r}
-
+pander(linearHypothesis(mrm2, c("expersq","tenuresq"))) 
 ```
 
+With an F stat of 0.226, this is greater than .20 for a 20% significance level. This would mean that $tenure^2$ and $exper^2$ are jointly insignificant at the 20% level.
 
 ### (iii)
 
+```{r comment=NA}
+mrm2b <- lm(lwage~educ+exper+tenure+married+black+south+urban+I(educ*black), df)
+pander(summary(mrm2b))
+```
 
+The p-value for $educ*black$ is 0.2626 which is greater than our level of significance, meaning that return to education does not depend on race at the 5% level.
 
 ### (iv)
+```{r comment=NA}
+mrm2c <- lm(lwage~educ+exper+tenure+married+black+south+urban+I(married*black), df)
+pander(summary(mrm2c))
+```
+
+If you are married a non-black, you are earning 17.9467% more than married black. 
 
 \newpage
 
@@ -257,5 +271,6 @@ ecofam %>%
   summarise(n = n())
 ```
 
-Based on our predictions, the estimated number of 1's is 486, but the actual is 412.
-For 0's, the predicted was 174 with an actual of 248.  
+Based on our predictions, the estimated number of 1's is 486, but the actual is 412. This would be 118%, which seems high.
+For 0's, the predicted was 174 with an actual of 248. The percentage predicted correctly was 70%.
+The model where ecobuy was 1 was still best predicted by the model.

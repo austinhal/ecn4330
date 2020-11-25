@@ -153,7 +153,22 @@ When adding in *mothcoll* and *fathcoll*, the effect of PC changes from 0.157 to
 ### (ii)
 
 
+```r
+pander(linearHypothesis(mrm4, c("mothcoll", "fathcoll")))
+```
 
+
+---------------------------------------------------
+ Res.Df    RSS    Df   Sum of Sq     F      Pr(>F) 
+-------- ------- ---- ----------- -------- --------
+  137     15.15   NA      NA         NA       NA   
+
+  135     15.09   2     0.05469    0.2446   0.7834 
+---------------------------------------------------
+
+Table: Linear hypothesis test
+
+The p-value of the F-stat is 0.7834 which is higher than our 5% significance level indicating that they are jointly insignificant at the 5% level.
 
 ### (iii)
 
@@ -290,7 +305,9 @@ Our coefficient on *black*, holding all else constant would indicate that the mo
 
 
 ```r
-mrm2 <- lm(lwage~educ+exper+tenure+married+black+south+urban+I(exper^2)+I(tenure^2), df)
+df$expersq = df$exper^2
+df$tenuresq = df$tenure^2
+mrm2 <- lm(lwage~educ+exper+tenure+married+black+south+urban+expersq+tenuresq, df)
 stargazer(mrm1, mrm2, type='text')
 ```
 
@@ -323,10 +340,10 @@ south                      -0.091***               -0.091***
 urban                      0.184***                0.185***        
                             (0.027)                 (0.027)        
                                                                    
-I(exper2)                                           -0.0001        
+expersq                                             -0.0001        
                                                     (0.001)        
                                                                    
-I(tenure2)                                          -0.001*        
+tenuresq                                            -0.001*        
                                                    (0.0005)        
                                                                    
 Constant                   5.395***                5.359***        
@@ -343,47 +360,143 @@ Note:                                   *p<0.1; **p<0.05; ***p<0.01
 ```
 
 ```r
-summary(mrm2)
-```
-
-```
-
-Call:
-lm(formula = lwage ~ educ + exper + tenure + married + black + 
-    south + urban + I(exper^2) + I(tenure^2), data = df)
-
-Residuals:
-     Min       1Q   Median       3Q      Max 
--1.98236 -0.21972 -0.00036  0.24078  1.25127 
-
-Coefficients:
-              Estimate Std. Error t value Pr(>|t|)    
-(Intercept)  5.3586757  0.1259143  42.558  < 2e-16 ***
-educ         0.0642761  0.0063115  10.184  < 2e-16 ***
-exper        0.0172146  0.0126138   1.365 0.172665    
-tenure       0.0249291  0.0081297   3.066 0.002229 ** 
-married      0.1985470  0.0391103   5.077 4.65e-07 ***
-black       -0.1906636  0.0377011  -5.057 5.13e-07 ***
-south       -0.0912153  0.0262356  -3.477 0.000531 ***
-urban        0.1854241  0.0269585   6.878 1.12e-11 ***
-I(exper^2)  -0.0001138  0.0005319  -0.214 0.830622    
-I(tenure^2) -0.0007964  0.0004710  -1.691 0.091188 .  
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 0.3653 on 925 degrees of freedom
-Multiple R-squared:  0.255,	Adjusted R-squared:  0.2477 
-F-statistic: 35.17 on 9 and 925 DF,  p-value: < 2.2e-16
+pander(summary(mrm2))
 ```
 
 
+------------------------------------------------------------------
+     &nbsp;         Estimate    Std. Error   t value    Pr(>|t|)  
+----------------- ------------ ------------ --------- ------------
+ **(Intercept)**     5.359        0.1259      42.56    4.658e-220 
 
+    **educ**        0.06428      0.006311     10.18    3.692e-23  
+
+    **exper**       0.01721      0.01261      1.365      0.1727   
+
+   **tenure**       0.02493      0.00813      3.066     0.002229  
+
+   **married**       0.1985      0.03911      5.077    4.646e-07  
+
+    **black**       -0.1907       0.0377     -5.057    5.128e-07  
+
+    **south**       -0.09122     0.02624     -3.477    0.0005311  
+
+    **urban**        0.1854      0.02696      6.878    1.116e-11  
+
+   **expersq**     -0.0001138   0.0005319    -0.214      0.8306   
+
+  **tenuresq**     -0.0007964    0.000471    -1.691     0.09119   
+------------------------------------------------------------------
+
+
+-------------------------------------------------------------
+ Observations   Residual Std. Error   $R^2$   Adjusted $R^2$ 
+-------------- --------------------- ------- ----------------
+     935              0.3653          0.255       0.2477     
+-------------------------------------------------------------
+
+Table: Fitting linear model: lwage ~ educ + exper + tenure + married + black + south + urban + expersq + tenuresq
+
+
+```r
+pander(linearHypothesis(mrm2, c("expersq","tenuresq"))) 
+```
+
+
+-------------------------------------------------
+ Res.Df    RSS    Df   Sum of Sq    F     Pr(>F) 
+-------- ------- ---- ----------- ------ --------
+  927     123.8   NA      NA        NA      NA   
+
+  925     123.4   2     0.3976     1.49   0.226  
+-------------------------------------------------
+
+Table: Linear hypothesis test
+
+With an F stat of 0.226, this is greater than .20 for a 20% significance level. This would mean that $tenure^2$ and $exper^2$ are jointly insignificant at the 20% level.
 
 ### (iii)
 
 
+```r
+mrm2b <- lm(lwage~educ+exper+tenure+married+black+south+urban+I(educ*black), df)
+pander(summary(mrm2b))
+```
+
+
+-------------------------------------------------------------------
+       &nbsp;          Estimate   Std. Error   t value   Pr(>|t|)  
+--------------------- ---------- ------------ --------- -----------
+   **(Intercept)**      5.375       0.1147      46.86    1.35e-246 
+
+      **educ**         0.06712     0.006428     10.44    3.324e-24 
+
+      **exper**        0.01383     0.003191     4.333    1.63e-05  
+
+     **tenure**        0.01179     0.002453     4.805    1.801e-06 
+
+     **married**        0.1989     0.03905      5.094    4.248e-07 
+
+      **black**        0.09481      0.2554     0.3712     0.7106   
+
+      **south**        -0.08945    0.02628     -3.404    0.0006923 
+
+      **urban**         0.1839     0.02695      6.821    1.633e-11 
+
+ **I(educ * black)**   -0.02262    0.02018     -1.121     0.2626   
+-------------------------------------------------------------------
+
+
+--------------------------------------------------------------
+ Observations   Residual Std. Error   $R^2$    Adjusted $R^2$ 
+-------------- --------------------- -------- ----------------
+     935              0.3654          0.2536       0.2471     
+--------------------------------------------------------------
+
+Table: Fitting linear model: lwage ~ educ + exper + tenure + married + black + south + urban + I(educ * black)
+
+The p-value for $educ*black$ is 0.2626 which is greater than our level of significance, meaning that return to education does not depend on race at the 5% level.
 
 ### (iv)
+
+```r
+mrm2c <- lm(lwage~educ+exper+tenure+married+black+south+urban+I(married*black), df)
+pander(summary(mrm2c))
+```
+
+
+-----------------------------------------------------------------------
+         &nbsp;           Estimate   Std. Error   t value    Pr(>|t|)  
+------------------------ ---------- ------------ --------- ------------
+    **(Intercept)**        5.404       0.1141      47.35    1.458e-249 
+
+        **educ**          0.06548     0.006253     10.47     2.52e-24  
+
+       **exper**          0.01415     0.003191     4.433     1.04e-05  
+
+       **tenure**         0.01166     0.002458     4.745    2.415e-06  
+
+      **married**          0.1889     0.04288      4.406    1.177e-05  
+
+       **black**          -0.2408     0.09602     -2.508     0.01231   
+
+       **south**          -0.09199    0.02632     -3.495    0.0004968  
+
+       **urban**           0.1844     0.02698      6.833    1.502e-11  
+
+ **I(married * black)**   0.06135      0.1033     0.5941      0.5526   
+-----------------------------------------------------------------------
+
+
+--------------------------------------------------------------
+ Observations   Residual Std. Error   $R^2$    Adjusted $R^2$ 
+-------------- --------------------- -------- ----------------
+     935              0.3656          0.2528       0.2464     
+--------------------------------------------------------------
+
+Table: Fitting linear model: lwage ~ educ + exper + tenure + married + black + south + urban + I(married * black)
+
+If you are married a non-black, you are earning 17.9467% more than married black. 
 
 \newpage
 
@@ -458,6 +571,166 @@ $$
 $$
  
 ### (iii)
+
+```r
+summary(mrm2)$fstatistic
+```
+
+```
+    value     numdf     dendf 
+ 13.42704   6.00000 653.00000 
+```
+
+```r
+pander(linearHypothesis(mrm2, c("faminc","hhsize","educ", "age")))
+```
+
+
+----------------------------------------------------
+ Res.Df    RSS    Df   Sum of Sq     F      Pr(>F)  
+-------- ------- ---- ----------- ------- ----------
+  657     141.5   NA      NA        NA        NA    
+
+  653     137.8   4      3.738     4.428   0.001544 
+----------------------------------------------------
+
+Table: Linear hypothesis test
+
+With a p-value of 0.0015, we can conclude that the non-price factors are statistically significant at the 5% level.
+The highest influential factor besides price that effects the decision to buy eco-apples is $educ$.
+This makes sense because the more education you have, the more likely you are to understand the benefits of these types of apples and thus increase the demand.
+
 ### (iv)
+
+```r
+mrm3 <- lm(ecobuy~ecoprc+regprc+I(log(faminc))+hhsize+educ+age, df_dummy)
+stargazer(mrm2,mrm3, type='text')
+```
+
+```
+
+===========================================================
+                                   Dependent variable:     
+                               ----------------------------
+                                          ecobuy           
+                                    (1)            (2)     
+-----------------------------------------------------------
+ecoprc                           -0.803***      -0.801***  
+                                  (0.109)        (0.109)   
+                                                           
+regprc                            0.719***      0.721***   
+                                  (0.132)        (0.132)   
+                                                           
+faminc                             0.001                   
+                                  (0.001)                  
+                                                           
+I(log(faminc))                                    0.045    
+                                                 (0.029)   
+                                                           
+hhsize                             0.024*        0.023*    
+                                  (0.013)        (0.013)   
+                                                           
+educ                              0.025***      0.023***   
+                                  (0.008)        (0.008)   
+                                                           
+age                                -0.001        -0.0004   
+                                  (0.001)        (0.001)   
+                                                           
+Constant                          0.424**        0.304*    
+                                  (0.165)        (0.179)   
+                                                           
+-----------------------------------------------------------
+Observations                        660            660     
+R2                                 0.110          0.112    
+Adjusted R2                        0.102          0.103    
+Residual Std. Error (df = 653)     0.459          0.459    
+F Statistic (df = 6; 653)        13.427***      13.673***  
+===========================================================
+Note:                           *p<0.1; **p<0.05; ***p<0.01
+```
+
+Looking at our output, our adjusted $R^2$ is slightly better than our normal $R^2$, so we should use the $log(faminc)$ variable to have the model fit the data better.
+
 ### (v)
+
+```r
+pander(summary(mrm3))
+```
+
+
+--------------------------------------------------------------------
+       &nbsp;          Estimate    Std. Error   t value   Pr(>|t|)  
+-------------------- ------------ ------------ --------- -----------
+  **(Intercept)**       0.3038       0.179       1.697     0.09011  
+
+     **ecoprc**        -0.8007       0.1093     -7.326    7.041e-13 
+
+     **regprc**         0.7214       0.1315      5.485    5.919e-08 
+
+ **I(log(faminc))**    0.04452      0.02872      1.55      0.1217   
+
+     **hhsize**         0.0227      0.01254      1.81      0.07079  
+
+      **educ**         0.02309      0.008451     2.733    0.006453  
+
+      **age**         -0.0003865    0.001252    -0.3088    0.7576   
+--------------------------------------------------------------------
+
+
+--------------------------------------------------------------
+ Observations   Residual Std. Error   $R^2$    Adjusted $R^2$ 
+-------------- --------------------- -------- ----------------
+     660              0.4589          0.1116       0.1034     
+--------------------------------------------------------------
+
+Table: Fitting linear model: ecobuy ~ ecoprc + regprc + I(log(faminc)) + hhsize + educ + age
+
+None of the estimated probabilities are negative, however two are above 1. This is strange because we shouldn't have predicted probilities that are more than 1. 
+
 ### (vi)
+
+```r
+df_dummy %>%
+  group_by(ecobuy) %>% 
+  summarise(n = n())
+```
+
+```
+## `summarise()` ungrouping output (override with `.groups` argument)
+```
+
+```
+## # A tibble: 2 x 2
+##   ecobuy     n
+##    <dbl> <int>
+## 1      0   248
+## 2      1   412
+```
+
+```r
+ecofam <- tibble(predict(mrm3))
+ecofam %>% 
+  rename(prediction = 'predict(mrm3)') %>% 
+  mutate(model.predict = case_when( 
+    prediction <= 0.5 ~ 0,
+    TRUE ~ 1
+  )) %>%
+  group_by(model.predict) %>% 
+  summarise(n = n())
+```
+
+```
+## `summarise()` ungrouping output (override with `.groups` argument)
+```
+
+```
+## # A tibble: 2 x 2
+##   model.predict     n
+##           <dbl> <int>
+## 1             0   174
+## 2             1   486
+```
+
+Based on our predictions, the estimated number of 1's is 486, but the actual is 412. This would be 118%, which seems high.
+For 0's, the predicted was 174 with an actual of 248. The percentage predicted correctly was 70%.
+The model where ecobuy was 1 was still best predicted by the model.
