@@ -127,7 +127,7 @@ When adding in *mothcoll* and *fathcoll*, the effect of PC changes from 0.157 to
 pander(linearHypothesis(mrm4, c("mothcoll", "fathcoll")))
 ```
 
-The p-value of the F-stat is 0.7834 which is higher than our 5% significance level indicating that they are jointly significant at the 5% level.
+The p-value of the F-stat is 0.7834 which is higher than our 5% significance level indicating that they are jointly insignificant at the 5% level.
 
 ### (iii)
 ```{r}
@@ -221,8 +221,41 @@ summary(mrm2)$fstatistic
 pander(linearHypothesis(mrm2, c("faminc","hhsize","educ", "age")))
 ```
 
-With a low 
+With a p-value of 0.0015, we can conclude that the non-price factors are statistically significant at the 5% level.
+The highest influential factor besides price that effects the decision to buy eco-apples is $educ$.
+This makes sense because the more education you have, the more likely you are to understand the benefits of these types of apples and thus increase the demand.
 
 ### (iv)
+```{r comment=NA}
+mrm3 <- lm(ecobuy~ecoprc+regprc+I(log(faminc))+hhsize+educ+age, df_dummy)
+stargazer(mrm2,mrm3, type='text')
+```
+
+Looking at our output, our adjusted $R^2$ is slightly better than our normal $R^2$, so we should use the $log(faminc)$ variable to have the model fit the data better.
+
 ### (v)
+```{r comment=NA}
+pander(summary(mrm3))
+```
+
+None of the estimated probabilities are negative, however two are above 1. This is strange because we shouldn't have predicted probilities that are more than 1. 
+
 ### (vi)
+```{r}
+df_dummy %>%
+  group_by(ecobuy) %>% 
+  summarise(n = n())
+
+ecofam <- tibble(predict(mrm3))
+ecofam %>% 
+  rename(prediction = 'predict(mrm3)') %>% 
+  mutate(model.predict = case_when( 
+    prediction <= 0.5 ~ 0,
+    TRUE ~ 1
+  )) %>%
+  group_by(model.predict) %>% 
+  summarise(n = n())
+```
+
+Based on our predictions, the estimated number of 1's is 486, but the actual is 412.
+For 0's, the predicted was 174 with an actual of 248.  
