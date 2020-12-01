@@ -12,14 +12,7 @@ output:
 
 # Problems
 
-```{r message=FALSE, warning=FALSE, include=FALSE}
-# setup
-library(tidyverse)
-library(stargazer)
-library(wooldridge)
-library(pander)
-library(car)
-```
+
 
 ## Question 1
 
@@ -71,11 +64,40 @@ Given that our variance should only rely on gender, our model would then look li
 
 ### (ii)
 
-```{r comment=NA}
+
+```r
 df4 <- sleep75
 wls4a <- lm(sleep~totwrk+educ+age+I(age^2)+yngkid+male, df4)
 pander(summary(wls4a))
 ```
+
+
+------------------------------------------------------------------
+     &nbsp;        Estimate   Std. Error    t value     Pr(>|t|)  
+----------------- ---------- ------------ ------------ -----------
+ **(Intercept)**     3841       239.4        16.04      1.51e-49  
+
+   **totwrk**      -0.1634     0.01816       -8.997     2.153e-18 
+
+    **educ**        -11.71      5.872        -1.995      0.04645  
+
+     **age**        -8.697      11.33       -0.7677      0.4429   
+
+  **I(age^2)**      0.1284      0.1347       0.9538      0.3405   
+
+   **yngkid**      -0.0228      50.28      -0.0004535    0.9996   
+
+    **male**        87.75       34.67        2.531       0.01158  
+------------------------------------------------------------------
+
+
+--------------------------------------------------------------
+ Observations   Residual Std. Error   $R^2$    Adjusted $R^2$ 
+-------------- --------------------- -------- ----------------
+     706                418           0.1228       0.1152     
+--------------------------------------------------------------
+
+Table: Fitting linear model: sleep ~ totwrk + educ + age + I(age^2) + yngkid + male
 
 ### (iii)
 
@@ -85,12 +107,17 @@ pander(summary(wls4a))
 
 ### (i)
 
-```{r comment=NA}
+
+```r
 df6 <- hprice1 
 wls6a <- lm(price~lotsize+sqrft+bdrms, df6, method = )
 wls6b <- lm(price~lotsize+sqrft+bdrms, df6)
 pander(summary(wls6))
 ```
+
+Quitting from lines 89-93 (HW11_G1_Halvorsen.Rmd) 
+Error in summary(wls6) : object 'wls6' not found
+Calls: <Anonymous> ... withCallingHandlers -> withVisible -> eval -> eval -> pander -> summary
 
 
 ### (ii)
