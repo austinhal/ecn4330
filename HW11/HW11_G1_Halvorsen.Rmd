@@ -19,11 +19,15 @@ library(stargazer)
 library(wooldridge)
 library(pander)
 library(car)
+library(lmtest)
 ```
 
 ## Question 1
 
 ### (i)
+
+4. All of the above are consequences
+
 
 ## Question 2
 
@@ -73,11 +77,20 @@ Given that our variance should only rely on gender, our model would then look li
 
 ```{r comment=NA}
 df4 <- sleep75
-wls4a <- lm(sleep~totwrk+educ+age+I(age^2)+yngkid+male, df4)
-pander(summary(wls4a))
+wls4 <- lm(sleep~totwrk+educ+age+I(age^2)+yngkid+male, df4)
+pander(summary(wls4))
 ```
 
+```{r comment=NA}
+wls4_resid <- resid(wls4)
+summary(lm(wls4_resid^2~male, df4))
+```
+
+Since the coefficient of male is negative, our variance error term u is higher for females than males.
+
 ### (iii)
+
+With a p-value of 0.291, which is larger than our alpha 0.05, it is not statistically significant between male and female.
 
 \newpage
 
@@ -87,28 +100,96 @@ pander(summary(wls4a))
 
 ```{r comment=NA}
 df6 <- hprice1 
-wls6a <- lm(price~lotsize+sqrft+bdrms, df6, method = )
+wls6a <- lm(price~lotsize+sqrft+bdrms, df6)
 wls6b <- lm(price~lotsize+sqrft+bdrms, df6)
-pander(summary(wls6))
+pander(summary(wls6a))
+coeftest(wls6a, vcov=hccm(wls6a,type="hc0"))
 ```
+
+Comparing our two tests, our errors only differ slightly with the most significant different between LOTSIZE
+
+| Variable  | OLS Std   | Het-robust std  |
+|-----------|-----------|-----------------|
+| Constant  | 29.48     | 36.2843         |
+| LOTSIZE   | 0.0006421 | 0.0012227       |
+| SQRFT     | 0.01324   | 0.0173178       |
+| BDRMS     | 9.01      | 8.2836880       |
+
 
 
 ### (ii)
+
+```{r comment=NA}
+wls6c <- lm(I(log(price))~I(log(lotsize))+I(log(sqrft))+bdrms, df6)
+pander(summary(wls6c))
+coeftest(wls6c, vcov=hccm(wls6c,type="hc0"))
+```
+
+Again, we see that many of our standard errors are close to each other using both the OLS and the heteroskedasticity-robust standard error
+
+| Variable  | OLS Std   | Het-robust std  |
+|-----------|-----------|-----------------|
+| Constant  | 0.6513    | 0.763351        |
+| LLOTSIZE  | 0.03828   | 0.040520        |
+| LSQRFT    | 0.09287   | 0.0173178       |
+| BDRMS     | 0.02753   | 0.101442        |
+
 ### (iii)
+
+After comparing our standard errors, we can see that using log transformations has helped us drastically reduce heteroskedasticity within our model. However, using the OLS standard error versus the Heteroskedasticity-robust standard error over different coefficients only yields a marginal difference in in value.
 
 \newpage
 
 ## Question 7
 
 ### (i)
+
+```{r comment=NA}
+df7 <- vote1
+ols7 <- lm(voteA~prtystrA+democA+lexpendA+lexpendB, df7) 
+pander(summary(ols7))
+```
+
+```{r comment=NA}
+ols7_resid <- resid(ols7)
+ols7a <- lm(ols7_resid~prtystrA+democA+lexpendA+lexpendB, df7) 
+pander(summary(ols7a))
+```
+
+When we regress on the error term, we get an $R^2 = 0$. This is because the dependent variable, *voteA*, gave us the estimated coefficients in a way that the error term was uncorrelated with the independent variables. So we are seeing the errors terms that are uncorrelated with our independent variables.
+
 ### (ii)
+
+```{r comment=NA}
+bptest(ols7)
+summary(lm(ols7_resid^2~prtystrA+democA+lexpendA+lexpendB, df7))
+```
+
+Using the F statistic method, we get a p-value of 0.05806
+
 ### (iii)
+
+```{r comment=NA}
+ols_y <- predict(ols7)
+summary(lm(ols7_resid^2~ols_y+I(ols_y^2)))
+```
+
+Here, we get an F-statistic of of 0.0645, which is greater than our alpha at 0.05, which is slightly higher than our BP test p-value. This would mean that there is slightly less evidence of heteroskedasticity than our BP test showed.
 
 \newpage
 
 ## Question 8
 
 ### (i) 
+```{r comment=NA}
+df8 <- k401ksubs
+ols8 <- lm(e401k~inc+incsq+age+agesq+male, df8)
+pander(summary(ols8))
+coeftest(ols8, vcov=hccm(ols8,type="hc0"))
+```
+
+Looking at our standard errors from both, the difference is small and such, the difference is not statistically important.
+
 ### (ii)
 
 Our fitted values are all between 0 and 1. 
