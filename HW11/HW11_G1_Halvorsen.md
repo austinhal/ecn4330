@@ -470,3 +470,6 @@ Looking at our standard errors from both, the difference is small and such, the 
 
 Our fitted values are all between 0 and 1. 
 
+
+
+
