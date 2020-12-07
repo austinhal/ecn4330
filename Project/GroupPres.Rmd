@@ -31,6 +31,23 @@ __How does someone's hourly wage impact the amount of sleep that they get on a g
 
 - This data set includes 706 observations on 34 variables, notably hourly wage, sleep, years of experience, marital status, spouse wage, age, children or no children, type of employment, and quality of health.
 
+### Variables
+
+`age`           
+`smsa`           
+`exper    `       
+`Ihrwage`
+`yrsmarr`         
+`spsepay`        
+`male     `    
+`gdhlth`
+
+## Chase is Learning GitHub!
+
+```{r}
+summary(wooldridge::sleep75)
+```
+
 
 ## Slide with R Output
 
