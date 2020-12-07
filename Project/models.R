@@ -10,8 +10,9 @@ model2 <- lm(sleep_h~age+smsa+exper+hrwage+yrsmarr+spsepay+male+gdhlth, df)
 model3 <- lm(sleep_h~age+smsa+exper+I(log(hrwage))+yrsmarr+spsepay+male+gdhlth, df)
 model4 <- summary(lm(sleep_h~age+hrwage+male, df))
 model5 <- lm(sleep_h~age+I(hrwage*construc)+I(hrwage*clerical)+hrwage, df)
+model6 <- lm(sleep_h~age+exper+I(log(hrwage))+yrsmarr+spsepay+male+gdhlth+totwrk, df)
 
-
+plot(df$sleep_h, df$hrwage)
 plot(model1$residuals)
 plot(b$sleep_h, b$hrwage)
 

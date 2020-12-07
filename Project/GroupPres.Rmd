@@ -1,0 +1,46 @@
+---
+title: "Group 1"
+author: "Austin Halvorsen, Chase Harward, Suneet Dash"
+date: "12/8/2020"
+output:
+  revealjs::revealjs_presentation:
+    theme: sky
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Introduction {data-transition="slide-in fade-out"}
+
+__How does someone's hourly wage impact the amount of sleep that they get on a given night?__
+
+<section style="text-align: left;">
+
+- Determining what role hourly wage plays in sleep is important because it can help us to understand an aspect of sleep that isn’t explored as often as opposed to just looking at hours of work itself. 
+
+- Through this question we can even see how different income classes sleep, such as how many hours does someone in the top income percentile sleep as opposed to someone in the middle class or someone making minimum wage.
+
+</section>
+
+## Data {data-transition="slide-in fade-out"}
+
+- We will be using the dataset “sleep75” found in the Wooldridge package and originally used for the paper “Sleep and the Allocation of Time” by Jeff Biddle and Daniel Hamermesh, published in the Journal of Political Economy in 1998. 
+
+- The goal of the original paper was to show a relationship between an increase in time in the labor market and how much sleep someone gets.
+
+- This data set includes 706 observations on 34 variables, notably hourly wage, sleep, years of experience, marital status, spouse wage, age, children or no children, type of employment, and quality of health.
+
+
+## Slide with R Output
+
+```{r cars, echo = TRUE}
+summary(cars)
+```
+
+## Slide with Plot
+
+```{r pressure}
+plot(pressure)
+```
+
