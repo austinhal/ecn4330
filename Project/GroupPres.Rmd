@@ -4,14 +4,33 @@ author: "Austin Halvorsen, Chase Harward, Suneet Dash"
 date: "12/8/2020"
 output:
   revealjs::revealjs_presentation:
-    theme: sky
+    theme: blood
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(wooldridge)
+library(car)
+library(effects)
+library(corrgram)
+library(wooldridge)
+library(lmtest)
 ```
 
-## Introduction {data-transition="slide-in fade-out"}
+```{r data, include=FALSE}
+df <- wooldridge::sleep75
+df <- df[complete.cases(df),]
+df <- select(df, -c(case, leis1, leis2, leis3, lhrwage, lothinc, rlxall, south, union, yngkid))
+df <- df %>% mutate(sleep_h = sleep/60)
+
+# Dataframe of only the variables we are using in the regression for the slide
+model_df <- select(df, c(sleep_h, age, exper, hrwage, yrsmarr, spsepay, male, gdhlth, totwrk))
+model <- lm(sleep_h~age+exper+I(log(hrwage))+yrsmarr+spsepay+male+gdhlth+totwrk, df)
+```
+
+
+# Introduction {data-transition="slide-in fade-out"}
 
 __How does someone's hourly wage impact the amount of sleep that they get on a given night?__
 
@@ -23,41 +42,116 @@ __How does someone's hourly wage impact the amount of sleep that they get on a g
 
 </section>
 
-## Data {data-transition="slide-in fade-out"}
+# Data {data-transition="slide-in fade-out"}
 
-- We will be using the dataset “sleep75” found in the Wooldridge package and originally used for the paper “Sleep and the Allocation of Time” by Jeff Biddle and Daniel Hamermesh, published in the Journal of Political Economy in 1998. 
+- <small>We will be using the dataset “sleep75” found in the Wooldridge package and originally used for the paper “Sleep and the Allocation of Time” by Jeff Biddle and Daniel Hamermesh, published in the Journal of Political Economy in 1998.</small>
 
-- The goal of the original paper was to show a relationship between an increase in time in the labor market and how much sleep someone gets.
+- <small>The goal of the original paper was to show a relationship between an increase in time in the labor market and how much sleep someone gets.</small>
 
-- This data set includes 706 observations on 34 variables, notably hourly wage, sleep, years of experience, marital status, spouse wage, age, children or no children, type of employment, and quality of health.
+- <small>This data set includes 706 observations on 34 variables, notably hourly wage, sleep, years of experience, marital status, spouse wage, age, children or no children, type of employment, and quality of health.</small>
 
-### Variables
+## Variables
 
-`age`           
-`smsa`           
-`exper    `       
-`Ihrwage`
-`yrsmarr`         
-`spsepay`        
-`male     `    
-`gdhlth`
+Our variables in our model are:
 
-## Chase is Learning GitHub!
+<section style="text-align: left;">
+
+- age            
+- exper           
+- lhrwage
+- yrsmarr         
+- spsepay        
+- male         
+- gdhlth
+
+</section>
+
+## Summary Stats 
+
+```{r summary, echo=FALSE, comment=NA}
+(summary(model_df))
+```
+
+
+
+# Emperical Framework {data-transition="slide-in fade-out"}
 
 ```{r}
 summary(wooldridge::sleep75)
 ```
 
 
-## Slide with R Output
+## Classical Linear Model (CLM) Assumptions
 
-```{r cars, echo = TRUE}
-summary(cars)
-```
+1. MLR.1 Linear in Parameters
+2. MLR.2 Random Sampling
+3. MLR.3 No Perfect Collinearity
+4. MLR.4 Zero Conditional Mean
+5. MLR.5 Homoscedasticity
+6. MLR.6 Normality
 
-## Slide with Plot
+## MLR.1 Linear in Parameters
 
-```{r pressure}
-plot(pressure)
-```
+- All of our parameters are linear
+- Hourly wage is shown in the log functional form, but this is still linear in parameters
 
+
+## MLR.2 Random Sampling
+
+- Data is taken from wooldridge dataset sleep75, which was randomly sampled with 706 observations
+
+
+## MLR.3 No Perfect Collinearity
+
+- Show in correlogram that nothing is perfectly correlated
+- Discus vif function of data to prove no perfect collinearity
+
+
+## MLR.4 Zero Conditional Mean
+
+- We have included the variables from the data set that we intuitively believe to have a correlation with the amount of sleep that someone gets in a week. 
+- Refer possibly to Pedram’s comment about him not yet showing us how to numerically prove the zero conditional mean assumption
+
+## MLR.5 Homoskedasticity
+
+- Show from R that it passes the heteroskedasticity test
+- So we can prove that the error u has the same variance across all values of the explanatory variables
+
+
+## MLR.6 Normality
+
+- One of the most important assumptions for this analysis, and we can prove that there is normality.
+- Show histogram of data to see that the distribution follows a bell curve and is normal.
+
+
+# Results {data-transition="slide-in fade-out"}
+
+<small>
+
+- B^4loghrwage: on average, a 1% increase in hourly wage is associated with a decrease in hours of sleep per week of 0.002191 (1 second per day or 7.89 seconds per week)
+- R^2 is .02305 or 2.305%
+- Adjusted R^2 is .008103 or .81%
+
+- The variation in these variables explain very little of the variation in our dependent variable sleep
+- T statistic for log hrly wage is -.371, it is not statistically significant for a 5% critical value
+- Show test of heteroskedasticity
+- Even when testing for join significance, p value is only .1398, still insignificant at a 5% significance level or even a 10% significance level
+
+</small>
+
+## Hypothesis Test
+
+<small>
+
+- We are asking whether or not there is a statistically significant relationship between hourly wage and hours of sleep per week
+
+- $H_0$ is that $B^4 = 0$ (hourly wage tells us very little about predicting someone’s sleep)
+- $H_a$ is that $B^4 \text{ does not} = 0$ (hourly wage may have some effect on sleep)
+- P value is __.7111__-smallest significance level that it is statistically significant at is 71.11%
+    - This is a very high p value
+- With a rejection region of <5% and a t value of -0.371, we fail to reject the null hypothesis
+    - We have a very small t value
+- There is a 95% chance that the true population coefficient for B^4 lies within:
+    - (-1.338, 1.118) since 0 lies within the confidence interval, we fail to reject the null hypothesis
+
+</small>
