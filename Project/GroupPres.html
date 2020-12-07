@@ -1862,6 +1862,81 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <li><p>The goal of the original paper was to show a relationship between an increase in time in the labor market and how much sleep someone gets.</p></li>
 <li><p>This data set includes 706 observations on 34 variables, notably hourly wage, sleep, years of experience, marital status, spouse wage, age, children or no children, type of employment, and quality of health.</p></li>
 </ul>
+<h3 id="variables">Variables</h3>
+<p><code>age</code><br />
+<code>smsa</code><br />
+<code>exper</code><br />
+<code>Ihrwage</code> <code>yrsmarr</code><br />
+<code>spsepay</code><br />
+<code>male</code><br />
+<code>gdhlth</code></p>
+</section>
+<section id="chase-is-learning-github" class="slide level2">
+<h2>Chase is Learning GitHub!</h2>
+<pre><code>##       age            black              case          clerical     
+##  Min.   :23.00   Min.   :0.00000   Min.   :  1.0   Min.   :0.0000  
+##  1st Qu.:29.00   1st Qu.:0.00000   1st Qu.:177.2   1st Qu.:0.0000  
+##  Median :36.00   Median :0.00000   Median :353.5   Median :0.0000  
+##  Mean   :38.82   Mean   :0.04958   Mean   :353.5   Mean   :0.1823  
+##  3rd Qu.:48.00   3rd Qu.:0.00000   3rd Qu.:529.8   3rd Qu.:0.1823  
+##  Max.   :65.00   Max.   :1.00000   Max.   :706.0   Max.   :1.0000  
+##                                                                    
+##     construc            educ          earns74          gdhlth      
+##  Min.   :0.00000   Min.   : 1.00   Min.   :    0   Min.   :0.0000  
+##  1st Qu.:0.00000   1st Qu.:12.00   1st Qu.: 2500   1st Qu.:1.0000  
+##  Median :0.00000   Median :12.00   Median : 8250   Median :1.0000  
+##  Mean   :0.03008   Mean   :12.78   Mean   : 9768   Mean   :0.8909  
+##  3rd Qu.:0.03008   3rd Qu.:16.00   3rd Qu.:13750   3rd Qu.:1.0000  
+##  Max.   :1.00000   Max.   :17.00   Max.   :42500   Max.   :1.0000  
+##                                                                    
+##       inlf            leis1          leis2          leis3           smsa       
+##  Min.   :0.0000   Min.   :1745   Min.   :1677   Min.   :1677   Min.   :0.0000  
+##  1st Qu.:1.0000   1st Qu.:4110   1st Qu.:3986   1st Qu.:3933   1st Qu.:0.0000  
+##  Median :1.0000   Median :4620   Median :4519   Median :4469   Median :0.0000  
+##  Mean   :0.7535   Mean   :4691   Mean   :4574   Mean   :4519   Mean   :0.3994  
+##  3rd Qu.:1.0000   3rd Qu.:5204   3rd Qu.:5071   3rd Qu.:5028   3rd Qu.:1.0000  
+##  Max.   :1.0000   Max.   :7417   Max.   :7297   Max.   :7282   Max.   :1.0000  
+##                                                                                
+##     lhrwage          lothinc            male             marr       
+##  Min.   :-1.050   Min.   : 0.000   Min.   :0.0000   Min.   :0.0000  
+##  1st Qu.: 1.061   1st Qu.: 0.000   1st Qu.:0.0000   1st Qu.:1.0000  
+##  Median : 1.477   Median : 8.613   Median :1.0000   Median :1.0000  
+##  Mean   : 1.431   Mean   : 6.228   Mean   :0.5666   Mean   :0.8215  
+##  3rd Qu.: 1.826   3rd Qu.: 9.328   3rd Qu.:1.0000   3rd Qu.:1.0000  
+##  Max.   : 3.570   Max.   :10.657   Max.   :1.0000   Max.   :1.0000  
+##  NA&#39;s   :174                                                        
+##       prot            rlxall         selfe            sleep         slpnaps    
+##  Min.   :0.0000   Min.   :1380   Min.   :0.0000   Min.   : 755   Min.   :1335  
+##  1st Qu.:0.0000   1st Qu.:3150   1st Qu.:0.0000   1st Qu.:3015   1st Qu.:3106  
+##  Median :1.0000   Median :3428   Median :0.0000   Median :3270   Median :3369  
+##  Mean   :0.6629   Mean   :3438   Mean   :0.1317   Mean   :3266   Mean   :3383  
+##  3rd Qu.:1.0000   3rd Qu.:3720   3rd Qu.:0.0000   3rd Qu.:3532   3rd Qu.:3655  
+##  Max.   :1.0000   Max.   :6110   Max.   :1.0000   Max.   :4695   Max.   :6110  
+##                                                                                
+##      south           spsepay         spwrk75           totwrk    
+##  Min.   :0.0000   Min.   :    0   Min.   :0.0000   Min.   :   0  
+##  1st Qu.:0.0000   1st Qu.:    0   1st Qu.:0.0000   1st Qu.:1554  
+##  Median :0.0000   Median :    0   Median :0.0000   Median :2288  
+##  Mean   :0.1841   Mean   : 5144   Mean   :0.4802   Mean   :2123  
+##  3rd Qu.:0.0000   3rd Qu.: 8900   3rd Qu.:1.0000   3rd Qu.:2692  
+##  Max.   :1.0000   Max.   :75000   Max.   :1.0000   Max.   :6415  
+##                                                                  
+##      union           worknrm        workscnd           exper      
+##  Min.   :0.0000   Min.   :   0   Min.   :   0.00   Min.   : 0.00  
+##  1st Qu.:0.0000   1st Qu.:1538   1st Qu.:   0.00   1st Qu.:10.00  
+##  Median :0.0000   Median :2275   Median :   0.00   Median :17.00  
+##  Mean   :0.2181   Mean   :2093   Mean   :  29.67   Mean   :20.04  
+##  3rd Qu.:0.0000   3rd Qu.:2636   3rd Qu.:   0.00   3rd Qu.:30.00  
+##  Max.   :1.0000   Max.   :6415   Max.   :1337.00   Max.   :55.00  
+##                                                                   
+##      yngkid          yrsmarr          hrwage           agesq     
+##  Min.   :0.0000   Min.   : 0.00   Min.   : 0.350   Min.   : 529  
+##  1st Qu.:0.0000   1st Qu.: 0.00   1st Qu.: 2.890   1st Qu.: 841  
+##  Median :0.0000   Median : 9.00   Median : 4.380   Median :1296  
+##  Mean   :0.1289   Mean   :11.77   Mean   : 5.083   Mean   :1635  
+##  3rd Qu.:0.0000   3rd Qu.:20.00   3rd Qu.: 6.210   3rd Qu.:2304  
+##  Max.   :1.0000   Max.   :43.00   Max.   :35.510   Max.   :4225  
+##                                   NA&#39;s   :174</code></pre>
 </section>
 <section id="chase-is-learning-github" class="slide level2">
 <h2>Chase is Learning GitHub!</h2>
