@@ -21,12 +21,12 @@ library(lmtest)
 ```{r data, include=FALSE}
 df <- wooldridge::sleep75
 df <- df[complete.cases(df),]
-df <- select(df, -c(case, leis1, leis2, leis3, lhrwage, lothinc, rlxall, south, union, yngkid))
+df <- select(df, -c(case, leis1, leis2, leis3, hrwage, lothinc, rlxall, south, union, yngkid))
 df <- df %>% mutate(sleep_h = sleep/60)
 
-# Dataframe of only the variables we are using in the regression for the slide
-model_df <- select(df, c(sleep_h, age, exper, hrwage, yrsmarr, spsepay, male, gdhlth, totwrk))
-model <- lm(sleep_h~age+exper+I(log(hrwage))+yrsmarr+spsepay+male+gdhlth+totwrk, df)
+# Data frame of only the variables we are using in the regression for the slide
+model_df <- select(df, c(sleep_h, age, exper, lhrwage, yrsmarr, spsepay, male, gdhlth, totwrk))
+model <- lm(sleep_h~age+exper+lhrwage+yrsmarr+spsepay+male+gdhlth+totwrk, df)
 ```
 
 
@@ -42,6 +42,16 @@ __How does someone's hourly wage impact the amount of sleep that they get on a g
 
 </section>
 
+## Preconcieved Beliefs
+
+When we started, we expected...
+
+## Why is this Important? {data-transition="slide-in fade-out"}
+
+- Understanding if wage plays a role in a persons sleep could help us identify groups that may be in true need of additional support through public programs, funding or other resources.
+
+- Understanding that if wage plays a key in role in an individuals sleep could indicate other aspects of quality of life. This could also be indicative of personal preference, i.e. some people may just choose to sleep more or less than others.
+
 # Data {data-transition="slide-in fade-out"}
 
 - <small>We will be using the dataset “sleep75” found in the Wooldridge package and originally used for the paper “Sleep and the Allocation of Time” by Jeff Biddle and Daniel Hamermesh, published in the Journal of Political Economy in 1998.</small>
@@ -52,7 +62,7 @@ __How does someone's hourly wage impact the amount of sleep that they get on a g
 
 ## Variables
 
-Our variables in our model are:
+Our explanatory variables in our model are:
 
 <section style="text-align: left;">
 
@@ -66,13 +76,15 @@ Our variables in our model are:
 
 </section>
 
+## Variables (con't)
+
+Our Dependent
+
 ## Summary Stats 
 
 ```{r summary, echo=FALSE, comment=NA}
 (summary(model_df))
 ```
-
-
 
 # Emperical Framework {data-transition="slide-in fade-out"}
 
@@ -98,7 +110,7 @@ summary(wooldridge::sleep75)
 
 ## MLR.2 Random Sampling
 
-- Data is taken from wooldridge dataset sleep75, which was randomly sampled with 706 observations
+- Data is taken from Wooldridge dataset sleep75, which was randomly sampled with 706 observations
 
 
 ## MLR.3 No Perfect Collinearity
@@ -128,9 +140,9 @@ summary(wooldridge::sleep75)
 
 <small>
 
-- B^4loghrwage: on average, a 1% increase in hourly wage is associated with a decrease in hours of sleep per week of 0.002191 (1 second per day or 7.89 seconds per week)
-- R^2 is .02305 or 2.305%
-- Adjusted R^2 is .008103 or .81%
+- $B^4loghrwage$: on average, a 1% increase in hourly wage is associated with a decrease in hours of sleep per week of 0.002191 (1 second per day or 7.89 seconds per week)
+- $R^2$ is .02305 or 2.305%
+- $\text{Adjusted } R^2$ is .008103 or .81%
 
 - The variation in these variables explain very little of the variation in our dependent variable sleep
 - T statistic for log hrly wage is -.371, it is not statistically significant for a 5% critical value
