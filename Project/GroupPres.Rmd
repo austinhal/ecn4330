@@ -156,6 +156,7 @@ bptest(model)
 
 ## MLR.6 Normality
 
+$\sigma^2:u \sim Normal(0,\sigma^2)$
 ```{r echo=FALSE, comment=NA}
 hist(resid(model), freq =FALSE)
 lines(density(resid(model), adjust = 2), lty = "dotted", col="red", lwd=3) 
@@ -165,35 +166,63 @@ lines(density(resid(model), adjust = 2), lty = "dotted", col="red", lwd=3)
 
 # Results {data-transition="slide-in fade-out"}
 
+Buckle Up...
+
+## Regression Results
+
 ```{r echo=FALSE, comment=NA}
 summary(model)
 ```
+- Initial view of results: only two of our variables are statistically significant!
+- $R^2$ is low at 12.22%, while adjusted $R^2$ is also low at 10.71%
+- This tells us that the variation in our explanatory variables explain very little of the variation in our explained variable (sleep)
+- We shouldn't focus too much on the $R^2$ of the regression, but this could be a sign that other factors we haven't analyzed are affecting sleep.
 
+## Coefficients
+```{r echo=FALSE, comment=NA}
+summary(model)
+```
+- On average, in 1975, a one dollar increase in someone's hourly wage is associated with an increase of 0.0104 hours of sleep per week
+- Standard error is for hrwage is .0904
+- This would equate to, on average, only 37.44 seconds extra sleep per week for a one dollar increase in hourly wage
+- Rest of our coefficients show similar results in that they appear to, on average, have a small impact on sleep
+- Only exception to this is totwrk and also marr, which we can see are statistically significant at varying significance levels
 
-- B^4loghrwage: on average, a 1% increase in hourly wage is associated with a decrease in hours of sleep per week of 0.002191 (1 second per day or 7.89 seconds per week)
-- R^2 is .02305 or 2.305%
-- Adjusted R^2 is .008103 or .81%
+## F and t statistics
+```{r echo=FALSE, comment=NA}
+summary(model)
+```
+- F statistics show us unsurprising results: it is statistically significant
+- We ran iterations of our model that weren't even jointly significant, so we made sure to include enough variables to fix this
+- T statistics are almost all very small with the exception of totwrk and marr
 
-- The variation in these variables explain very little of the variation in our dependent variable sleep
-- T statistic for log hrly wage is -.371, it is not statistically significant for a 5% critical value
-- Show test of heteroskedasticity
-- Even when testing for join significance, p value is only .1398, still insignificant at a 5% significance level or even a 10% significance level
+## Hypothesis Testing
+```{r echo=FALSE, comment=NA}
+summary(model)
+```
+$H_0: \beta_1 = 0$
+Null Hypothesis is that hourly wage has no effect on the number of hours of sleep someone gets in a week
+$H_1: \beta_1 \neq 0$
+Alternative Hypothesis is that hourly wage does have an effect on the amount of sleep that someone gets in a week
+- with a p-value of .9086, hrwage is only statistically significant as low as the 90.86% significance level
+- we fail to reject the Null Hypothesis
+- Take note: totwrk and marr are statistically significant
 
-</small>
+## Confidence Interval
+```{r echo=FALSE, comment=NA}
+confint(model, level = .95)
+```
+- There is a 95% probability that the true population mean lies within our confidence interval here
+- Unfortunately (but unsurprising, 0 lies within our 95% confidence interval), further providing evidence to reject the null hypothesis
 
-## Hypothesis Test
+# Conclusion
 
-<small>
+Does one's hourly wage have some relationship with the amount of sleep that they get in a given week?
 
-- We are asking whether or not there is a statistically significant relationship between hourly wage and hours of sleep per week
+## The Downside
 
-- $H_0$ is that $B^4 = 0$ (hourly wage tells us very little about predicting someone’s sleep)
-- $H_a$ is that $B^4 \text{ does not} = 0$ (hourly wage may have some effect on sleep)
-- P value is __.7111__-smallest significance level that it is statistically significant at is 71.11%
-    - This is a very high p value
-- With a rejection region of <5% and a t value of -0.371, we fail to reject the null hypothesis
-    - We have a very small t value
-- There is a 95% chance that the true population coefficient for B^4 lies within:
-    - (-1.338, 1.118) since 0 lies within the confidence interval, we fail to reject the null hypothesis
+Even after exploring multiple potential transformations of our original mode, adding more explanatory variables, and close analysis, our conclusion is that someone's hourly wage has little to no effect on the amount of sleep that someone gets in a given week. Moreover, the only variables that we could conclude had ANY statistically significant effect on sleep were how much someone works in a week and their marital status. We were originally discouraged by these results, as it made us feel like our original research question was a boring one. 
 
-</small>
+## The Upside
+
+These results, however, raise more interesting questions that call for further investigation. While knowing someone's hourly wage might not help us that much in predicting how much sleep that they get in a week, perhaps the reason for this is that our preferences are more individualistic in a way that cannot be captured simply by how much money that someone makes. Two different CEOs may have wildly different preferences on sleeping, and we could see a similarly commplex situation at lower hourly wages too. So if we can make any conclusion from these results, it's that we need to know MORE. 
