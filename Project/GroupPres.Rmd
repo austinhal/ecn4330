@@ -25,8 +25,8 @@ df <- select(df, -c(case, leis1, leis2, leis3, lhrwage, lothinc, rlxall, south, 
 df <- df %>% mutate(sleep_h = sleep/60)
 
 # Dataframe of only the variables we are using in the regression for the slide
-model_df <- select(df, c(sleep_h, age, exper, hrwage, yrsmarr, spsepay, male, gdhlth, totwrk))
-model <- lm(sleep_h~age+exper+I(log(hrwage))+yrsmarr+spsepay+male+gdhlth+totwrk, df)
+model_df <- select(df, c(sleep_h, age, exper, hrwage, yrsmarr, spsepay, male, gdhlth, totwrk, marr))
+model <- lm(sleep_h~hrwage+exper+age+yrsmarr+spsepay+male+gdhlth+totwrk+marr, df)
 ```
 
 
@@ -149,10 +149,6 @@ Our variables in our model are:
 ```{r echo=FALSE, comment=NA}
 #Breusch-Pagan test
 bptest(model)
-
-#White Test
-y_hat <- predict(model)
-bptest(model,         ~ y_hat      + I(y_hat^2) )
 ```
 - So we can prove that the error u has the same variance across all values of the explanatory variables
 
