@@ -202,6 +202,7 @@ ggcorrplot::ggcorrplot(df_cor,
 </div>
 
 <div id="right">
+<<<<<<< HEAD
   <section style="text-align: left; font-size:0.75em">
   
 - No evidence of perfect collinearity
@@ -210,6 +211,20 @@ ggcorrplot::ggcorrplot(df_cor,
 
 - No independent variable is constant.
 
+  </section>
+</div>
+=======
+  <section style="text-align: left;">
+    <small> 
+  
+-No evidence of perfect collinearity
+
+-Nothing is perfectly correlated with our dependent variable "sleep"
+
+-No independent variable is constant.
+>>>>>>> refs/remotes/origin/master
+
+    </small>
   </section>
 </div>
 
@@ -245,13 +260,25 @@ lines(density(resid(model), adjust = 2), lty = "dotted", col="red", lwd=3)
 ```
 </div>
 
+<<<<<<< HEAD
 <div id="right" style="text-align: left; font-size:0.75em">
+=======
+<div id="right" style="text-align: left">
+  <small>
+>>>>>>> refs/remotes/origin/master
   
 - $\sigma^2:u \sim Normal(0,\sigma^2)$
 
 - Normal distribution of our data is shown here. 
   
+<<<<<<< HEAD
 </div>
+=======
+  </small>
+</div>
+
+</small>
+>>>>>>> refs/remotes/origin/master
 
 # Results {data-transition="slide-in fade-out"}
 
