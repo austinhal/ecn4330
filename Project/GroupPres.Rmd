@@ -17,6 +17,7 @@ library(corrgram)
 library(wooldridge)
 library(lmtest)
 library(corrplot)
+library(stargazer)
 ```
 
 ```{r data, include=FALSE}
@@ -118,32 +119,39 @@ Our variables in our model are:
 
 ## MLR.1 Linear in Parameters
 
+The model in the population can be written as:
+
+$sleep_h = B_0 + B_1 hrwage + B_2 exper + B_3 age + B_4 yrsmarry + B_5 spsepay + B_6 male + B_7 gdhlth + B_8 totwrk + B_9 marry + u$
+
 - All of our parameters are linear
 
 ## MLR.2 Random Sampling
 
-- Data is taken from wooldridge dataset sleep75, which was randomly sampled.
-
+- Data is taken from wooldridge dataset sleep75, which was randomly sampled with a sample size of 706.
 
 ## MLR.3 No Perfect Collinearity
+
 ```{r echo=FALSE, comment=NA}
-
+M <- cor(model_df)
+corrplot(M, type="lower")
 ```
-
-
+-No evidence of perfect collinearity
+-Nothing is perfectly correlated with our dependent variable "sleep"
+-No independent variable is constant.
 
 ## MLR.4 Zero Conditional Mean
 
-- We have included the variables from the data set that we intuitively believe to have a correlation with the amount of sleep that someone gets in a week. 
-- Refer possibly to Pedram’s comment about him not yet showing us how to numerically prove the zero conditional mean assumption
+$E(u|x_1,x_2,...,x_k) = 0$
+- We included multiple important variables in order to avoid violating the Zero Conditional Mean Assumption.
 
 ## MLR.5 Homoskedasticity
 
+$Var(u|x_1,...,x_k) = \sigma^2$
 ```{r echo=FALSE, comment=NA}
 #Breusch-Pagan test
 bptest(model)
 ```
-- We can prove that the error has the same variance across all values of the explanatory variables 
+- We can prove that the error has the same variance across all values of the explanatory variables
 - According to the results of our Breusch-Pagan test, we have a p value of .1939, and so we fail to reject the null hypothesis
 
 ## MLR.6 Normality
@@ -153,11 +161,14 @@ hist(resid(model), freq =FALSE)
 lines(density(resid(model), adjust = 2), lty = "dotted", col="red", lwd=3) 
 ```
 
-- One of the most important assumptions for this analysis, and we can prove that there is normality.
+- Normal distribution of our data is shown here. 
 
 # Results {data-transition="slide-in fade-out"}
 
-<small>
+```{r echo=FALSE, comment=NA}
+summary(model)
+```
+
 
 - B^4loghrwage: on average, a 1% increase in hourly wage is associated with a decrease in hours of sleep per week of 0.002191 (1 second per day or 7.89 seconds per week)
 - R^2 is .02305 or 2.305%
