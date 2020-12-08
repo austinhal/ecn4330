@@ -4,7 +4,11 @@ author: "Austin Halvorsen, Chase Harward, Suneet Dash"
 date: "12/8/2020"
 output:
   revealjs::revealjs_presentation:
-    theme: blood
+    theme: moon
+    highlight: zenburn
+    center: true
+    transition: slide
+    
 ---
 
 ```{r setup, include=FALSE}
@@ -17,25 +21,57 @@ library(corrgram)
 library(wooldridge)
 library(lmtest)
 library(corrplot)
+library(stargazer)
+library(ggcorrplot)
 ```
 
 ```{r data, include=FALSE}
 df <- wooldridge::sleep75
 df <- df[complete.cases(df),]
-df <- select(df, -c(case, leis1, leis2, leis3, hrwage, lothinc, rlxall, south, union, yngkid))
+df <- select(df, -c(case, leis1, leis2, leis3, lhrwage, lothinc, rlxall, south, union, yngkid))
 df <- df %>% mutate(sleep_h = sleep/60)
 
-<<<<<<< HEAD
-# Data frame of only the variables we are using in the regression for the slide
-model_df <- select(df, c(sleep_h, age, exper, lhrwage, yrsmarr, spsepay, male, gdhlth, totwrk))
-model <- lm(sleep_h~age+exper+lhrwage+yrsmarr+spsepay+male+gdhlth+totwrk, df)
-=======
 # Dataframe of only the variables we are using in the regression for the slide
 model_df <- select(df, c(sleep_h, age, exper, hrwage, yrsmarr, spsepay, male, gdhlth, totwrk, marr))
 model <- lm(sleep_h~hrwage+exper+age+yrsmarr+spsepay+male+gdhlth+totwrk+marr, df)
->>>>>>> refs/remotes/origin/master
 ```
 
+
+<style>
+
+ #left {
+  left:-8.33%;
+  text-align: left;
+  float: left;
+  width:50%;
+  z-index:-10;
+}
+
+ #right {
+  left:31.25%;
+  top: 75px;
+  float: right;
+  text-align: right;
+  z-index:-10;
+  width:50%;
+ }
+ 
+  code {
+  font-family: Consolas,"courier new";
+  color: black;
+  background-color: #CED2E0;
+  padding: 2px;
+  margin-left: 25%;
+  margin-right: 25%;
+  }
+  
+  .code_block {
+  width: 100%;
+  margin-left: 25%;
+  margin-right: 25%;
+  }
+
+</style>
 
 # Introduction {data-transition="slide-in fade-out"}
 
@@ -43,30 +79,50 @@ __How does someone's hourly wage impact the amount of sleep that they get on a g
 
 <section style="text-align: left;">
 
+<small>
+
 - Determining what role hourly wage plays in sleep is important because it can help us to understand an aspect of sleep that isn’t explored as often as opposed to just looking at hours of work itself. 
 
 - Through this question we can even see how different income classes sleep, such as how many hours does someone in the top income percentile sleep as opposed to someone in the middle class or someone making minimum wage.
 
+</small>
+
 </section>
 
-## Preconcieved Beliefs
+## Initial Assumptions
 
-When we started, we expected...
+<small>
 
-## Why is this Important? {data-transition="slide-in fade-out"}
+> - On one side of the question we  assumed that people making minimum wages would typically sleep more, as a lot of these people are just entering the labor market and would be younger (high school/college). Also they wouldn’t have to deal with as many high-stress situations as someone who is making a significantly higher amount  of money. 
 
-- Understanding if wage plays a role in a persons sleep could help us identify groups that may be in true need of additional support through public programs, funding or other resources.
+> - On the other side we considered that someone making minimum wages could be sleeping less, as they might be working a second job or something like that to make their quality of life better. And that someone making a higher wage would be in a comfortable position in life where financial issues weren’t impacting their sleep. 
 
-- Understanding that if wage plays a key in role in an individuals sleep could indicate other aspects of quality of life. This could also be indicative of personal preference, i.e. some people may just choose to sleep more or less than others.
+</small>
+
+## Ethical Importance {data-transition="slide-in fade-out"}
+
+This question poses some interesting ethical discussions.  
+
+<small> 
+
+> - We typically look towards financial positions, family status, and where people live as basic indications of a quality of life. Something we don’t often consider is what type of quality of life information  we can get from sleep data.
+> - Another example would be  in terms of government programs allocating resources towards low-income workers, can we make a conclusion on the quality of life they have based on the relationship between the hourly wage and sleep?
+
+</small>
 
 # Data {data-transition="slide-in fade-out"}
 
-- <small>We will be using the dataset “sleep75” found in the Wooldridge package and originally used for the paper “Sleep and the Allocation of Time” by Jeff Biddle and Daniel Hamermesh, published in the Journal of Political Economy in 1998.</small>
+<small>
 
-- <small>The goal of the original paper was to show a relationship between an increase in time in the labor market and how much sleep someone gets.</small>
-<<<<<<< HEAD
+- We will be using the dataset “sleep75” found in the Wooldridge package and originally used for the paper “Sleep and the Allocation of Time” by Jeff Biddle and Daniel Hamermesh, published in the Journal of Political Economy in 1998. 
 
-- <small>This data set includes 706 observations on 34 variables, notably hourly wage, sleep, years of experience, marital status, spouse wage, age, children or no children, type of employment, and quality of health.</small>
+- The goal of the original paper was to show a relationship between an increase in time in the labor market and how much sleep someone gets.
+
+- Previous questions involving the “sleep75” data set typically included some analysis on a tradeoff between sleep and time worked, so we aimed to ask a question that hasn’t really been explored with this data.
+
+- This data set includes 706 observations on 34 variables, notably hourly wage, sleep, years of experience, marital status, spouse wage, age, children or no children, type of employment, and quality of health.
+
+</small>
 
 ## Variables
 
@@ -86,7 +142,7 @@ Our explanatory variables in our model are:
 
 ## Variables (con't)
 
-Our Dependent
+Our Dependent variable in our study is sleep.
 
 ## Summary Stats 
 
@@ -96,34 +152,11 @@ Our Dependent
 
 # Emperical Framework {data-transition="slide-in fade-out"}
 
-```{r}
+```{r comment=NA}
 summary(wooldridge::sleep75)
 ```
 
-
 - <small>This data set includes 706 observations on 34 variables, notably hourly wage, sleep, years of experience, marital status, spouse wage, age, children or no children, type of employment, and quality of health.</small>
-
-## Variables
-
-Our variables in our model are:
-
-<section style="text-align: left;">
-
-- age            
-- exper           
-- lhrwage
-- yrsmarr         
-- spsepay        
-- male         
-- gdhlth
-
-</section>
-
-## Summary Stats 
-
-```{r echo=FALSE, comment=NA}
-(summary(model_df))
-```
 
 ## Classical Linear Model (CLM) Assumptions
 
@@ -136,75 +169,227 @@ Our variables in our model are:
 
 ## MLR.1 Linear in Parameters
 
+The model in the population can be written as:
+
+<small>
+$$sleep_h = \beta_0 + \beta_1 hrwage + \beta_2 exper + \beta_3 age + \beta_4 yrsmarr + \beta_5 spsepay + \\ \beta_6 male + \beta_7 gdhlth + \beta_8 totwrk + \beta_9 marr + u$$
+
 - All of our parameters are linear
+
+</small>
 
 ## MLR.2 Random Sampling
 
-<<<<<<< HEAD
 - Data is taken from Wooldridge dataset sleep75, which was randomly sampled with 706 observations
-=======
-- Data is taken from wooldridge dataset sleep75, which was randomly sampled.
->>>>>>> refs/remotes/origin/master
 
 
 ## MLR.3 No Perfect Collinearity
-```{r echo=FALSE, comment=NA}
 
+<div id="left">
+
+```{r echo=FALSE, comment=NA}
+M <- cor(model_df)
+df_cor <- cor(model_df)
+ggcorrplot::ggcorrplot(df_cor, 
+                       type = "lower", 
+                       show.diag = TRUE, 
+                       lab = TRUE, 
+                       ggtheme = theme_classic(), 
+                       colors = c("darkred", "white", "darkgreen"),
+                       lab_size = 3)
 ```
 
+</div>
 
+<div id="right">
+  <section style="text-align: left;">
+    <small> 
+  
+-No evidence of perfect collinearity
+
+-Nothing is perfectly correlated with our dependent variable "sleep"
+
+-No independent variable is constant.
+
+    </small>
+  </section>
+</div>
 
 ## MLR.4 Zero Conditional Mean
 
-- We have included the variables from the data set that we intuitively believe to have a correlation with the amount of sleep that someone gets in a week. 
-- Refer possibly to Pedram’s comment about him not yet showing us how to numerically prove the zero conditional mean assumption
+$E(u|x_1,x_2,...,x_k) = 0$
+
+- We included multiple important variables in order to avoid violating the Zero Conditional Mean Assumption.
 
 ## MLR.5 Homoskedasticity
+
+$Var(u|x_1,...,x_k) = \sigma^2$
 
 ```{r echo=FALSE, comment=NA}
 #Breusch-Pagan test
 bptest(model)
 ```
-- We can prove that the error has the same variance across all values of the explanatory variables 
+
+<small>
+
+- We can prove that the error has the same variance across all values of the explanatory variables
+
 - According to the results of our Breusch-Pagan test, we have a p value of .1939, and so we fail to reject the null hypothesis
+
+</small>
 
 ## MLR.6 Normality
 
+<div id="left">
 ```{r echo=FALSE, comment=NA}
 hist(resid(model), freq =FALSE)
 lines(density(resid(model), adjust = 2), lty = "dotted", col="red", lwd=3) 
 ```
+</div>
 
-- One of the most important assumptions for this analysis, and we can prove that there is normality.
+<div id="right" style="text-align: left">
+  <small>
+  
+- $\sigma^2:u \sim Normal(0,\sigma^2)$
+
+- Normal distribution of our data is shown here. 
+  
+  </small>
+</div>
+
+</small>
 
 # Results {data-transition="slide-in fade-out"}
 
-<small>
+Buckle Up...
 
-- $B^4loghrwage$: on average, a 1% increase in hourly wage is associated with a decrease in hours of sleep per week of 0.002191 (1 second per day or 7.89 seconds per week)
-- $R^2$ is .02305 or 2.305%
-- $\text{Adjusted } R^2$ is .008103 or .81%
+## Regression Results
 
-- The variation in these variables explain very little of the variation in our dependent variable sleep
-- T statistic for log hrly wage is -.371, it is not statistically significant for a 5% critical value
-- Show test of heteroskedasticity
-- Even when testing for join significance, p value is only .1398, still insignificant at a 5% significance level or even a 10% significance level
+<div class="code_block">
+```{r echo=FALSE, comment=NA}
+summary(model)
+```
+</div>
 
-</small>
-
-## Hypothesis Test
+## Regression Explaination
 
 <small>
 
-- We are asking whether or not there is a statistically significant relationship between hourly wage and hours of sleep per week
+- Initial view of results: only two of our variables are statistically significant!
 
-- $H_0$ is that $B^4 = 0$ (hourly wage tells us very little about predicting someone’s sleep)
-- $H_a$ is that $B^4 \text{ does not} = 0$ (hourly wage may have some effect on sleep)
-- P value is __.7111__-smallest significance level that it is statistically significant at is 71.11%
-    - This is a very high p value
-- With a rejection region of <5% and a t value of -0.371, we fail to reject the null hypothesis
-    - We have a very small t value
-- There is a 95% chance that the true population coefficient for B^4 lies within:
-    - (-1.338, 1.118) since 0 lies within the confidence interval, we fail to reject the null hypothesis
+- $R^2$ is low at 12.22%, while adjusted $R^2$ is also low at 10.71%
+
+- This tells us that the variation in our explanatory variables explain very little of the variation in our explained variable (sleep)
+
+- We shouldn't focus too much on the $R^2$ of the regression, but this could be a sign that other factors we haven't analyzed are affecting sleep.
 
 </small>
+
+## Coefficients
+
+```{r echo=FALSE, comment=NA}
+summary(model)
+```
+
+## Coefficients Explained
+
+<small>
+
+- On average, in 1975, a one dollar increase in someone's hourly wage is associated with an increase of 0.0104 hours of sleep per week
+
+- Standard error is for hrwage is .0904
+
+- This would equate to, on average, only 37.44 seconds extra sleep per week for a one dollar increase in hourly wage
+
+- Rest of our coefficients show similar results in that they appear to, on average, have a small impact on sleep
+
+- Only exception to this is totwrk and also marr, which we can see are statistically significant at varying significance levels
+
+</small>
+
+## F and t statistics
+
+```{r echo=FALSE, comment=NA}
+summary(model)
+```
+
+## F and t statistics
+
+<small>
+
+- F statistics show us unsurprising results: it is statistically significant
+
+- We ran iterations of our model that weren't even jointly significant, so we made sure to include enough variables to fix this
+
+- T statistics are almost all very small with the exception of totwrk and marr
+
+</small>
+
+## Hypothesis Testing
+
+```{r echo=FALSE, comment=NA}
+summary(model)
+```
+
+## Hypothesis Testing
+
+<div id="left" style="text-align: left">
+  <small>
+  
+$H_0: \beta_1 = 0$
+
+Null Hypothesis is that hourly wage has no effect on the number of hours of sleep someone gets in a week
+  
+  </small>
+</div>
+
+<div id ="right" style="text-align: left">
+  <small>
+  
+$H_1: \beta_1 \neq 0$
+
+Alternative Hypothesis is that hourly wage does have an effect on the amount of sleep that someone gets in a week
+- with a p-value of .9086, hrwage is only statistically significant as low as the 90.86% significance level
+- we fail to reject the Null Hypothesis
+- Take note: totwrk and marr are statistically significant
+
+  </small>
+</div>
+
+## Confidence Interval
+```{r echo=FALSE, comment=NA}
+confint(model, level = .95)
+```
+
+<small>
+
+- There is a 95% probability that the true population mean lies within our confidence interval here
+
+- Unfortunately (but unsurprising, 0 lies within our 95% confidence interval), further providing evidence to reject the null hypothesis
+
+</small>
+
+# Conclusion
+
+Does one's hourly wage have some relationship with the amount of sleep that they get in a given week?
+
+## The Downside
+
+<small>
+
+Even after exploring multiple potential transformations of our original mode, adding more explanatory variables, and close analysis, our conclusion is that someone's hourly wage has little to no effect on the amount of sleep that someone gets in a given week. 
+
+Moreover, the only variables that we could conclude had **ANY** statistically significant effect on sleep were how much someone works in a week and their marital status. We were originally discouraged by these results, as it made us feel like our original research question was a boring one. 
+
+</small>
+
+## The Upside
+
+<small>
+
+These results, however, raise more interesting questions that call for further investigation. While knowing someone's hourly wage might not help us that much in predicting how much sleep that they get in a week, perhaps the reason for this is that our preferences are more individualistic in a way that cannot be captured simply by how much money that someone makes. 
+
+Two different CEOs may have wildly different preferences on sleeping, and we could see a similarly complex situation at lower hourly wages too. So if we can make any conclusion from these results, it's that we need to know **MORE.** 
+
+</small>
+
