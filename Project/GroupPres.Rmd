@@ -106,7 +106,7 @@ Our variables in our model are:
 
 ## Summary Stats 
 
-```{r summary, echo=FALSE, comment=NA}
+```{r echo=FALSE, comment=NA}
 (summary(model_df))
 ```
 
