@@ -81,7 +81,6 @@ Our variables in our model are:
 summary(wooldridge::sleep75)
 ```
 
-=======
 
 - <small>This data set includes 706 observations on 34 variables, notably hourly wage, sleep, years of experience, marital status, spouse wage, age, children or no children, type of employment, and quality of health.</small>
 
@@ -106,16 +105,6 @@ Our variables in our model are:
 ```{r echo=FALSE, comment=NA}
 (summary(model_df))
 ```
-
-
-
-# Emperical Framework {data-transition="slide-in fade-out"}
->>>>>>> fcf372bdbe7e64a7fade3fc4700caec99a846727
-
-```{r}
-summary(wooldridge::sleep75)
-```
-
 
 <<<<<<< HEAD
 ## Slide with R Output
@@ -157,9 +146,15 @@ summary(wooldridge::sleep75)
 
 ## MLR.5 Homoskedasticity
 
-- Show from R that it passes the heteroskedasticity test
-- So we can prove that the error u has the same variance across all values of the explanatory variables
+```{r echo=FALSE, comment=NA}
+#Breusch-Pagan test
+bptest(model)
 
+#White Test
+y_hat <- predict(model)
+bptest(model,         ~ y_hat      + I(y_hat^2) )
+```
+- So we can prove that the error u has the same variance across all values of the explanatory variables
 
 ## MLR.6 Normality
 
