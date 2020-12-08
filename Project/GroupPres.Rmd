@@ -47,6 +47,7 @@ __How does someone's hourly wage impact the amount of sleep that they get on a g
 - <small>We will be using the dataset “sleep75” found in the Wooldridge package and originally used for the paper “Sleep and the Allocation of Time” by Jeff Biddle and Daniel Hamermesh, published in the Journal of Political Economy in 1998.</small>
 
 - <small>The goal of the original paper was to show a relationship between an increase in time in the labor market and how much sleep someone gets.</small>
+<<<<<<< HEAD
 
 - <small>This data set includes 706 observations on 34 variables, notably hourly wage, sleep, years of experience, marital status, spouse wage, age, children or no children, type of employment, and quality of health.</small>
 
@@ -83,13 +84,47 @@ summary(wooldridge::sleep75)
 
 <<<<<<< HEAD
 ## Chase is Learning GitHub!
+=======
+
+- <small>This data set includes 706 observations on 34 variables, notably hourly wage, sleep, years of experience, marital status, spouse wage, age, children or no children, type of employment, and quality of health.</small>
+
+## Variables
+
+Our variables in our model are:
+
+<section style="text-align: left;">
+
+- age            
+- exper           
+- lhrwage
+- yrsmarr         
+- spsepay        
+- male         
+- gdhlth
+
+</section>
+
+## Summary Stats 
+
+```{r summary, echo=FALSE, comment=NA}
+(summary(model_df))
+```
+
+
+
+# Emperical Framework {data-transition="slide-in fade-out"}
+>>>>>>> fcf372bdbe7e64a7fade3fc4700caec99a846727
 
 ```{r}
 summary(wooldridge::sleep75)
 ```
 
 
+<<<<<<< HEAD
 ## Slide with R Output
+=======
+## Classical Linear Model (CLM) Assumptions
+>>>>>>> fcf372bdbe7e64a7fade3fc4700caec99a846727
 =======
 ## Classical Linear Model (CLM) Assumptions
 >>>>>>> fcf372bdbe7e64a7fade3fc4700caec99a846727
