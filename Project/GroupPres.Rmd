@@ -81,9 +81,6 @@ Our variables in our model are:
 summary(wooldridge::sleep75)
 ```
 
-
-<<<<<<< HEAD
-## Chase is Learning GitHub!
 =======
 
 - <small>This data set includes 706 observations on 34 variables, notably hourly wage, sleep, years of experience, marital status, spouse wage, age, children or no children, type of employment, and quality of health.</small>
