@@ -16,6 +16,7 @@ library(effects)
 library(corrgram)
 library(wooldridge)
 library(lmtest)
+library(corrplot)
 ```
 
 ```{r data, include=FALSE}
@@ -106,37 +107,29 @@ Our variables in our model are:
 (summary(model_df))
 ```
 
-<<<<<<< HEAD
-## Slide with R Output
-=======
 ## Classical Linear Model (CLM) Assumptions
->>>>>>> fcf372bdbe7e64a7fade3fc4700caec99a846727
-=======
-## Classical Linear Model (CLM) Assumptions
->>>>>>> fcf372bdbe7e64a7fade3fc4700caec99a846727
 
 1. MLR.1 Linear in Parameters
 2. MLR.2 Random Sampling
 3. MLR.3 No Perfect Collinearity
 4. MLR.4 Zero Conditional Mean
-5. MLR.5 Homoscedasticity
+5. MLR.5 Homoskedasticity
 6. MLR.6 Normality
 
 ## MLR.1 Linear in Parameters
 
 - All of our parameters are linear
-- Hourly wage is shown in the log functional form, but this is still linear in parameters
-
 
 ## MLR.2 Random Sampling
 
-- Data is taken from wooldridge dataset sleep75, which was randomly sampled with 706 observations
+- Data is taken from wooldridge dataset sleep75, which was randomly sampled.
 
 
 ## MLR.3 No Perfect Collinearity
+```{r echo=FALSE, comment=NA}
 
-- Show in correlogram that nothing is perfectly correlated
-- Discus vif function of data to prove no perfect collinearity
+```
+
 
 
 ## MLR.4 Zero Conditional Mean
@@ -150,13 +143,17 @@ Our variables in our model are:
 #Breusch-Pagan test
 bptest(model)
 ```
-- So we can prove that the error u has the same variance across all values of the explanatory variables
+- We can prove that the error has the same variance across all values of the explanatory variables 
+- According to the results of our Breusch-Pagan test, we have a p value of .1939, and so we fail to reject the null hypothesis
 
 ## MLR.6 Normality
 
-- One of the most important assumptions for this analysis, and we can prove that there is normality.
-- Show histogram of data to see that the distribution follows a bell curve and is normal.
+```{r echo=FALSE, comment=NA}
+hist(resid(model), freq =FALSE)
+lines(density(resid(model), adjust = 2), lty = "dotted", col="red", lwd=3) 
+```
 
+- One of the most important assumptions for this analysis, and we can prove that there is normality.
 
 # Results {data-transition="slide-in fade-out"}
 
