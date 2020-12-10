@@ -5,11 +5,11 @@ author: "Austin Halvorsen, Chase Harward, Suneet Dash"
 date: "12/8/2020"
 output:
   revealjs::revealjs_presentation:
+    self_contained: true
     theme: moon
     highlight: zenburn
     center: true
     transition: slide
-    
 ---
 
 ```{r setup, include=FALSE}
@@ -35,7 +35,7 @@ df <- df[complete.cases(df),]
 df <- select(df, -c(case, leis1, leis2, leis3, lhrwage, lothinc, rlxall, south, union, yngkid))
 df <- df %>% mutate(sleep_h = sleep/60)
 
-## Dataframe of only the variables we are using in the regression for the slide
+# Dataframe of only the variables we are using in the regression for the slide
 model_df <- select(df, c(sleep_h, age, exper, hrwage, yrsmarr, spsepay, male, gdhlth, totwrk, marr))
 model <- lm(sleep_h~hrwage+exper+age+yrsmarr+spsepay+male+gdhlth+totwrk+marr, df)
 fit <- summary(model)
