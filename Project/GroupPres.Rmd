@@ -36,8 +36,8 @@ df <- select(df, -c(case, leis1, leis2, leis3, lhrwage, lothinc, rlxall, south, 
 df <- df %>% mutate(sleep_h = sleep/60)
 
 # Dataframe of only the variables we are using in the regression for the slide
-model_df <- select(df, c(sleep_h, age, exper, hrwage, yrsmarr, spsepay, male, gdhlth, totwrk, marr))
-model <- lm(sleep_h~hrwage+exper+age+yrsmarr+spsepay+male+gdhlth+totwrk+marr, df)
+model_df <- select(df, c(sleep_h, age, educ, hrwage, yrsmarr, spsepay, male, gdhlth, totwrk, marr))
+model <- lm(sleep_h~hrwage+educ+age+yrsmarr+spsepay+male+gdhlth+totwrk+marr, df)
 fit <- summary(model)
 ```
 
@@ -136,7 +136,7 @@ Our explanatory variables in our model are:
 <section style="text-align: left; font-size:0.75em">
   
 - age = years old of the individual          
-- exper = combination of age and education         
+- educ = someone's years of education        
 - hrwage = the hourly rate of the individual
 - marr = Is the person married or not?
 - yrsmarr = time in years the person was married (if married)       
@@ -182,11 +182,11 @@ ggplot(data=model_df, aes(sleep_h)) +
 
   - Our true model is: 
   
-  $$sleep = \beta_0 + \beta_1 hrwage + \beta_2 exper + \beta_3 age + \beta_4 yrsmarr + \beta_5 spsepay + \\ \beta_6 male + \beta_7 gdhlth + \beta_8 totwrk + \beta_9 marr + u$$
+  $$sleep = \beta_0 + \beta_1 hrwage + \beta_2 educ + \beta_3 age + \beta_4 yrsmarr + \beta_5 spsepay + \\ \beta_6 male + \beta_7 gdhlth + \beta_8 totwrk + \beta_9 marr + u$$
   
   - Our estimated model is: 
   
-  $$\hat{sleep} = 60.143 + 0.0104 hrwage + 0.1074 exper -0.0619  age -0.046 yrsmarr -0.0000403 spsepay \\ + 0.359 male -1.198 gdhlth -0.0026 totwrk + 2.035 marr + u$$
+  $$\hat{sleep} = 60.143 + 0.0104 hrwage - 0.1074 educ -0.0619  age -0.046 yrsmarr -0.0000403 spsepay \\ + 0.359 male -1.198 gdhlth -0.0026 totwrk + 2.035 marr + u$$
   
 </div>
 
@@ -225,7 +225,7 @@ The Standard Errors from our model are:
 The model in the population can be written as:
 
 <small>
-$$sleep_h = \beta_0 + \beta_1 hrwage + \beta_2 exper + \beta_3 age + \beta_4 yrsmarr + \beta_5 spsepay + \\ \beta_6 male + \beta_7 gdhlth + \beta_8 totwrk + \beta_9 marr + u$$
+$$sleep_h = \beta_0 + \beta_1 hrwage + \beta_2 educ + \beta_3 age + \beta_4 yrsmarr + \beta_5 spsepay + \\ \beta_6 male + \beta_7 gdhlth + \beta_8 totwrk + \beta_9 marr + u$$
 
 - All of our parameters are linear
 
